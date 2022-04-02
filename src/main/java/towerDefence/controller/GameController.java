@@ -15,7 +15,6 @@ public class GameController implements ActionListener {
         this.gameModel = gameModel;
         this.gameRender = gameRender;
 
-
         timer = new Timer(1 / gameModel.getFPS(), this);
         timer.start();
     }

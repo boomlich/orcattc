@@ -1,7 +1,7 @@
 package towerDefence.model;
 
-import towerDefence.map.EnemyWave;
-import towerDefence.map.EnemyWithTimer;
+import towerDefence.level.EnemyWave;
+import towerDefence.level.EnemyWithTimer;
 
 public class WaveSpawner {
 
@@ -18,18 +18,20 @@ public class WaveSpawner {
         delayTimer = 0;
     }
 
-    protected void update(long steps) {
-        spawnEnemies(steps);
+    protected void update(double deltaSteps) {
+        spawnEnemies(deltaSteps);
     }
 
-    private void spawnEnemies(long steps) {
+    private void spawnEnemies(double deltaSteps) {
+
+        delayTimer -= deltaSteps;
         EnemyWithTimer currentEnemy;
 
-        if (!currentWave.isEmpty()) {
-            if (steps >= delayTimer) {
+        if (currentWave.notEmpty()) {
+            if (delayTimer <= 0) {
                 currentEnemy = currentWave.getAndRemoveFirstEnemy();
                 gameEntities.addEnemy(currentEnemy.enemy);
-                delayTimer = steps + currentEnemy.timer;
+                delayTimer = currentEnemy.timer;
             }
         }
     }

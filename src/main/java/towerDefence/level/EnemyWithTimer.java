@@ -1,4 +1,4 @@
-package towerDefence.map;
+package towerDefence.level;
 
 import towerDefence.enemies.IEnemy;
 

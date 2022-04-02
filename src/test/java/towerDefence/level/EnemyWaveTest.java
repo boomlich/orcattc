@@ -1,4 +1,4 @@
-package towerDefence.map;
+package towerDefence.level;
 
 import org.junit.jupiter.api.Test;
 import towerDefence.enemies.IEnemy;
@@ -28,9 +28,6 @@ public class EnemyWaveTest {
             assertEquals(expectedDelayTimer.get(i), wave.getEnemies().get(i).timer);
             assertEquals(expectedEnemies.get(i).getClass(), wave.getEnemies().get(i).enemy.getClass());
         }
-
-
-
     }
 
     @Test

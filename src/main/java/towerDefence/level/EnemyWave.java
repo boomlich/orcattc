@@ -1,4 +1,4 @@
-package towerDefence.map;
+package towerDefence.level;
 
 import towerDefence.enemies.IEnemy;
 import towerDefence.enemies.enemyTypes.*;
@@ -33,7 +33,7 @@ public class EnemyWave {
      *
      * @param wave formatted string with wave information
      */
-    protected void parseWave(String wave) {
+    private void parseWave(String wave) {
         int selectedTimeDelay = 10;
 
         for (String section: wave.split(", ")) {
@@ -56,6 +56,11 @@ public class EnemyWave {
         }
     }
 
+    /**
+     *
+     * @param enemyCode letter corrosponding to the type of enemy
+     * @return enemy
+     */
     protected IEnemy parseEnemy(char enemyCode){
         IEnemy selectedEnemy = null;
 
@@ -70,8 +75,8 @@ public class EnemyWave {
     }
 
 
-    public boolean isEmpty() {
-        return enemies.size() == 0;
+    public boolean notEmpty() {
+        return enemies.size() != 0;
     }
 
     public List<EnemyWithTimer> getEnemies(){
@@ -81,7 +86,6 @@ public class EnemyWave {
     public EnemyWithTimer getAndRemoveFirstEnemy() {
         EnemyWithTimer selectedEnemy = enemies.get(0);
         enemies.remove(0);
-
         return selectedEnemy;
     }
 }
