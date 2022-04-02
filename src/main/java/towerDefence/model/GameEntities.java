@@ -24,7 +24,7 @@ public class GameEntities {
         return null;
     }
 
-    protected void update(long steps) {
+    protected void update(double deltaSteps) {
 
     }
 
@@ -73,6 +73,7 @@ public class GameEntities {
 
     public void addEnemy(IEnemy enemy) {
         enemies.add(enemy);
+        System.out.println("Enemy added:     " + enemy);
     }
 }
 

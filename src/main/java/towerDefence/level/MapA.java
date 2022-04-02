@@ -1,20 +1,17 @@
-package towerDefence.map;
+package towerDefence.level;
 
 import javax.swing.*;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MapA implements IGameMap{
 
-    private String[] enemyWaves = {
+    private final String[] enemyWaves = {
             "D_15, a_2, db_1, P_60, abc_1",
     };
     private Point2D[] pathCornerPoints;
 
     public MapA() {
-
     }
 
     @Override

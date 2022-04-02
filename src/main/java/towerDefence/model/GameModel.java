@@ -1,8 +1,8 @@
 package towerDefence.model;
 
 import towerDefence.controller.GameControllable;
-import towerDefence.map.IGameMap;
-import towerDefence.map.MapA;
+import towerDefence.level.IGameMap;
+import towerDefence.level.MapA;
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
 
@@ -52,10 +52,10 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void update() {
-        steps ++;
+        double deltaSteps = 1;
 
-        gameEntities.update(steps);
-        waveSpawner.update(steps);
+        gameEntities.update(deltaSteps);
+        waveSpawner.update(deltaSteps);
     }
 
     @Override
