@@ -27,25 +27,33 @@ public class TrackPath {
     }
 
     private Point2D getSplinePoint(double x, List<Point2D> splineControls) {
-        int p0, p1, p2, p3;
-        p1 = (int) x + 1;
-        p2 = p1 + 1;
-        p3 = p2 + 1;
-        p0 = p1 - 1;
+        int point0, point1, point2, point3;
+        point1 = (int) x + 1;
+        point2 = point1 + 1;
+        point3 = point2 + 1;
+        point0 = point1 - 1;
 
         x = x - (int) x;
         double x2 = x * x;
         double x3 = x2 * x;
 
-        double q0 = -x3 + 2.0*x2 - x;
-        double q1 = 3.0*x3 - 5.0*x2 + 2.0;
-        double q2 = -3.0*x3 + 4.0*x2 + x;
-        double q3 = x3 - x2;
+        // Equations
+        double equation1 = -x3 + 2.0*x2 - x;
+        double equation2 = 3.0*x3 - 5.0*x2 + 2.0;
+        double equation3 = -3.0*x3 + 4.0*x2 + x;
+        double equation4 = x3 - x2;
 
-        double xValue = 0.5 * (splineControls.get(p0).getX() * q0 + splineControls.get(p1).getX() * q1 +
-                splineControls.get(p2).getX() * q2 + splineControls.get(p3).getX() * q3);
-        double yValue = 0.5 * (splineControls.get(p0).getY() * q0 + splineControls.get(p1).getY() * q1 +
-                splineControls.get(p2).getY() * q2 + splineControls.get(p3).getY() * q3);
+        double xValue = 0.5 *
+                (splineControls.get(point0).getX() * equation1
+                + splineControls.get(point1).getX() * equation2
+                + splineControls.get(point2).getX() * equation3
+                + splineControls.get(point3).getX() * equation4);
+
+        double yValue = 0.5 *
+                (splineControls.get(point0).getY() * equation1
+                + splineControls.get(point1).getY() * equation2
+                + splineControls.get(point2).getY() * equation3
+                + splineControls.get(point3).getY() * equation4);
 
         return new Point2D.Double(xValue, yValue);
     }

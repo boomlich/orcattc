@@ -6,7 +6,10 @@ import towerDefence.model.GameModel;
 import towerDefence.view.GameRender;
 import towerDefence.view.GameRenderable;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
