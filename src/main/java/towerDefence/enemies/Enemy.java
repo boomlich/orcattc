@@ -2,7 +2,7 @@ package towerDefence.enemies;
 
 import towerDefence.components.Damage;
 import towerDefence.components.LinearMovement;
-import towerDefence.view.sprites.Sprite;
+import towerDefence.view.sprite.Sprite;
 
 import java.awt.geom.Point2D;
 
