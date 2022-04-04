@@ -1,4 +1,4 @@
-package towerDefence.components;
+package towerDefence.components.movement;
 
 import towerDefence.Math.MathHelperMethods;
 
@@ -8,12 +8,10 @@ public class LinearMovement {
 
     private Point2D velocity;
     private Point2D position;
-    long lastStep;
 
     public LinearMovement(double speed, Point2D spawnPoint, Point2D targetPoint) {
         calculateVelocity(spawnPoint, targetPoint, speed);
         position = spawnPoint;
-        lastStep = 0;
     }
 
     private void calculateVelocity(Point2D spawnPoint, Point2D targetPoint, double speed) {

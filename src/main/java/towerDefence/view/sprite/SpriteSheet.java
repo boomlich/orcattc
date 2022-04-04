@@ -30,16 +30,25 @@ public class SpriteSheet {
         return ImageIO.read(ClassLoader.getSystemResource( path ));
     }
 
+    /**
+     * Retrieve the sprite at a position in the sprite-sheet.
+     * @param spriteIndex Frame-number of the selected sprite in the sprite-sheet
+     * @return
+     */
     public BufferedImage grabSprite(int spriteIndex) {
         Point spritePosition = convertIndexToRowCol(spriteIndex);
         int spriteWidth = image.getWidth() / columns;
         int spriteHeight = image.getHeight() / rows;
 
-//        System.out.println("GRABBED ::::::" + spriteIndex + "       :::       " + spritePosition + "       :::       " + spritePosition.x * spriteHeight + " ... " + spritePosition.y * spriteWidth);
-
-        return image.getSubimage(spritePosition.x * spriteHeight, spritePosition.y * spriteWidth, spriteWidth, spriteHeight);
+        return image.getSubimage(spritePosition.y * spriteWidth,  spritePosition.x * spriteHeight, spriteWidth, spriteHeight);
     }
 
+    /**
+     * Convert the index of a sprite to its corresponding row and column in the sprite-sheet
+     *
+     * @param index of the spire in the sprite-sheet
+     * @return Point with row and column coordinates
+     */
     protected Point convertIndexToRowCol(int index) {
         int row = index / columns;
         int col = index % columns;

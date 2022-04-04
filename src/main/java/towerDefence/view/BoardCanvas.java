@@ -1,6 +1,6 @@
 package towerDefence.view;
 
-import towerDefence.components.LinearMovement;
+import towerDefence.components.movement.LinearMovement;
 import towerDefence.enemies.IEnemy;
 import towerDefence.enemies.enemyTypes.RowBoat;
 import towerDefence.level.path.TrackPath;
@@ -26,7 +26,7 @@ public class BoardCanvas implements ICanvas{
     Point2D pointA = new Point2D.Double(200, 200);
     Point2D pointB = new Point2D.Double(150, 100);
 
-    IEnemy testEnemy = new RowBoat(new LinearMovement(1, pointA, pointB));
+//    IEnemy testEnemy = new RowBoat(new LinearMovement(1, pointA, pointB));
 
 
 
@@ -53,14 +53,12 @@ public class BoardCanvas implements ICanvas{
 
     TrackPath path = new TrackPath(splineControls);
 
-    SpriteEngine spriteAnim = new SpriteEngine("TestSpriteSheet.png", 4, 5, 0);
+    SpriteEngine spriteAnim = new SpriteEngine("TestSpriteSheet.png", 4, 5, 15, 0);
 
     public BoardCanvas(GameRenderable gameModel) {
         this.gameModel = gameModel;
 
         spriteAnim.start(0, 18, true);
-
-
 
         try {
             img = ImageIO.read(ClassLoader.getSystemResource( "rowboat.png" ));
@@ -75,20 +73,19 @@ public class BoardCanvas implements ICanvas{
 
         
 
-        g2D.fill(new Rectangle2D.Double(testEnemy.getPosition().getX(), testEnemy.getPosition().getY(), 50, 50));
-
-        testEnemy.update(1);
+//        g2D.fill(new Rectangle2D.Double(testEnemy.getPosition().getX(), testEnemy.getPosition().getY(), 50, 50));
+//
+//        testEnemy.update(1);
 
 //        AffineTransform reset = g2D.getTransform();
 //        g2D.rotate(Math.toRadians(-90),132, 132);
 //        g2D.drawImage(img, 100, 100, 64, 64, null);
 //        g2D.setTransform(reset);
 
-        g2D.drawImage(spriteAnim.getSprite().image, 100, 100, 64, 64, null);
+        drawSprite(g2D, spriteAnim.getSprite(), Math.PI/2, new Point(100, 100));
+
+//        g2D.drawImage(spriteAnim.getSprite().image, 100, 100, 64, 64, null);
         spriteAnim.update(1);
-
-
-
 
         for (Point2D point: path.getSplinePoints()) {
             g2D.draw(new Rectangle2D.Double(point.getX(), point.getY(), 1, 1));
@@ -98,10 +95,10 @@ public class BoardCanvas implements ICanvas{
         }
     }
 
-    private void drawRotatedSprite(Graphics2D g2D, Sprite sprite, double rotation, Point2D coordinate) {
+    private void drawSprite(Graphics2D g2D, Sprite sprite, double rotation, Point coordinate) {
         AffineTransform reset = g2D.getTransform();
-        g2D.rotate(rotation, coordinate.getX(), coordinate.getY());
-//        g2D.drawImage(sprite.get)
-
+        g2D.rotate(rotation, coordinate.getX() + sprite.width / 2.0, coordinate.getY() + sprite.height / 2.0);
+        g2D.drawImage(sprite.image, coordinate.x, coordinate.y, sprite.width, sprite.height, null);
+        g2D.setTransform(reset);
     }
 }

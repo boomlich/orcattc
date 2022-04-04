@@ -1,8 +1,8 @@
 package towerDefence.enemies;
 
 import towerDefence.components.Damage;
-import towerDefence.components.LinearMovement;
-import towerDefence.view.sprite.Sprite;
+import towerDefence.components.movement.SplineMovement;
+import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.geom.Point2D;
 
@@ -10,13 +10,13 @@ public class Enemy implements IEnemy{
 
     int health;
     Damage damageOverTime;
-    LinearMovement linearMovement;
-    Sprite sprite;
+    SplineMovement splineMovement;
+    SpriteEngine spriteEngine;
 
-    public Enemy(int health, LinearMovement linearMovement, Sprite sprite) {
+    public Enemy(int health, SplineMovement splineMovement, SpriteEngine spriteEngine) {
         this.health = health;
-        this.linearMovement = linearMovement;
-        this.sprite = sprite;
+        this.splineMovement = splineMovement;
+        this.spriteEngine = spriteEngine;
     }
 
     // For testing
@@ -25,12 +25,13 @@ public class Enemy implements IEnemy{
 
     @Override
     public void update(double deltaSteps) {
-        linearMovement.update(deltaSteps);
+        splineMovement.update(deltaSteps);
     }
 
     @Override
     public Point2D getPosition() {
-        return linearMovement.getPosition();
+//        return splineMovement.getPosition();
+        return null;
     }
 
 

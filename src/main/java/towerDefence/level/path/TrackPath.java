@@ -1,5 +1,6 @@
 package towerDefence.level.path;
 
+import javax.sound.midi.Track;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ public class TrackPath {
 
     private final List<Point2D> splineControls;
     private final List<Point2D> splinePoints;
+    private List<PathPoint> pathPoints;
 
     public TrackPath(List<Point2D> splineControls){
         this.splineControls = splineControls;
@@ -58,11 +60,16 @@ public class TrackPath {
         return new Point2D.Double(xValue, yValue);
     }
 
-    private Point2D getSplineGradient() {
-        return null;
+    private double getPointRotation(Point2D pointA, Point2D pointB) {
+        double sinAngle = Math.abs(pointA.getY() - pointB.getY()) / Math.sqrt(
+                Math.pow(pointB.getX() - pointA.getX(), 2) + Math.pow(pointB.getY() - pointA.getY(), 2));
+
+        if (pointB.getX() < pointA.getX()) {
+            return Math.PI - Math.asin(sinAngle);
+        } else {
+            return Math.asin(sinAngle);
+        }
     }
-
-
 
     public List<Point2D> getSplineControls() {
         return splineControls;
