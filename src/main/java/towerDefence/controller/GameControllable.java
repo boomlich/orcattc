@@ -1,10 +1,11 @@
 package towerDefence.controller;
 
+import towerDefence.level.levels.Level;
 import towerDefence.tower.ITower;
 
 public interface GameControllable {
 
-    public void loadLevel();
+    public void loadLevel(Level level);
 
     public void startRound();
 

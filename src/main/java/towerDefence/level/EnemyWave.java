@@ -1,18 +1,21 @@
 package towerDefence.level;
 
+import towerDefence.components.movement.SplineMovement;
 import towerDefence.enemies.IEnemy;
 import towerDefence.enemies.enemyTypes.*;
+import towerDefence.level.path.PathPoint;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EnemyWave {
 
-    private final List<EnemyWithTimer> enemies = new ArrayList<>();
+    private List<EnemyWithSpawnTime> enemies = new ArrayList<>();
+    private List<PathPoint> path;
 
-
-    public EnemyWave(String wave) {
-        parseWave(wave);
+    public EnemyWave(String wave, List<PathPoint> path) {
+        this.path = path;
+        enemies = parseWave(wave);
     }
 
     // For testing
@@ -33,8 +36,9 @@ public class EnemyWave {
      *
      * @param wave formatted string with wave information
      */
-    private void parseWave(String wave) {
+    private List<EnemyWithSpawnTime> parseWave(String wave) {
         int selectedTimeDelay = 10;
+        List<EnemyWithSpawnTime> enemies = new ArrayList<>();
 
         for (String section: wave.split(", ")) {
 
@@ -45,15 +49,16 @@ public class EnemyWave {
             if (command.equals("D")){
                 selectedTimeDelay = multiplier;
             } else if (command.equals("P")) {
-                enemies.add(new EnemyWithTimer(new EmptyEnemy(), multiplier));
+                enemies.add(new EnemyWithSpawnTime(new EmptyEnemy(), multiplier));
             } else {
                 for (int i = 0; i < multiplier; i++) {
                     for (char enemyCode: command.toCharArray()) {
-                        enemies.add(new EnemyWithTimer(parseEnemy(enemyCode), selectedTimeDelay));
+                        enemies.add(new EnemyWithSpawnTime(parseEnemy(enemyCode), selectedTimeDelay));
                     }
                 }
             }
         }
+        return enemies;
     }
 
     /**
@@ -65,8 +70,8 @@ public class EnemyWave {
         IEnemy selectedEnemy = null;
 
         switch (enemyCode) {
-            case 'a' -> selectedEnemy = new RowBoat();
-            case 'b' -> selectedEnemy = new Ship();
+            case 'a' -> selectedEnemy = new RowBoat(path);
+            case 'b' -> selectedEnemy = new Ship(path);
             case 'c' -> selectedEnemy = new AttackShip();
             case 'd' -> selectedEnemy = new BattleShip();
             case 'e' -> selectedEnemy = new WarShip();
@@ -79,12 +84,12 @@ public class EnemyWave {
         return enemies.size() != 0;
     }
 
-    public List<EnemyWithTimer> getEnemies(){
+    public List<EnemyWithSpawnTime> getEnemies(){
         return enemies;
     }
 
-    public EnemyWithTimer getAndRemoveFirstEnemy() {
-        EnemyWithTimer selectedEnemy = enemies.get(0);
+    public EnemyWithSpawnTime getAndRemoveFirstEnemy() {
+        EnemyWithSpawnTime selectedEnemy = enemies.get(0);
         enemies.remove(0);
         return selectedEnemy;
     }

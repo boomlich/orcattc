@@ -1,7 +1,7 @@
 package towerDefence.model;
 
 import towerDefence.level.EnemyWave;
-import towerDefence.level.EnemyWithTimer;
+import towerDefence.level.EnemyWithSpawnTime;
 
 public class WaveSpawner {
 
@@ -25,7 +25,7 @@ public class WaveSpawner {
     private void spawnEnemies(double deltaSteps) {
 
         delayTimer -= deltaSteps;
-        EnemyWithTimer currentEnemy;
+        EnemyWithSpawnTime currentEnemy;
 
         if (currentWave.notEmpty()) {
             if (delayTimer <= 0) {

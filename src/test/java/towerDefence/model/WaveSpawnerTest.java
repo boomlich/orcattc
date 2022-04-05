@@ -11,7 +11,7 @@ public class WaveSpawnerTest {
 
     @Test
     void spawnWaveTest() {
-        EnemyWave wave = new EnemyWave("D_15, a_2, db_1, P_60, abc_1");
+        EnemyWave wave = new EnemyWave("D_15, a_2, db_1, P_60, abc_1", null);
         GameEntities entities = new GameEntities();
         WaveSpawner spawner = new WaveSpawner(entities);
         spawner.setCurrentWave(wave);

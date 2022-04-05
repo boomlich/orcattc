@@ -64,7 +64,6 @@ public class SpriteEngine {
     }
 
     private void playAnimation(double deltaSteps) {
-
         // Only update sprite at the spriteFPS playback speed
         if (currentFrame > previousFrame) {
             sprite = new Sprite(spriteSheet.grabSprite((int) currentFrame));
@@ -80,6 +79,10 @@ public class SpriteEngine {
                 stop();
             }
         }
+    }
+
+    public void setSpriteRotation(double angle) {
+        sprite.setRotation(angle);
     }
 
     public void setDefaultSprite() {

@@ -8,6 +8,7 @@ import towerDefence.tower.ITower;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameEntities {
 
@@ -21,11 +22,29 @@ public class GameEntities {
     }
 
     private List<IEnemy> sortEnemiesByProgression() {
+
         return null;
     }
 
     protected void update(double deltaSteps) {
 
+        List<IEnemy> deadEnemies = new ArrayList<>();
+
+        for (IEnemy enemy: enemies) {
+            enemy.update(deltaSteps);
+            if (enemy.isDead()) {
+                deadEnemies.add(enemy);
+            }
+        }
+
+        removeDead(deadEnemies, enemies);
+
+    }
+
+    private <T> void removeDead(List<T> deadList, List<T> originalList) {
+        for (T object: deadList) {
+            originalList.remove(object);
+        }
     }
 
     protected void setEnemies(List<IEnemy> enemies) {
@@ -74,6 +93,10 @@ public class GameEntities {
     public void addEnemy(IEnemy enemy) {
         enemies.add(enemy);
         System.out.println("Enemy added:     " + enemy);
+    }
+
+    public void removeEnemy(IEnemy enemy) {
+        enemies.remove(enemy);
     }
 }
 

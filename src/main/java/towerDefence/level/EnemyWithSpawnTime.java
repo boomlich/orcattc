@@ -2,11 +2,11 @@ package towerDefence.level;
 
 import towerDefence.enemies.IEnemy;
 
-public class EnemyWithTimer {
+public class EnemyWithSpawnTime {
     public final int timer;
     public final IEnemy enemy;
 
-    public EnemyWithTimer(IEnemy enemy, int timer) {
+    public EnemyWithSpawnTime(IEnemy enemy, int timer) {
         this.enemy = enemy;
         this.timer = timer;
     }

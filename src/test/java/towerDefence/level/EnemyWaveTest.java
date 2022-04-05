@@ -14,7 +14,7 @@ public class EnemyWaveTest {
 
     @Test
     void parseWaveTest() {
-        EnemyWave wave = new EnemyWave("D_15, a_2, db_1, P_60, abc_1");
+        EnemyWave wave = new EnemyWave("D_15, a_2, db_1, P_60, abc_1", null);
 
         List<Integer> expectedDelayTimer = new ArrayList<>(Arrays.asList(15, 15, 15, 15, 60, 15, 15, 15));
 
