@@ -100,7 +100,7 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public List<PathPoint> getTrackPath() {
-        return levelManager.getPath();
+        return levelManager.getPath().getPathPoints();
     }
 
     @Override

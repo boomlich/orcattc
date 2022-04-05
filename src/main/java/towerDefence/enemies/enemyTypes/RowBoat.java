@@ -4,6 +4,7 @@ import towerDefence.components.movement.LinearMovement;
 import towerDefence.components.movement.SplineMovement;
 import towerDefence.enemies.Enemy;
 import towerDefence.level.path.PathPoint;
+import towerDefence.level.path.SplinePathData;
 import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.geom.Point2D;
@@ -14,9 +15,9 @@ public class RowBoat extends Enemy {
     public RowBoat() {
     }
 
-    public RowBoat(List<PathPoint> path) {
+    public RowBoat(SplinePathData path) {
         super(100,
-                new SplineMovement(path, 0.5),
+                new SplineMovement(path, 1),
                 new SpriteEngine("TestSpriteSheet.png", 4, 5, 15, 1));
     }
 }

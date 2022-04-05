@@ -2,7 +2,8 @@ package towerDefence.level;
 
 import towerDefence.level.levels.Level;
 import towerDefence.level.path.PathPoint;
-import towerDefence.level.path.TrackPath;
+import towerDefence.level.path.SplinePath;
+import towerDefence.level.path.SplinePathData;
 
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class LevelManager implements IGameLevel {
 
-    private TrackPath path;
+    private SplinePath path;
     private Level currentLevel;
 
 //    public LevelManager(Point2D[] pathSplineControl, String enemyWaves) {
@@ -22,7 +23,7 @@ public class LevelManager implements IGameLevel {
 
     public void loadLevel(Level selectedLevel) {
         currentLevel = selectedLevel;
-        path = new TrackPath(currentLevel.getPathSplineControls());
+        path = new SplinePath(currentLevel.getPathSplineControls());
     }
 
     @Override
@@ -36,8 +37,8 @@ public class LevelManager implements IGameLevel {
     }
 
     @Override
-    public List<PathPoint> getPath() {
-        return path.getSplinePoints();
+    public SplinePathData getPath() {
+        return path.getSplinePathData();
     }
 
 

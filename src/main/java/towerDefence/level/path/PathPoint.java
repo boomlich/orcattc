@@ -14,11 +14,11 @@ public class PathPoint {
     PathPoint(Point2D coordinate, Point2D direction) {
         this.coordinate = coordinate;
         this.direction = direction;
-        rotation = getPointOrientation(direction);
+        rotation = getPointRotation(direction);
         unitNormalVector = MathHelperMethods.normalVector(MathHelperMethods.unitVector(direction));
     }
 
-    private double getPointOrientation(Point2D direction) {
+    private double getPointRotation(Point2D direction) {
         double sinAngle = direction.getY() / Math.sqrt(Math.pow(direction.getX(), 2) + Math.pow(direction.getY(), 2));
 
         if (direction.getX() < 0) {

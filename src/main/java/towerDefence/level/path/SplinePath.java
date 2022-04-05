@@ -1,38 +1,43 @@
 package towerDefence.level.path;
 
-import javax.sound.midi.Track;
-import java.awt.*;
+import towerDefence.Math.MathHelperMethods;
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrackPath {
+public class SplinePath {
 
+    private final SplinePathData splinePathData;
     private final Point2D[] splineControls;
-    private final List<PathPoint> splinePoints;
 
-    public TrackPath(Point2D[] splineControls){
+    public SplinePath(Point2D[] splineControls){
         this.splineControls = splineControls;
-        splinePoints = calculateSpline(splineControls);
+        splinePathData = calculateSpline(splineControls, 20);
     }
 
-    private List<PathPoint> calculateSpline(Point2D[] splineControls) {
-
-        List<Point2D> splinePoints = new ArrayList<>();
+    protected SplinePathData calculateSpline(Point2D[] splineControls, int splineResolution) {
         List<PathPoint> pathPoints = new ArrayList<>();
+        List<Double> segmentLength = new ArrayList<>();
 
+        Point2D currentPoint = getSplinePoint(0, splineControls);
+        double length = 0;
+        double increment = 1 / (double) splineResolution;
+        for (double x = increment; x < (double) splineControls.length - 3.0 ; x += increment) {
+            Point2D nextPoint = getSplinePoint(x, splineControls);
+            Point2D direction = getPointDirection(currentPoint, nextPoint);
+            currentPoint = nextPoint;
+            pathPoints.add(new PathPoint(nextPoint, direction));
 
-        Point2D previousPoint = new Point2D.Double(0.0, 0.0);
-        for (double x = 0; x < (float) splineControls.length - 3.0 ; x += 0.05) {
-            Point2D pos = getSplinePoint(x, splineControls);
-            splinePoints.add(pos);
-
-            Point2D direction = getPointDirection(previousPoint, pos);
-            previousPoint = pos;
-            pathPoints.add(new PathPoint(pos, direction));
+            // Calculate segment length
+            length += MathHelperMethods.vectorLength(direction);
+            if (pathPoints.size() % splineResolution == 0) {
+                segmentLength.add(length);
+                length = 0;
+            }
         }
 
-        return pathPoints;
+        return new SplinePathData(pathPoints, splineResolution, segmentLength);
     }
 
     private Point2D getPointDirection (Point2D posA, Point2D posB) {
@@ -79,7 +84,7 @@ public class TrackPath {
         return splineControls;
     }
 
-    public List<PathPoint> getSplinePoints() {
-        return splinePoints;
+    public SplinePathData getSplinePathData() {
+        return splinePathData;
     }
 }

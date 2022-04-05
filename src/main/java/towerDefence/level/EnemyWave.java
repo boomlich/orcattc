@@ -4,6 +4,7 @@ import towerDefence.components.movement.SplineMovement;
 import towerDefence.enemies.IEnemy;
 import towerDefence.enemies.enemyTypes.*;
 import towerDefence.level.path.PathPoint;
+import towerDefence.level.path.SplinePathData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,10 @@ import java.util.List;
 public class EnemyWave {
 
     private List<EnemyWithSpawnTime> enemies = new ArrayList<>();
-    private List<PathPoint> path;
+    private SplinePathData path;
+    private double totalPathLength;
 
-    public EnemyWave(String wave, List<PathPoint> path) {
+    public EnemyWave(String wave, SplinePathData path) {
         this.path = path;
         enemies = parseWave(wave);
     }

@@ -2,20 +2,12 @@ package towerDefence.view;
 
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.path.PathPoint;
-import towerDefence.level.path.TrackPath;
 import towerDefence.view.sprite.Sprite;
-import towerDefence.view.sprite.SpriteEngine;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public class BoardCanvas implements ICanvas{
@@ -56,7 +48,8 @@ public class BoardCanvas implements ICanvas{
         AffineTransform reset = g2D.getTransform();
 
         g2D.rotate(sprite.getRotation(), coordinate.getX(), coordinate.getY());
-        g2D.drawImage(sprite.image, (int) (coordinate.getX() - sprite.width / 2.0), (int) (coordinate.getY() - sprite.height / 2.0), sprite.width, sprite.height, null);
+        g2D.translate(coordinate.getX() - sprite.width / 2.0, coordinate.getY() - sprite.height / 2.0);
+        g2D.drawImage(sprite.image, 0, 0, sprite.width, sprite.height, null);
         g2D.setTransform(reset);
     }
 }

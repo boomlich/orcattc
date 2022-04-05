@@ -1,6 +1,7 @@
 package towerDefence.level;
 
 import towerDefence.level.path.PathPoint;
+import towerDefence.level.path.SplinePathData;
 
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -12,7 +13,7 @@ public interface IGameLevel {
 
     public Point2D[] getSplineControls();
 
-    public List<PathPoint> getPath();
+    public SplinePathData getPath();
 
     public EnemyWave getCurrentWave(int waveNumber);
 
