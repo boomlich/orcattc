@@ -14,6 +14,8 @@ public class SplinePathData {
 
     private final Point2D[] splineControls;
 
+    private List<Point2D> equalPoints;
+
     protected SplinePathData(List<PathPoint> pathPoints, int segmentResolution,
                              List<Double> segmentLength, Point2D[] splineControls) {
         this.pathPoints = pathPoints;
@@ -21,7 +23,14 @@ public class SplinePathData {
         this.segmentLength = segmentLength;
         this.splineControls = splineControls;
         totalLength = calculateTotalLength(segmentLength);
+    }
 
+    public void setEqualPoints(List<Point2D> equalPoints) {
+        this.equalPoints = equalPoints;
+    }
+
+    public List<Point2D> getEqualPoints() {
+        return equalPoints;
     }
 
     private double calculateTotalLength (List<Double> segmentLength) {

@@ -15,10 +15,23 @@ public class MathHelperMethods {
         return Math.sqrt(Math.pow(vector.getX(), 2) + Math.pow(vector.getY(), 2));
     }
 
+    public static double vectorLength(Point2D pointA, Point2D pointB) {
+        return vectorLength(pointsToVector(pointA, pointB));
+    }
+
+    public static Point2D pointsToVector(Point2D pointA, Point2D pointB) {
+        double x = pointB.getX() - pointA.getX();
+        double y = pointB.getY() - pointA.getY();
+
+        return new Point2D.Double(x, y);
+    }
+
     public static Point2D unitVector(Point2D vector) {
         double length = vectorLength(vector);
         return new Point2D.Double(vector.getX() / length, vector.getY() / length);
     }
+
+
 
 
     public static Point2D normalVector(Point2D vector) {

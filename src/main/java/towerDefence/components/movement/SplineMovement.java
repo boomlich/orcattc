@@ -55,13 +55,15 @@ public class SplineMovement implements IMovement{
         double segmentPointRemainder = segmentPoint - segmentPointIndex;
         currentIndex = (segment * path.getSegmentResolution() + segmentPointIndex);
 
-        Point2D pointCoordinate = path.getPathPoints().get(currentIndex).coordinate;
-        Point2D pointDirection = path.getPathPoints().get(currentIndex).direction;
-
-        double x = pointCoordinate.getX() + pointDirection.getX() * segmentPointRemainder;
-        double y = pointCoordinate.getY() + pointDirection.getY() * segmentPointRemainder;
-
-        return new Point2D.Double(x, y);
+        return MathHelperMethods.getSplinePoint(currentLength, path.getSplineControls());
+//
+//        Point2D pointCoordinate = path.getPathPoints().get(currentIndex).coordinate;
+//        Point2D pointDirection = path.getPathPoints().get(currentIndex).direction;
+//
+//        double x = pointCoordinate.getX() + pointDirection.getX() * segmentPointRemainder;
+//        double y = pointCoordinate.getY() + pointDirection.getY() * segmentPointRemainder;
+//
+//        return new Point2D.Double(x, y);
     }
     /**
      * @return angle of orientation in radians

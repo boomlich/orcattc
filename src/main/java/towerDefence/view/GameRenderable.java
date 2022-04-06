@@ -24,4 +24,6 @@ public interface GameRenderable {
 
     public Point2D[] getSplineControls();
 
+    public List<Point2D> getEqualPathPoints();
+
 }
