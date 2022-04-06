@@ -16,8 +16,6 @@ public class SplinePath {
         this.splineControls = splineControls;
         splinePathData = calculateSpline(splineControls, 20);
         calculateSplineLength(splinePathData, 20);
-
-        splinePathData.setEqualPoints(equalDistancePoints(splinePathData.getPathPoints(), splinePathData.getTotalLength(), 50));
     }
 
 
@@ -63,57 +61,6 @@ public class SplinePath {
         }
         System.out.println("ADDED TOTAL: " + total);
     }
-
-
-    private List<Point2D> equalDistancePoints(List<PathPoint> pathPoints, double totalLength, int numberOfPoints) {
-
-        List<Point2D> equalPoints = new ArrayList<>();
-
-        double lengthPerPoint = totalLength / numberOfPoints;
-        System.out.println(lengthPerPoint);
-
-        int pointIndex = 0;
-        Point2D current = pathPoints.get(pointIndex).coordinate;
-        Point2D next = new Point2D.Double(0,0);
-        for (int i = 0; i < numberOfPoints; i++) {
-            double previousLength = 0.0;
-            double length = 0.0;
-
-            while (length < lengthPerPoint) {
-                next = pathPoints.get(pointIndex + 1).coordinate;
-                previousLength = length;
-                length += MathHelperMethods.vectorLength(current, next);
-
-
-                System.out.println(pointIndex + "  ::  " + equalPoints.size() + "  ::  "+ length + " :: " + lengthPerPoint);
-
-                current = next;
-                pointIndex ++;
-            }
-            current = pathPoints.get(pointIndex-2).coordinate;
-
-            double remainder = lengthPerPoint - previousLength;
-            double progressToNext = remainder / (length - previousLength);
-            Point2D direction = MathHelperMethods.pointsToVector(current, next);
-
-            double x = current.getX() + direction.getX() * progressToNext;
-            double y = current.getY() + direction.getY() * progressToNext;
-
-            current = new Point2D.Double(x, y);
-
-            equalPoints.add(current);
-            System.out.println(equalPoints.size() + "  " + current);
-        }
-
-//        System.out.println(equalPoints.size() + "  ::  " + equalPoints);
-
-        return equalPoints;
-    }
-
-
-
-
-
 
     protected SplinePathData calculateSpline(Point2D[] splineControls, int splineResolution) {
         List<PathPoint> pathPoints = new ArrayList<>();

@@ -16,7 +16,7 @@ public class BoardCanvas implements ICanvas{
     GameRenderable gameModel;
 
     SpriteEngine testSprite = new SpriteEngine("TestSpriteSheet.png", 4, 5, 10, 0);
-//
+
 //
 //    Path2D test = new Path2D.Double();
 //    List<Point2D> testPath = new ArrayList<>();
@@ -25,61 +25,14 @@ public class BoardCanvas implements ICanvas{
         this.gameModel = gameModel;
 
         testSprite.start(0, 18, true);
-
-//        test.moveTo(128, 96);
-//        test.quadTo(280,48, 240, 200);
-//        test.quadTo(440,240, 424, 336);
-//        PathIterator pi = test.getPathIterator(null, 0.5);
-//        while (!pi.isDone()) {
-//            double[] coords = new double[6];
-//            switch (pi.currentSegment(coords)) {
-//                case PathIterator.SEG_MOVETO:
-//                case PathIterator.SEG_LINETO:
-//                    testPath.add(new Point2D.Double(coords[0], coords[1]));
-//                    break;
-//            }
-//            pi.next();
-//        }
-
-
-//        test.getPathIterator()
-
     }
 
     @Override
     public void paint(Graphics2D g2D) {
 
-
-//        g2D.draw(test);
-
-//        g2D.draw(new Rectangle2D.Double(128, 96, 10, 10));
-//        g2D.draw(new Rectangle2D.Double(280, 48, 10, 10));
-//        g2D.draw(new Rectangle2D.Double(240, 200, 10, 10));
-//        g2D.draw(new Rectangle2D.Double(440, 240, 10, 10));
-//        g2D.draw(new Rectangle2D.Double(424, 336, 10, 10));
-//
-//        for (Point2D point: testPath) {
-//            g2D.draw(new Rectangle2D.Double(point.getX(), point.getY(), 1, 1));
-//        }
-
-
-        g2D.setColor(Color.RED);
-        for (Point2D equalPoint: gameModel.getEqualPathPoints()) {
-            g2D.fill(new Rectangle2D.Double(equalPoint.getX(), equalPoint.getY(), 5, 5));
-        }
-
-        g2D.setColor(Color.BLACK);
-
-
         // Sprite engine test
         drawSprite(g2D, testSprite.getSprite(), new Point2D.Double(400, 100));
         testSprite.update(1);
-
-
-        // Enemies
-        for (IEnemy enemy: gameModel.getEnemies()) {
-            drawSprite(g2D, enemy.getSprite(), enemy.getPosition());
-        }
 
         // TrackPath
         for (PathPoint point: gameModel.getTrackPath()) {
@@ -91,11 +44,11 @@ public class BoardCanvas implements ICanvas{
             g2D.draw(new Rectangle2D.Double(point.getX()-5, point.getY()-5, 10, 10));
         }
 
-
-
+        // Enemies
+        for (IEnemy enemy: gameModel.getEnemies()) {
+            drawSprite(g2D, enemy.getSprite(), enemy.getPosition());
+        }
     }
-
-
 
     private void drawSprite(Graphics2D g2D, Sprite sprite, Point2D coordinate) {
 //        System.out.println(coordinate);

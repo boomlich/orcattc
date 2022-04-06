@@ -14,10 +14,6 @@ public class LevelManager implements IGameLevel {
     private SplinePath path;
     private Level currentLevel;
 
-//    public LevelManager(Point2D[] pathSplineControl, String enemyWaves) {
-//        path = new TrackPath(pathSpineControls);
-//    }
-
     public LevelManager() {
     }
 
@@ -40,8 +36,6 @@ public class LevelManager implements IGameLevel {
     public SplinePathData getPath() {
         return path.getSplinePathData();
     }
-
-
 
     @Override
     public EnemyWave getCurrentWave(int waveNumber) {

@@ -107,9 +107,4 @@ public class GameModel implements GameRenderable, GameControllable {
     public Point2D[] getSplineControls() {
         return levelManager.getSplineControls();
     }
-
-    @Override
-    public List<Point2D> getEqualPathPoints() {
-        return levelManager.getPath().getEqualPoints();
-    }
 }

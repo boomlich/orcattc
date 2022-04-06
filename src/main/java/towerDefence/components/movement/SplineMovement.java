@@ -25,8 +25,6 @@ public class SplineMovement implements IMovement{
     public void update(double deltaSteps) {
         if (!movementDone()) {
             currentLength += deltaSteps * speed;
-//            System.out.println(currentLength);
-//            currentIndex += deltaSteps * speed;
         }
     }
 
@@ -52,19 +50,11 @@ public class SplineMovement implements IMovement{
         double segmentRemainder = currentLength - segment;
         double segmentPoint = path.getSegmentResolution() * segmentRemainder;
         int segmentPointIndex = (int) segmentPoint;
-        double segmentPointRemainder = segmentPoint - segmentPointIndex;
         currentIndex = (segment * path.getSegmentResolution() + segmentPointIndex);
 
         return MathHelperMethods.getSplinePoint(currentLength, path.getSplineControls());
-//
-//        Point2D pointCoordinate = path.getPathPoints().get(currentIndex).coordinate;
-//        Point2D pointDirection = path.getPathPoints().get(currentIndex).direction;
-//
-//        double x = pointCoordinate.getX() + pointDirection.getX() * segmentPointRemainder;
-//        double y = pointCoordinate.getY() + pointDirection.getY() * segmentPointRemainder;
-//
-//        return new Point2D.Double(x, y);
     }
+
     /**
      * @return angle of orientation in radians
      */
@@ -76,19 +66,3 @@ public class SplineMovement implements IMovement{
         return currentIndex > path.getPathPoints().size() - 2;
     }
 }
-
-/**
- *
- *         double segmentLength = 0.0;
- *         int i = 0;
- *         double remainder = 0.0;
- *         while (currentLength >= 0 && i < path.getSegmentLength().size()) {
- *             remainder = currentLength;
- *             segmentLength = path.getSegmentLength().get(i);
- *             currentLength -= segmentLength;
- *             i ++;
- *         }
- *         i --;
- *
- *
- */
