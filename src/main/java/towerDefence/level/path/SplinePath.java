@@ -2,6 +2,7 @@ package towerDefence.level.path;
 
 import towerDefence.Math.MathHelperMethods;
 
+import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,50 @@ public class SplinePath {
     public SplinePath(Point2D[] splineControls){
         this.splineControls = splineControls;
         splinePathData = calculateSpline(splineControls, 20);
+        calculateSplineLength(splinePathData, 20);
+    }
+
+
+    private void calculateSplineLength(SplinePathData pathData, int pathResolution) {
+        double totalLength = 0.0;
+        List<Double> segmentLengths = new ArrayList<>();
+        List<Double> allSegments = new ArrayList<>();
+        System.out.println(pathData.getPathPoints().size());
+
+        double length = 0.0;
+        int point = 0;
+        for (int i = 0; i < pathData.getPathPoints().size() - 1; i++) {
+            Point2D current = pathData.getPathPoints().get(i).coordinate;
+            Point2D next = pathData.getPathPoints().get(i + 1).coordinate;
+
+            double x = next.getX() - current.getX();
+            double y = next.getY() - current.getY();
+
+            allSegments.add(MathHelperMethods.vectorLength(new Point2D.Double(x, y)));
+
+            length += MathHelperMethods.vectorLength(new Point2D.Double(x, y));
+            point ++;
+            if (point % 20 == 0) {
+                segmentLengths.add(length);
+                length = 0;
+            }
+            totalLength += MathHelperMethods.vectorLength(new Point2D.Double(x, y));
+        }
+        if (length > 0.0) {
+            segmentLengths.add(length);
+        }
+
+
+        System.out.println("Total points: " + point);
+        System.out.println(segmentLengths);
+        System.out.println("OLD total length: " + splinePathData.getTotalLength());
+        System.out.println("TOTAL length: "  + totalLength);
+
+        double total = 0;
+        for (double num: allSegments) {
+            total += num;
+        }
+        System.out.println("ADDED TOTAL: " + total);
     }
 
     protected SplinePathData calculateSpline(Point2D[] splineControls, int splineResolution) {
@@ -36,8 +81,15 @@ public class SplinePath {
                 length = 0;
             }
         }
+        if (length > 0) {
+            segmentLength.add(length);
+        }
 
-        return new SplinePathData(pathPoints, splineResolution, segmentLength);
+        for (int i = 0; i < segmentLength.size(); i++) {
+            System.out.println(i + " : " + segmentLength.get(i));
+        }
+
+        return new SplinePathData(pathPoints, splineResolution, segmentLength, splineControls);
     }
 
     private Point2D getPointDirection (Point2D posA, Point2D posB) {

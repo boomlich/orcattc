@@ -3,6 +3,7 @@ package towerDefence.view;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.path.PathPoint;
 import towerDefence.view.sprite.Sprite;
+import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -14,14 +15,21 @@ public class BoardCanvas implements ICanvas{
 
     GameRenderable gameModel;
 
+    SpriteEngine testSprite = new SpriteEngine("TestSpriteSheet.png", 4, 5, 10, 0);
+
     public BoardCanvas(GameRenderable gameModel) {
         this.gameModel = gameModel;
+
+        testSprite.start(0, 18, true);
 
     }
 
     @Override
     public void paint(Graphics2D g2D) {
 
+        // Sprite engine test
+        drawSprite(g2D, testSprite.getSprite(), new Point2D.Double(400, 100));
+        testSprite.update(1);
 
 
         // Enemies

@@ -1,5 +1,6 @@
 package towerDefence.components.movement;
 
+import towerDefence.Math.MathHelperMethods;
 import towerDefence.level.path.PathPoint;
 import towerDefence.level.path.SplinePathData;
 
@@ -31,16 +32,7 @@ public class SplineMovement implements IMovement{
 
     @Override
     public Point2D getPosition() {
-
-        double normalisedOffset = getNormalisedOffset(currentLength);
-
-
-//        System.out.println(getNormalisedOffset(currentLength));
         return calculateNormalizedPosition(currentLength);
-    }
-
-    private void getPoint() {
-
     }
 
     private double getNormalisedOffset(double currentLength) {
@@ -54,32 +46,23 @@ public class SplineMovement implements IMovement{
     }
 
     protected Point2D calculateNormalizedPosition (double currentLength) {
-
         currentLength = getNormalisedOffset(currentLength);
 
         int segment = (int) currentLength;
         double segmentRemainder = currentLength - segment;
-
-
         double segmentPoint = path.getSegmentResolution() * segmentRemainder;
         int segmentPointIndex = (int) segmentPoint;
         double segmentPointRemainder = segmentPoint - segmentPointIndex;
-
-
         currentIndex = (segment * path.getSegmentResolution() + segmentPointIndex);
 
         Point2D pointCoordinate = path.getPathPoints().get(currentIndex).coordinate;
         Point2D pointDirection = path.getPathPoints().get(currentIndex).direction;
 
-
         double x = pointCoordinate.getX() + pointDirection.getX() * segmentPointRemainder;
         double y = pointCoordinate.getY() + pointDirection.getY() * segmentPointRemainder;
 
         return new Point2D.Double(x, y);
-
-//        return path.getPathPoints().get((int) currentIndex).coordinate;
     }
-
     /**
      * @return angle of orientation in radians
      */

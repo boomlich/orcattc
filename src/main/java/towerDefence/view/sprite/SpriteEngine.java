@@ -70,7 +70,7 @@ public class SpriteEngine {
             previousFrame = (int) currentFrame + 1;
         }
 
-        currentFrame += (deltaSteps * 5/60);
+        currentFrame += (deltaSteps * spriteFPS/60);
         if (currentFrame >= endFrame) {
             if (loopAnimation) {
                 currentFrame = startFrame;

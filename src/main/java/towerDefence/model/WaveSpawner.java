@@ -15,7 +15,7 @@ public class WaveSpawner {
 
     protected void setCurrentWave(EnemyWave enemyWave) {
         this.currentWave = enemyWave;
-        delayTimer = 0;
+        delayTimer = enemyWave.getStartSpawnTimer();
     }
 
     protected void update(double deltaSteps) {

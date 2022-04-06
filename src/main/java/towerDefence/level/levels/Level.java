@@ -23,13 +23,13 @@ public class Level {
             new Point2D.Double(350, 300),
             new Point2D.Double(440, 376),
             new Point2D.Double(352, 448),
-            new Point2D.Double(56, 376),
-            new Point2D.Double(0, 376),
+            new Point2D.Double(20, 50),
+            new Point2D.Double(0, 0),
             },
 
             // Enemy wave
             new String[] {
-            "D_30, a_1",
+            "P_60, D_30, a_20",
             }
     );
 

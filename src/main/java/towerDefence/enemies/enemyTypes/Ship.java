@@ -16,7 +16,7 @@ public class Ship extends Enemy {
 
     public Ship(SplinePathData path) {
         super(100,
-                new SplineMovement(path, 0.05),
+                new SplineMovement(path, 0.5),
                 new SpriteEngine("TestSpriteSheet.png", 4, 5, 15, 2));
     }
 }

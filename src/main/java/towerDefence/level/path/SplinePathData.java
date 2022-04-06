@@ -1,5 +1,6 @@
 package towerDefence.level.path;
 
+import java.awt.geom.Point2D;
 import java.util.List;
 
 public class SplinePathData {
@@ -11,11 +12,16 @@ public class SplinePathData {
     private final List<Double> segmentLength;
     private final double totalLength;
 
-    protected SplinePathData(List<PathPoint> pathPoints, int segmentResolution, List<Double> segmentLength) {
+    private final Point2D[] splineControls;
+
+    protected SplinePathData(List<PathPoint> pathPoints, int segmentResolution,
+                             List<Double> segmentLength, Point2D[] splineControls) {
         this.pathPoints = pathPoints;
         this.segmentResolution = segmentResolution;
         this.segmentLength = segmentLength;
+        this.splineControls = splineControls;
         totalLength = calculateTotalLength(segmentLength);
+
     }
 
     private double calculateTotalLength (List<Double> segmentLength) {
@@ -40,5 +46,9 @@ public class SplinePathData {
 
     public double getTotalLength() {
         return totalLength;
+    }
+
+    public Point2D[] getSplineControls() {
+        return splineControls;
     }
 }
