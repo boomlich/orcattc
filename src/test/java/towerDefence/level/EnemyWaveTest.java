@@ -22,7 +22,7 @@ public class EnemyWaveTest {
         IEnemy typeB = new Ship();
         IEnemy typeC = new AttackShip();
         IEnemy typeD = new BattleShip();
-        List<IEnemy> expectedEnemies = new ArrayList<>(Arrays.asList(typeA, typeA, typeD, typeB, new EmptyEnemy(), typeA, typeB, typeC));
+        List<IEnemy> expectedEnemies = new ArrayList<>(Arrays.asList(typeA, typeA, typeD, typeB, typeA, typeB, typeC));
 
         for (int i = 0; i < expectedDelayTimer.size(); i++) {
             assertEquals(expectedDelayTimer.get(i), wave.getEnemies().get(i).timer);

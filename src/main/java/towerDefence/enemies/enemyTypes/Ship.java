@@ -1,5 +1,6 @@
 package towerDefence.enemies.enemyTypes;
 
+import towerDefence.components.Collision;
 import towerDefence.components.movement.SplineMovement;
 import towerDefence.enemies.Enemy;
 import towerDefence.level.path.PathPoint;
@@ -17,6 +18,7 @@ public class Ship extends Enemy {
     public Ship(SplinePathData path) {
         super(100,
                 new SplineMovement(path, 0.5),
-                new SpriteEngine("TestSpriteSheet.png", 4, 5, 15, 2));
+                new SpriteEngine("TestSpriteSheet.png", 4, 5, 15, 2),
+                new Collision(10));
     }
 }

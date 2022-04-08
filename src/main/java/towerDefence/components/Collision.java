@@ -1,60 +1,78 @@
 package towerDefence.components;
 
-import towerDefence.enemies.IEnemy;
+import towerDefence.Math.MathHelperMethods;
 
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Collision extends Ellipse2D {
+public class Collision implements CollidableObject{
     private final double radius;
 
-    public Collision(double radius) {
+    /** Center of collision circle */
+    private Point2D position = new Point2D.Double(0,0);
+
+    private final boolean isSingleTarget;
+
+    public Collision(double radius, boolean isSingleTarget) {
         this.radius = radius;
+        this.isSingleTarget = isSingleTarget;
     }
 
-    public IEnemy checkCollision () {
-        return null;
+    public Collision(double radius) {
+        this(radius, false);
     }
+
+    /**
+     * Sweap and prune algorithm for collision detection.
+     *
+     * @param targets potential objects
+     * @return List of all objects collided with
+     */
+    public List<CollidableObject> updateCollision(List<CollidableObject> targets) {
+        List<CollidableObject> detectedTargets = new ArrayList<>();
+
+        for (CollidableObject target: targets) {
+            // Filter out enemies outside of bounds
+            if (inBounds(target)) {
+                if (collisionDetected(target)) {
+                    detectedTargets.add(target);
+                    if (isSingleTarget) {
+                        return detectedTargets;
+                    }
+                }
+            }
+        }
+        return detectedTargets;
+    }
+
+    private boolean inBounds(CollidableObject target) {
+        double targetMinX = target.getPosition().getX() - target.getCollision().getRadius();
+        double targetMaxX = target.getPosition().getX() + target.getCollision().getRadius();
+        return targetMinX > position.getX() - radius || targetMaxX < position.getX() + radius;
+    }
+
+    private boolean collisionDetected(CollidableObject target) {
+        double distance = MathHelperMethods.vectorLength(target.getPosition(), this.position);
+        return distance < target.getCollision().getRadius() + this.radius;
+    }
+
 
     public double getRadius() {
         return radius;
     }
 
-
-
-    @Override
-    public double getX() {
-        return 0;
+    public void setPosition(Point2D position) {
+        this.position = position;
     }
 
     @Override
-    public double getY() {
-        return 0;
+    public Point2D getPosition() {
+        return position;
     }
 
     @Override
-    public double getWidth() {
-        return 0;
-    }
-
-    @Override
-    public double getHeight() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public void setFrame(double x, double y, double w, double h) {
-
-    }
-
-    @Override
-    public Rectangle2D getBounds2D() {
-        return null;
+    public Collision getCollision() {
+        return this;
     }
 }

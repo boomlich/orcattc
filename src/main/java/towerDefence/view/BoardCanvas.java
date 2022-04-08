@@ -8,6 +8,7 @@ import towerDefence.view.sprite.SpriteEngine;
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 
 
@@ -47,7 +48,13 @@ public class BoardCanvas implements ICanvas{
         // Enemies
         for (IEnemy enemy: gameModel.getEnemies()) {
             drawSprite(g2D, enemy.getSprite(), enemy.getPosition());
+
+            double radius = enemy.getCollision().getRadius();
+            Ellipse2D collision = new Ellipse2D.Double(enemy.getPosition().getX(), enemy.getPosition().getY(), radius, radius);
+            g2D.draw(collision);
+
         }
+
     }
 
     private void drawSprite(Graphics2D g2D, Sprite sprite, Point2D coordinate) {

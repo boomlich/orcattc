@@ -1,5 +1,7 @@
 package towerDefence.tower;
 
+import java.awt.geom.Point2D;
+
 public interface ITower {
 
     /**
@@ -7,7 +9,7 @@ public interface ITower {
      */
     public void updateRank();
 
-    /**
-     * A
-     */
+    public void update(double deltaSteps);
+
+    public void updatePosition(Point2D newPosition);
 }

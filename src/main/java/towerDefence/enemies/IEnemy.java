@@ -1,5 +1,6 @@
 package towerDefence.enemies;
 
+import towerDefence.components.Collision;
 import towerDefence.components.damage.Damage;
 import towerDefence.model.GameEntities;
 import towerDefence.view.sprite.Sprite;
@@ -17,4 +18,6 @@ public interface IEnemy {
     public Sprite getSprite();
 
     public boolean isDead();
+
+    public Collision getCollision();
 }

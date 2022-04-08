@@ -1,5 +1,6 @@
 package towerDefence.enemies.enemyTypes;
 
+import towerDefence.components.Collision;
 import towerDefence.components.movement.LinearMovement;
 import towerDefence.components.movement.SplineMovement;
 import towerDefence.enemies.Enemy;
@@ -18,6 +19,7 @@ public class RowBoat extends Enemy {
     public RowBoat(SplinePathData path) {
         super(100,
                 new SplineMovement(path, 1),
-                new SpriteEngine("TestSpriteSheet.png", 4, 5, 15, 1));
+                new SpriteEngine("TestSpriteSheet.png", 4, 5, 15, 1),
+                new Collision(10));
     }
 }

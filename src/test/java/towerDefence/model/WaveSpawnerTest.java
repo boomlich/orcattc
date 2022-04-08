@@ -16,7 +16,7 @@ public class WaveSpawnerTest {
         WaveSpawner spawner = new WaveSpawner(entities);
         spawner.setCurrentWave(wave);
 
-        IEnemy enemyType = new EmptyEnemy();
+        IEnemy enemyType = null;
 
         int step = 0;
         while (wave.notEmpty()) {
@@ -32,7 +32,7 @@ public class WaveSpawnerTest {
             } else if (step < 60) {
                 enemyType = new Ship();
             } else if (step < 120) {
-                enemyType = new EmptyEnemy();
+                enemyType = null;
             } else if (step < 135) {
                 enemyType = new RowBoat();
             } else if (step < 150) {
