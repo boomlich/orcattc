@@ -1,5 +1,7 @@
 package towerDefence.view.sprite;
 
+import towerDefence.components.Animation;
+
 public class SpriteEngine {
 
     private Sprite sprite;
@@ -23,7 +25,11 @@ public class SpriteEngine {
     double currentFrame;
 
     /** Determine if an animation should play */
-    private boolean activeAnimation = false;
+//    private boolean hasActiveAnimation = false;
+
+
+    private Animation currentAnimation;
+
 
     /** Determines if the currently active animation is looping */
     private boolean loopAnimation = false;
@@ -38,27 +44,43 @@ public class SpriteEngine {
     /**
      * Start an animation within a range.
      *
-     * @param startFrame First frame on the sprite-sheet of the animation
-     * @param endFrame End frame of the sprite-sheet of the animation
-     * @param loopAnimation set true to enable looping of the animation
+//     * @param startFrame First frame on the sprite-sheet of the animation
+//     * @param endFrame End frame of the sprite-sheet of the animation
+//     * @param loopAnimation set true to enable looping of the animation
      */
-    public void start(int startFrame, int endFrame, boolean loopAnimation) {
-        activeAnimation = true;
-        this.startFrame = startFrame;
-        currentFrame = startFrame;
-        previousFrame = startFrame - 1;
-        this.endFrame = endFrame + 2;
-        this.loopAnimation = loopAnimation;
+//    public void start(int startFrame, int endFrame, boolean loopAnimation) {
+//        hasActiveAnimation = true;
+//        this.startFrame = startFrame;
+//        currentFrame = startFrame;
+//        previousFrame = startFrame - 1;
+//        this.endFrame = endFrame + 2;
+//        this.loopAnimation = loopAnimation;
+//
+//        playAnimation(1);
+//    }
 
-        playAnimation(1);
+    public void start(Animation animation) {
+        if (animation != currentAnimation) {
+            System.out.println("Anim start: " + animation.endFrame);
+            this.currentAnimation = animation;
+            this.startFrame = animation.startFrame;
+            currentFrame = startFrame;
+            previousFrame = startFrame - 1;
+            this.endFrame = animation.endFrame;
+            this.loopAnimation = animation.loop;
+            System.out.println(startFrame + "  ::  " + endFrame + "  ::  " + loopAnimation);
+        }
+
     }
 
+
     public void stop() {
-        activeAnimation = false;
+        currentAnimation = null;
     }
 
     public void update(double deltaSteps) {
-        if (activeAnimation) {
+        if (currentAnimation != null) {
+//            System.out.println("Current anim:" + currentAnimation);
             playAnimation(deltaSteps);
         }
     }
@@ -69,8 +91,8 @@ public class SpriteEngine {
             sprite = new Sprite(spriteSheet.grabSprite((int) currentFrame));
             previousFrame = (int) currentFrame + 1;
         }
-
         currentFrame += (deltaSteps * spriteFPS/60);
+
         if (currentFrame >= endFrame) {
             if (loopAnimation) {
                 currentFrame = startFrame;

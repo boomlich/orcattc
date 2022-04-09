@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Collision implements CollidableObject{
+public class Collision implements CollisionObject {
     private final double radius;
 
     /** Center of collision circle */
@@ -24,15 +24,17 @@ public class Collision implements CollidableObject{
     }
 
     /**
-     * Sweap and prune algorithm for collision detection.
+     * Sweap and prune algorithm for collision detection. Filter out potential
+     * objects that is outside of the x-values, before checking collision. If
+     * only singletarget selected, the first detected collision target is returned.
      *
      * @param targets potential objects
      * @return List of all objects collided with
      */
-    public List<CollidableObject> updateCollision(List<CollidableObject> targets) {
-        List<CollidableObject> detectedTargets = new ArrayList<>();
+    public List<CollisionObject> updateCollision(List<CollisionObject> targets) {
+        List<CollisionObject> detectedTargets = new ArrayList<>();
 
-        for (CollidableObject target: targets) {
+        for (CollisionObject target: targets) {
             // Filter out enemies outside of bounds
             if (inBounds(target)) {
                 if (collisionDetected(target)) {
@@ -46,13 +48,13 @@ public class Collision implements CollidableObject{
         return detectedTargets;
     }
 
-    private boolean inBounds(CollidableObject target) {
+    private boolean inBounds(CollisionObject target) {
         double targetMinX = target.getPosition().getX() - target.getCollision().getRadius();
         double targetMaxX = target.getPosition().getX() + target.getCollision().getRadius();
         return targetMinX > position.getX() - radius || targetMaxX < position.getX() + radius;
     }
 
-    private boolean collisionDetected(CollidableObject target) {
+    private boolean collisionDetected(CollisionObject target) {
         double distance = MathHelperMethods.vectorLength(target.getPosition(), this.position);
         return distance < target.getCollision().getRadius() + this.radius;
     }

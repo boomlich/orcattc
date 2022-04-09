@@ -2,19 +2,21 @@ package towerDefence.view;
 
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.path.PathPoint;
+import towerDefence.tower.ITower;
 import towerDefence.view.sprite.Sprite;
 import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.ArrayList;
-import java.util.EventListener;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class BoardCanvas implements ICanvas{
 
-    GameRenderable gameModel;
+    private GameRenderable gameModel;
+    private int width;
+    private int height;
 
     SpriteEngine testSprite = new SpriteEngine("TestSpriteSheet.png", 4, 5, 10, 0);
 
@@ -22,10 +24,12 @@ public class BoardCanvas implements ICanvas{
 //    Path2D test = new Path2D.Double();
 //    List<Point2D> testPath = new ArrayList<>();
 
-    public BoardCanvas(GameRenderable gameModel) {
+    public BoardCanvas(GameRenderable gameModel, int width, int height) {
         this.gameModel = gameModel;
+        this.width = width;
+        this.height = height;
 
-        testSprite.start(0, 18, true);
+//        testSprite.start(new Animation(0, 18, true));
     }
 
     @Override
@@ -45,20 +49,30 @@ public class BoardCanvas implements ICanvas{
             g2D.draw(new Rectangle2D.Double(point.getX()-5, point.getY()-5, 10, 10));
         }
 
-        // Enemies
-        for (IEnemy enemy: gameModel.getEnemies()) {
-            drawSprite(g2D, enemy.getSprite(), enemy.getPosition());
 
-            double radius = enemy.getCollision().getRadius();
-            Ellipse2D collision = new Ellipse2D.Double(enemy.getPosition().getX(), enemy.getPosition().getY(), radius, radius);
-            g2D.draw(collision);
+        // Draw in order of z-depth
+        for (int i = 0; i < height; i++) {
 
+            // Enemies
+            HashMap<Integer, List<IEnemy>> enemies = gameModel.getEnemies();
+            if (enemies.containsKey(i)) {
+                for (IEnemy enemy: enemies.get(i)) {
+                    drawSprite(g2D, enemy.getSprite(), enemy.getPosition());
+                }
+            }
+
+            // Towers
+            HashMap<Integer, List<ITower>> towers = gameModel.getTowers();
+            if (towers.containsKey(i)) {
+                for (ITower tower: towers.get(i)) {
+                    drawSprite(g2D, tower.getBaseSprite(), tower.getBasePosition());
+                    drawSprite(g2D, tower.getBodySprite(), tower.getBodyPosition());
+                }
+            }
         }
-
     }
 
     private void drawSprite(Graphics2D g2D, Sprite sprite, Point2D coordinate) {
-//        System.out.println(coordinate);
 
         AffineTransform reset = g2D.getTransform();
 

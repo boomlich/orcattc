@@ -1,9 +1,7 @@
 package towerDefence.level;
 
-import towerDefence.components.movement.SplineMovement;
 import towerDefence.enemies.IEnemy;
 import towerDefence.enemies.enemyTypes.*;
-import towerDefence.level.path.PathPoint;
 import towerDefence.level.path.SplinePathData;
 
 import java.util.ArrayList;
@@ -77,8 +75,8 @@ public class EnemyWave {
         IEnemy selectedEnemy = null;
 
         switch (enemyCode) {
-            case 'a' -> selectedEnemy = new RowBoat(path);
-            case 'b' -> selectedEnemy = new Ship(path);
+            case 'a' -> selectedEnemy = new OrcPeon(path);
+            case 'b' -> selectedEnemy = new OrcBrute(path);
             case 'c' -> selectedEnemy = new AttackShip();
             case 'd' -> selectedEnemy = new BattleShip();
             case 'e' -> selectedEnemy = new WarShip();

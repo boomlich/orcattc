@@ -3,11 +3,12 @@ package towerDefence.enemies;
 import towerDefence.components.Collision;
 import towerDefence.components.damage.Damage;
 import towerDefence.model.GameEntities;
+import towerDefence.view.IRenderableObject;
 import towerDefence.view.sprite.Sprite;
 
 import java.awt.geom.Point2D;
 
-public interface IEnemy {
+public interface IEnemy extends IRenderableObject {
 
     public void update(double deltaSteps);
 

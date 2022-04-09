@@ -9,7 +9,7 @@ public class GameRender extends JComponent {
     ICanvas boardCanvas, UICanvas;
 
     public GameRender(GameRenderable gameModel){
-        boardCanvas = new BoardCanvas(gameModel);
+        boardCanvas = new BoardCanvas(gameModel, getWidth(), 500);
         UICanvas = new UICanvas(gameModel);
     }
 

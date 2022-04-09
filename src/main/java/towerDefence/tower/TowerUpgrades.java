@@ -7,23 +7,23 @@ import towerDefence.components.Weapon;
 
 public class TowerUpgrades {
 
-    public static Collision updateDetectionRange(Collision range) {
+    public static Collision upgradeDetectionRange(Collision range, double percentage) {
         return null;
     }
 
-    public static Weapon updateFireRate(Weapon weapon) {
+    public static Weapon upgradeFireRate(Weapon weapon, double percentage) {
         return null;
     }
 
-    public static Projectile updateProjectilePenetration() {
+    public static Projectile upgradeProjectilePenetration() {
         return null;
     }
 
-    public static Collision updateImpactRadius() {
+    public static Collision upgradeImpactRadius() {
         return null;
     }
 
-    public static Damage updateDamage() {
+    public static Damage upgradeDamage() {
         return null;
     }
 

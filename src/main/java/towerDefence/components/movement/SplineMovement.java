@@ -62,6 +62,10 @@ public class SplineMovement implements IMovement{
         return path.getPathPoints().get(currentIndex).rotation;
     }
 
+    public Point2D getUnitNormalVector() {
+        return path.getPathPoints().get(currentIndex).unitNormalVector;
+    }
+
     public boolean movementDone() {
         return currentIndex > path.getPathPoints().size() - 2;
     }

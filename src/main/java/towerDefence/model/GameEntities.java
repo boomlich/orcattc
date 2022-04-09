@@ -1,12 +1,21 @@
 package towerDefence.model;
 
+import towerDefence.components.Collision;
 import towerDefence.components.Projectile;
+import towerDefence.components.Weapon;
 import towerDefence.enemies.IEnemy;
 import towerDefence.particles.Particle;
 import towerDefence.particles.ParticleEmitter;
 import towerDefence.tower.ITower;
+import towerDefence.tower.towerTypes.Gunman;
+import towerDefence.tower.towerTypes.Rifleman;
+import towerDefence.view.IRenderableObject;
+import towerDefence.view.sprite.SpriteEngine;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,12 +27,46 @@ public class GameEntities {
     private List<Particle> particles = new ArrayList<>();
     private List<ParticleEmitter> particleEmitters = new ArrayList<>();
 
+    // Z-depth ordered renderable objects
+    private HashMap<Integer, List<IEnemy>> renderEnemies;
+    private HashMap<Integer, List<ITower>> renderTowers;
+
     public GameEntities() {
+
+        addTower(new Rifleman(new Point2D.Double(325, 250)));
+
     }
 
     private List<IEnemy> sortEnemiesByProgression() {
 
+
         return null;
+    }
+
+    /**
+     * Take in renderable objects and sort them by their z-depth value, such that
+     * when rendering the objects on screen, they are rendered in the correct order.
+     * Sort the object in a HashMap, where each key corresponds to the z-depth value
+     * of at least one of the objects. The corresponding value in the HashMap is a
+     * list of all objects with the matching z-depth.
+     *
+     *
+     * @param objects
+     * @param <T>
+     * @return
+     */
+    private <T extends IRenderableObject> HashMap<Integer, List<T>> sortByZDepth(List<T> objects){
+        HashMap<Integer, List<T>> sortedObjects = new HashMap<>();
+
+        for (T object: objects) {
+            int zDepth = object.getZDepth();
+            if (!sortedObjects.containsKey(zDepth)) {
+                sortedObjects.put(zDepth, new ArrayList<T>(List.of(object)));
+            } else {
+                sortedObjects.get(zDepth).add(object);
+            }
+        }
+        return sortedObjects;
     }
 
     protected void update(double deltaSteps) {
@@ -39,6 +82,10 @@ public class GameEntities {
 
         removeDead(deadEnemies, enemies);
 
+        // Sort enemies by z-depth
+        renderEnemies = sortByZDepth(enemies);
+//        System.out.println(renderEnemies);
+
     }
 
     private <T> void removeDead(List<T> deadList, List<T> originalList) {
@@ -51,8 +98,8 @@ public class GameEntities {
         this.enemies = enemies;
     }
 
-    public List<IEnemy> getEnemies() {
-        return enemies;
+    public HashMap<Integer, List<IEnemy>> getEnemies() {
+        return renderEnemies;
     }
 
     protected void setProjectiles(List<Projectile> projectiles) {
@@ -67,8 +114,14 @@ public class GameEntities {
         this.towers = towers;
     }
 
-    public List<ITower> getTowers() {
-        return towers;
+    public void addTower(ITower tower){
+        towers.add(tower);
+        renderTowers = sortByZDepth(towers);
+        System.out.println(renderTowers);
+    }
+
+    public HashMap<Integer, List<ITower>> getTowers() {
+        return renderTowers;
     }
 
     public List<Particle> getParticles() {

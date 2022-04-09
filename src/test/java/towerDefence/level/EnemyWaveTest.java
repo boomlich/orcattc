@@ -18,8 +18,8 @@ public class EnemyWaveTest {
 
         List<Integer> expectedDelayTimer = new ArrayList<>(Arrays.asList(15, 15, 15, 15, 60, 15, 15, 15));
 
-        IEnemy typeA = new RowBoat();
-        IEnemy typeB = new Ship();
+        IEnemy typeA = new OrcPeon();
+        IEnemy typeB = new OrcBrute();
         IEnemy typeC = new AttackShip();
         IEnemy typeD = new BattleShip();
         List<IEnemy> expectedEnemies = new ArrayList<>(Arrays.asList(typeA, typeA, typeD, typeB, typeA, typeB, typeC));
@@ -37,7 +37,7 @@ public class EnemyWaveTest {
         IEnemy testEnemy = new AttackShip();
         assertEquals(testEnemy.getClass(), wave.parseEnemy('c').getClass());
 
-        testEnemy = new RowBoat();
+        testEnemy = new OrcPeon();
         assertEquals(testEnemy.getClass(), wave.parseEnemy('a').getClass());
     }
 }

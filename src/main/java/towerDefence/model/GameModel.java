@@ -10,6 +10,7 @@ import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
 
 import java.awt.geom.Point2D;
+import java.util.HashMap;
 import java.util.List;
 
 public class GameModel implements GameRenderable, GameControllable {
@@ -74,12 +75,12 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     @Override
-    public void getTowers() {
-
+    public HashMap<Integer, List<ITower>> getTowers() {
+        return gameEntities.getTowers();
     }
 
     @Override
-    public List<IEnemy> getEnemies() {
+    public HashMap<Integer, List<IEnemy>> getEnemies() {
         return gameEntities.getEnemies();
     }
 

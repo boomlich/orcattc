@@ -14,7 +14,7 @@ public class CollisionTest {
     void updateCollisionSingleTargetTest() {
         Collision mainCollision = new Collision(5);
 
-        List<CollidableObject> testObjects = new ArrayList<>();
+        List<CollisionObject> testObjects = new ArrayList<>();
         Collision testCollision = new Collision(4);
         testCollision.setPosition(new Point2D.Double(8.9, 1.74));
         testObjects.add(testCollision);
@@ -32,7 +32,7 @@ public class CollisionTest {
     void updateCollisionMutlipleTargetsTest() {
         Collision mainCollision = new Collision(5, false);
 
-        List<CollidableObject> testObjects = new ArrayList<>();
+        List<CollisionObject> testObjects = new ArrayList<>();
         Collision testCollision1 = new Collision(4);
         Collision testCollision2 = new Collision(4);
 
