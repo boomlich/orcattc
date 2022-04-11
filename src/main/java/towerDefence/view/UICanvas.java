@@ -2,7 +2,6 @@ package towerDefence.view;
 
 import towerDefence.view.UI.*;
 
-import javax.swing.*;
 import java.awt.*;
 
 
@@ -17,24 +16,24 @@ public class UICanvas implements ICanvas {
 
         container = new UIContainer( width, height);
         container.setAlignment(UIAlignment.NORTH_WEST);
-        container.setLayout(UILayout.HORIZONTAL);
+        container.setLayoutManager(UILayout.HORIZONTAL);
         container.setPadding(new ContainerPadding(5));
         container.setBorder(new ContainerBorder(10));
 
 
         UIContainer test1 = new UIContainer(10,10);
         test1.setBackground(Color.ORANGE);
-        test1.setAlignment(UIAlignment.EAST);
+        test1.setAlignment(UIAlignment.WEST);
         container.add(test1);
 
         UIContainer test2 = new UIContainer(10,20);
         test2.setBackground(Color.MAGENTA);
-        test2.setAlignment(UIAlignment.EAST);
+        test2.setAlignment(UIAlignment.WEST);
         container.add(test2);
 
         UIContainer test3 = new UIContainer(50,25);
         test3.setBackground(Color.RED);
-        test3.setAlignment(UIAlignment.EAST);
+        test3.setAlignment(UIAlignment.NORTH_WEST);
         container.add(test3);
     }
 
