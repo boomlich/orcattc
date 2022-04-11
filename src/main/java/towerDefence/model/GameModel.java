@@ -11,7 +11,9 @@ import towerDefence.view.GameRenderable;
 
 import java.awt.geom.Point2D;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
 public class GameModel implements GameRenderable, GameControllable {
 
@@ -77,6 +79,11 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public HashMap<Integer, List<ITower>> getTowers() {
         return gameEntities.getTowers();
+    }
+
+    @Override
+    public TreeSet<Integer> getZDepthRange() {
+        return gameEntities.getzDepthRange();
     }
 
     @Override

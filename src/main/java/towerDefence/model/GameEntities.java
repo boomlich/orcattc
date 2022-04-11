@@ -1,23 +1,15 @@
 package towerDefence.model;
 
-import towerDefence.components.Collision;
 import towerDefence.components.Projectile;
-import towerDefence.components.Weapon;
 import towerDefence.enemies.IEnemy;
 import towerDefence.particles.Particle;
 import towerDefence.particles.ParticleEmitter;
 import towerDefence.tower.ITower;
-import towerDefence.tower.towerTypes.Gunman;
 import towerDefence.tower.towerTypes.Rifleman;
 import towerDefence.view.IRenderableObject;
-import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class GameEntities {
 
@@ -30,6 +22,7 @@ public class GameEntities {
     // Z-depth ordered renderable objects
     private HashMap<Integer, List<IEnemy>> renderEnemies;
     private HashMap<Integer, List<ITower>> renderTowers;
+    private TreeSet<Integer> zDepthRange = new TreeSet<>();
 
     public GameEntities() {
 
@@ -46,6 +39,7 @@ public class GameEntities {
     /**
      * Take in renderable objects and sort them by their z-depth value, such that
      * when rendering the objects on screen, they are rendered in the correct order.
+     *
      * Sort the object in a HashMap, where each key corresponds to the z-depth value
      * of at least one of the objects. The corresponding value in the HashMap is a
      * list of all objects with the matching z-depth.
@@ -62,6 +56,7 @@ public class GameEntities {
             int zDepth = object.getZDepth();
             if (!sortedObjects.containsKey(zDepth)) {
                 sortedObjects.put(zDepth, new ArrayList<T>(List.of(object)));
+                zDepthRange.add(zDepth);
             } else {
                 sortedObjects.get(zDepth).add(object);
             }
@@ -84,14 +79,16 @@ public class GameEntities {
 
         // Sort enemies by z-depth
         renderEnemies = sortByZDepth(enemies);
-//        System.out.println(renderEnemies);
-
     }
 
     private <T> void removeDead(List<T> deadList, List<T> originalList) {
         for (T object: deadList) {
             originalList.remove(object);
         }
+    }
+
+    public TreeSet<Integer> getzDepthRange() {
+        return zDepthRange;
     }
 
     protected void setEnemies(List<IEnemy> enemies) {

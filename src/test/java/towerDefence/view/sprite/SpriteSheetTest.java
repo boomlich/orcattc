@@ -3,9 +3,7 @@ package towerDefence.view.sprite;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,23 +23,14 @@ public class SpriteSheetTest {
 
     @Test
     void testTest() {
+        HashSet<Integer> mySet = new HashSet<>();
 
+        mySet.add(5);
+        mySet.add(5);
+        mySet.add(3);
 
-        HashMap<Integer, List<String>> testHash = new HashMap<Integer, List<String>>();
-
-        testHash.put(0, new ArrayList<>(Arrays.asList("My first entery", "Second")));
-        testHash.put(1, new ArrayList<>());
-        testHash.put(70000, new ArrayList<>(Arrays.asList("Skipped")));
-
-        int testVal = 70000;
-        if (testHash.containsKey(testVal)) {
-            System.out.println(testHash.get(testVal));
-        }
-
-//        for (int i = 0; i < testHash.size(); i++) {
-//            for (int j = 0; j < testHash.get(i).size(); j++) {
-//                System.out.println(testHash.get(i).get(j));
-//            }
-//        }
+        System.out.println(mySet);
     }
+
+
 }

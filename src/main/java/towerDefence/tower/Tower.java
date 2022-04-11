@@ -14,7 +14,7 @@ public class Tower implements ITower {
     private Collision searchRadius;
     private final Collision placementRadius;
     private final Weapon weapon;
-    private final SpriteEngine spriteBody;
+    private SpriteEngine spriteBody;
     private SpriteEngine spriteBase;
 
     public Tower(Point2D position, Collision searchRadius, Collision placementRadius, Weapon weapon,

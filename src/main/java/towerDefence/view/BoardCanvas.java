@@ -6,6 +6,7 @@ import towerDefence.tower.ITower;
 import towerDefence.view.sprite.Sprite;
 import towerDefence.view.sprite.SpriteEngine;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.HashMap;
@@ -26,11 +27,15 @@ public class BoardCanvas implements ICanvas{
 
     public BoardCanvas(GameRenderable gameModel, int width, int height) {
         this.gameModel = gameModel;
+
+
         this.width = width;
         this.height = height;
 
 //        testSprite.start(new Animation(0, 18, true));
     }
+
+
 
     @Override
     public void paint(Graphics2D g2D) {
@@ -50,11 +55,11 @@ public class BoardCanvas implements ICanvas{
         }
 
 
-        // Draw in order of z-depth
-        for (int i = 0; i < height; i++) {
+        // Render out in z-depth order
+        for (int i: gameModel.getZDepthRange()) {
 
             // Enemies
-            HashMap<Integer, List<IEnemy>> enemies = gameModel.getEnemies();
+            HashMap<Integer, java.util.List<IEnemy>> enemies = gameModel.getEnemies();
             if (enemies.containsKey(i)) {
                 for (IEnemy enemy: enemies.get(i)) {
                     drawSprite(g2D, enemy.getSprite(), enemy.getPosition());
@@ -81,4 +86,5 @@ public class BoardCanvas implements ICanvas{
         g2D.drawImage(sprite.image, 0, 0, sprite.width, sprite.height, null);
         g2D.setTransform(reset);
     }
+
 }

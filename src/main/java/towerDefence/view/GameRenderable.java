@@ -6,7 +6,9 @@ import towerDefence.tower.ITower;
 
 import java.awt.geom.Point2D;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
 public interface GameRenderable {
 
@@ -17,6 +19,8 @@ public interface GameRenderable {
      * @return HashMap of towers ordered by their z-depth value
      */
     public HashMap<Integer, List<ITower>> getTowers();
+
+    public TreeSet<Integer> getZDepthRange();
 
     /**
      *
