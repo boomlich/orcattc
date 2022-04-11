@@ -10,8 +10,19 @@ public class UILayoutManager {
         this.layout = layout;
     }
 
-
-    private int calcWestXAndTopYValue(int value, boolean xAxis, int border, int padding , List<UIComponent> components) {
+    /**
+     * Calculate the x value of the components' in the first row (West) if xAxis set to true.
+     * Calculate the y value of the components' int the first column (North) if xAxis set to false.
+     *
+     *
+     * @param value x or y value
+     * @param xAxis the target axis for calculation
+     * @param border container border
+     * @param padding horizontal or vertical padding between components
+     * @param components all components with equal alignment
+     * @return position of new component
+     */
+    private int calcAxisFirstRowOrColumn(int value, boolean xAxis, int border, int padding , List<UIComponent> components) {
         for (UIComponent equalComponent: components) {
             if (xAxis) {
                 value += equalComponent.getWidth() + padding;
@@ -22,8 +33,20 @@ public class UILayoutManager {
         return value + border;
     }
 
-
-    private int calculateCenterXValue(int value, boolean xAxis, int size, int componentSize, int padding, List<UIComponent> components) {
+    /**
+     * Calculate the x-value and distribute the components in the center row if
+     * xAxis set to true. Calculate the y-value and distribute the components
+     * in the center column if xAxis is set to false.
+     *
+     * @param value x or y value
+     * @param xAxis the target axis for calculation and distribution
+     * @param containerSize total size of the container in the target axis (width or height)
+     * @param componentSize size of the container in the target axis (width or height)
+     * @param padding horizontal or vertical padding between components
+     * @param components all components with equal alignment
+     * @return position of new component
+     */
+    private int distributeCenterComponents(int value, boolean xAxis, int containerSize, int componentSize, int padding, List<UIComponent> components) {
 
         // Find total length of the horizontal sequence with the new component is included
         int length = componentSize;
@@ -32,20 +55,33 @@ public class UILayoutManager {
         }
 
         // Distribute components evenly over the new length
-        int currentX = (2 * value + size - length) / 2;
+        int currentValue = (2 * value + containerSize - length) / 2;
         for (UIComponent equalComponent: components) {
-            equalComponent.setX(currentX);
             if (xAxis) {
-                currentX += equalComponent.getWidth() + padding;
+                equalComponent.setX(currentValue);
+                currentValue += equalComponent.getWidth() + padding;
             } else {
-                currentX += equalComponent.getHeight() + padding;
+                equalComponent.setY(currentValue);
+                currentValue += equalComponent.getHeight() + padding;
             }
         }
-
-        return currentX;
+        return currentValue;
     }
 
-    private int calculateEastXValue(int value, int containerSize, int componentSize, boolean xAxis, int padding, int border, List<UIComponent> components) {
+    /**
+     * Calculate the x value of the components' in the last row (EAST) if xAxis set to true.
+     * Calculate the y value of the components' int the last column (SOUTH) if xAxis set to false.
+     *
+     * @param value x or y value
+     * @param containerSize total size of the container in the target axis (width or height)
+     * @param componentSize size of the container in the target axis (width or height)
+     * @param xAxis the target axis for calculation and distribution
+     * @param padding horizontal or vertical padding between components
+     * @param border container border
+     * @param components all components with equal alignment
+     * @return position of new component
+     */
+    private int calcAxisLastRowOrColumn(int value, int containerSize, int componentSize, boolean xAxis, int padding, int border, List<UIComponent> components) {
         value += containerSize;
         for (UIComponent equalComponent: components) {
             if (xAxis) {
@@ -57,6 +93,36 @@ public class UILayoutManager {
         return value - (componentSize + border);
     }
 
+    /**
+     * Calculate position of newly added component and potentially redistribute the
+     * other components. Calculation is based of the currently active layout and
+     * the component(s) selected alignment. If two components have equal alignment
+     * they will be placed next to each other, seperated by the active padding.
+     *
+     * If HORIZONTAL layout is selected and the horizontal alignment is set to WEST
+     * or EAST, the first component will be positioned furthest to the WEST/EAST,
+     * and the subsequent equally aligned components will be stacked next to it
+     *
+     * If HORIZONTAL alignment is set to CENTER, the components will be stacked
+     * horizontally and distributed equally around the center-width of the container.
+     *
+     * If VERTICAL layout is selected and the vertical alignment is set to NORTH
+     * or SOUTH, the first component will be positioned furthers to the NORTH/SOUTH
+     * and the subsequent equally aligned components will be stacked beneath or on top.
+     *
+     * If VERTICAL layout is set to CENTER, the components will be stacked vertically and
+     * distributed equally around the center-height of the container
+     *
+     * @param x x-coordinate of the container
+     * @param y y-coordinate of the container
+     * @param width total width of the container
+     * @param height total height of the container
+     * @param border border of the container
+     * @param padding padding of the contaner
+     * @param component new component to be added
+     * @param equalAlignmentComponents all components with equal alignment
+     * @return position of new component
+     */
     protected Point assignPositionsToComponents(int x, int y, int width, int height, ContainerBorder border, ContainerPadding padding,
                                                 UIComponent component, List<UIComponent> equalAlignmentComponents) {
 
@@ -66,166 +132,93 @@ public class UILayoutManager {
             int midYValue = y + height / 2 - component.getHeight() / 2;
             int botYValue = y + height - component.getHeight() - border.south;
 
-
             if (component.getAlignment() == UIAlignment.NORTH_WEST) {
-                x = calcWestXAndTopYValue(x, true, border.west, padding.horizontal, equalAlignmentComponents);
+                x = calcAxisFirstRowOrColumn(x, true, border.west, padding.horizontal, equalAlignmentComponents);
                 y = topYValue;
             }
             else if (component.getAlignment() == UIAlignment.WEST) {
-                x = calcWestXAndTopYValue(x, true, border.west, padding.horizontal, equalAlignmentComponents);
+                x = calcAxisFirstRowOrColumn(x, true, border.west, padding.horizontal, equalAlignmentComponents);
                 y = midYValue;
             }
             else if (component.getAlignment() == UIAlignment.SOUTH_WEST) {
-                x = calcWestXAndTopYValue(x, true, border.west, padding.horizontal, equalAlignmentComponents);
+                x = calcAxisFirstRowOrColumn(x, true, border.west, padding.horizontal, equalAlignmentComponents);
                 y = botYValue;
             }
             else if (component.getAlignment() == UIAlignment.NORTH) {
-                x = calculateCenterXValue(x, true, width, component.getWidth(), padding.horizontal, equalAlignmentComponents);
+                x = distributeCenterComponents(x, true, width, component.getWidth(), padding.horizontal, equalAlignmentComponents);
                 y = topYValue;
             }
             else if (component.getAlignment() == UIAlignment.CENTER) {
-                x = calculateCenterXValue(x, true, width, component.getWidth(), padding.horizontal, equalAlignmentComponents);
+                x = distributeCenterComponents(x, true, width, component.getWidth(), padding.horizontal, equalAlignmentComponents);
                 y = midYValue;
             }
             else if (component.getAlignment() == UIAlignment.SOUTH) {
-                x = calculateCenterXValue(x, true, width, component.getWidth(), padding.horizontal, equalAlignmentComponents);
+                x = distributeCenterComponents(x, true, width, component.getWidth(), padding.horizontal, equalAlignmentComponents);
                 y = botYValue;
             }
             else if (component.getAlignment() == UIAlignment.NORTH_EAST) {
-                x = calculateEastXValue(x, width, component.getWidth(), true, padding.horizontal, border.east, equalAlignmentComponents);
+                x = calcAxisLastRowOrColumn(x, width, component.getWidth(), true, padding.horizontal, border.east, equalAlignmentComponents);
                 y = topYValue;
             }
             else if (component.getAlignment() == UIAlignment.EAST) {
-                x = calculateEastXValue(x, width, component.getWidth(), true, padding.horizontal, border.east, equalAlignmentComponents);
+                x = calcAxisLastRowOrColumn(x, width, component.getWidth(), true, padding.horizontal, border.east, equalAlignmentComponents);
                 y = midYValue;
             }
             else if (component.getAlignment() == UIAlignment.SOUTH_EAST) {
-                x = calculateEastXValue(x, width, component.getWidth(), true, padding.horizontal, border.east, equalAlignmentComponents);
+                x = calcAxisLastRowOrColumn(x, width, component.getWidth(), true, padding.horizontal, border.east, equalAlignmentComponents);
                 y = botYValue;
             }
         }
 
         else {
 
+            int leftXValue = x + border.west;
+            int midXValue = x + width / 2 - component.getWidth() / 2;
+            int rightXValue = x + width - component.getWidth() - border.south;
+
             if (component.getAlignment() == UIAlignment.NORTH_WEST) {
-                for (UIComponent equalComponent: equalAlignmentComponents) {
-                    y += equalComponent.getHeight() + padding.vertical;
-                }
-
-                x += border.west;
-                y += border.north;
+                x = leftXValue;
+                y = calcAxisFirstRowOrColumn(y, false, border.north, padding.vertical, equalAlignmentComponents);
             }
-
             else if (component.getAlignment() == UIAlignment.WEST) {
-
-                // Find total length of the horizontal sequence with the new component is included
-                int length = component.getHeight();
-                for (UIComponent equalComponent: equalAlignmentComponents) {
-                    length += equalComponent.getHeight() + padding.vertical;
-                }
-
-                // Distribute components evenly over the new length
-                int currentY = (2 * y + height - length) / 2;
-                for (UIComponent equalComponent: equalAlignmentComponents) {
-                    equalComponent.setY(currentY);
-                    currentY += equalComponent.getHeight() + padding.vertical;
-                }
-
-                x += border.west;
-                y = currentY;
+                x = leftXValue;
+                y = distributeCenterComponents(y, false, height, component.getHeight(), padding.vertical, equalAlignmentComponents);
             }
-
             else if (component.getAlignment() == UIAlignment.SOUTH_WEST) {
-                y += height;
-                for (UIComponent equalComponent: equalAlignmentComponents) {
-                    y -= (equalComponent.getHeight() + padding.vertical);
-                }
-
-                x += border.west;
-                y -= (component.getHeight() + border.south);
+                x = leftXValue;
+                y = calcAxisLastRowOrColumn(y, height, component.getHeight(), false, padding.vertical, border.south, equalAlignmentComponents);
             }
-
             else if (component.getAlignment() == UIAlignment.NORTH) {
-                for (UIComponent equalComponent: equalAlignmentComponents) {
-                    y += equalComponent.getHeight() + padding.vertical;
-                }
-
-                x += width / 2 - component.getWidth() / 2;
-                y += border.north;
+                x = midXValue;
+                y = calcAxisFirstRowOrColumn(y, false, border.north, padding.vertical, equalAlignmentComponents);
             }
-
             else if (component.getAlignment() == UIAlignment.CENTER) {
-                // Find total length of the horizontal sequence with the new component is included
-                int length = component.getHeight();
-                for (UIComponent equalComponent: equalAlignmentComponents) {
-                    length += equalComponent.getHeight() + padding.vertical;
-                }
-
-                // Distribute components evenly over the new length
-                int currentY = (2 * y + height - length) / 2;
-                for (UIComponent equalComponent: equalAlignmentComponents) {
-                    equalComponent.setY(currentY);
-                    currentY += equalComponent.getHeight() + padding.vertical;
-                }
-
-                x += width/2 - component.getWidth() / 2;
-                y = currentY;
+                x = midXValue;
+                y = distributeCenterComponents(y, false, height, component.getHeight(), padding.vertical, equalAlignmentComponents);
             }
-
             else if (component.getAlignment() == UIAlignment.SOUTH) {
-                y += height;
-                for (UIComponent equalComponent: equalAlignmentComponents) {
-                    y -= (equalComponent.getHeight() + padding.vertical);
-                }
-
-                x += width/2 - component.getWidth() / 2;
-                y -= (component.getHeight() + border.south);
+                x = midXValue;
+                y = calcAxisLastRowOrColumn(y, height, component.getHeight(), false, padding.vertical, border.south, equalAlignmentComponents);
             }
-
             else if (component.getAlignment() == UIAlignment.NORTH_EAST) {
-                for (UIComponent equalComponent: equalAlignmentComponents) {
-                    y += equalComponent.getHeight() + padding.vertical;
-                }
-
-                x += width - component.getWidth() - border.south;
-                y += border.north;
+                x = rightXValue;
+                y = calcAxisFirstRowOrColumn(y, false, border.north, padding.vertical, equalAlignmentComponents);
             }
-
             else if(component.getAlignment() == UIAlignment.EAST) {
-                // Find total length of the horizontal sequence with the new component is included
-                int length = component.getHeight();
-                for (UIComponent equalComponent: equalAlignmentComponents) {
-                    length += equalComponent.getHeight() + padding.vertical;
-                }
-
-                // Distribute components evenly over the new length
-                int currentY = (2 * y + height - length) / 2;
-                for (UIComponent equalComponent: equalAlignmentComponents) {
-                    equalComponent.setY(currentY);
-                    currentY += equalComponent.getHeight() + padding.vertical;
-                }
-
-                x += width - component.getWidth() - border.south;
-                y = currentY;
+                x = rightXValue;
+                y = distributeCenterComponents(y, false, height, component.getHeight(), padding.vertical, equalAlignmentComponents);
             }
-
             else if (component.getAlignment() == UIAlignment.SOUTH_EAST) {
-                y += height;
-                for (UIComponent equalComponent: equalAlignmentComponents) {
-                    y -= (equalComponent.getHeight() + padding.vertical);
-                }
-
-//                x += width - component.getWidth() - border.south;
-                x += endCornerValue(width, component.getWidth(), border.south);
-                y -= (component.getHeight() + border.south);
+                x = rightXValue;
+                y = calcAxisLastRowOrColumn(y, height, component.getHeight(), false, padding.vertical, border.south, equalAlignmentComponents);
             }
         }
 
+        // Adjust for text, which has point of origin at bottom left, instead of top left as other components.
+        if (component.getClass().equals(UITextBox.class)) {
+            y += component.getHeight();
+        }
+
         return new Point(x, y);
-    }
-
-
-    private int endCornerValue(int size, int componentSize, int border) {
-        return size - componentSize - border;
     }
 }

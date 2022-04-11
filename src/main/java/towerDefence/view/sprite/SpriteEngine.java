@@ -61,14 +61,14 @@ public class SpriteEngine {
 
     public void start(Animation animation) {
         if (animation != currentAnimation) {
-            System.out.println("Anim start: " + animation.endFrame);
+//            System.out.println("Anim start: " + animation.endFrame);
             this.currentAnimation = animation;
             this.startFrame = animation.startFrame;
             currentFrame = startFrame;
             previousFrame = startFrame - 1;
             this.endFrame = animation.endFrame;
             this.loopAnimation = animation.loop;
-            System.out.println(startFrame + "  ::  " + endFrame + "  ::  " + loopAnimation);
+//            System.out.println(startFrame + "  ::  " + endFrame + "  ::  " + loopAnimation);
         }
 
     }

@@ -6,9 +6,9 @@ public class UIComponentTemplate implements UIComponent{
 
     private int x = 0;
     private int y = 0;
-    private final int width, height;
+    private int width;
+    private int height;
     private UIAlignment alignment = UIAlignment.CENTER;
-    private UILayout layout = UILayout.HORIZONTAL;
 
     public UIComponentTemplate(int width, int height) {
         this.width = width;
@@ -33,6 +33,16 @@ public class UIComponentTemplate implements UIComponent{
     @Override
     public int getHeight() {
         return height;
+    }
+
+    @Override
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    @Override
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     @Override

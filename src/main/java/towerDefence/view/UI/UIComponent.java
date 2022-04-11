@@ -8,6 +8,10 @@ public interface UIComponent {
 
     public int getHeight();
 
+    public void setWidth(int width);
+
+    public void setHeight(int height);
+
     public int getX();
 
     public int getY();
