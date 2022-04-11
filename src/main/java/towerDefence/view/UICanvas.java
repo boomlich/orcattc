@@ -15,7 +15,6 @@ public class UICanvas implements ICanvas {
     public UICanvas(GameRenderable gameModel, int width, int height) {
 
         container = new UIContainer( width, height);
-        container.setAlignment(UIAlignment.NORTH_WEST);
         container.setLayoutManager(UILayout.HORIZONTAL);
         container.setPadding(new ContainerPadding(5));
         container.setBorder(new ContainerBorder(10));
@@ -23,17 +22,17 @@ public class UICanvas implements ICanvas {
 
         UIContainer test1 = new UIContainer(10,10);
         test1.setBackground(Color.ORANGE);
-        test1.setAlignment(UIAlignment.WEST);
+        test1.setAlignment(UIAlignment.SOUTH_EAST);
         container.add(test1);
 
         UIContainer test2 = new UIContainer(10,20);
         test2.setBackground(Color.MAGENTA);
-        test2.setAlignment(UIAlignment.WEST);
+        test2.setAlignment(UIAlignment.SOUTH_EAST);
         container.add(test2);
 
         UIContainer test3 = new UIContainer(50,25);
         test3.setBackground(Color.RED);
-        test3.setAlignment(UIAlignment.NORTH_WEST);
+        test3.setAlignment(UIAlignment.EAST);
         container.add(test3);
     }
 
