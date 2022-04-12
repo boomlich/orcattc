@@ -1,6 +1,7 @@
 package towerDefence.view.UI;
 
 import org.junit.jupiter.api.Test;
+import towerDefence.view.UI.components.UITextBox;
 
 public class UITextTest {
 

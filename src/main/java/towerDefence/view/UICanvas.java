@@ -1,6 +1,7 @@
 package towerDefence.view;
 
-import towerDefence.view.UI.*;
+import towerDefence.view.UI.components.*;
+import towerDefence.view.UI.presets.UI_Champ;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.List;
 public class UICanvas implements ICanvas {
 
     private GameRenderable gameModel;
-    private UI_HUD HUD;
 
     private final UIContainer container;
 
@@ -37,7 +37,7 @@ public class UICanvas implements ICanvas {
         UIContainer test3 = new UIContainer(500,250);
         test3.setBackground(Color.RED);
         test3.setAlignment(UIAlignment.NORTH_EAST);
-        container.add(test3);
+//        container.add(test3);
 
         test3.setPadding(new ContainerPadding(10));
         test3.setLayoutManager(UILayout.VERTICAL);
@@ -54,15 +54,46 @@ public class UICanvas implements ICanvas {
 
         test3.setBackgroundImage("TestSpriteSheet.png");
 
-        UIButton testButton = new UIButton();
+        UIButton testButton = new UIButton("Press");
         testButton.setAlignment(UIAlignment.CENTER);
         test3.add(testButton);
 
-        testButton.add(new UITextBox("Press"));
+//        testButton.add(new UITextBox("Press"));
+
+
+        UIContainer cont1 = new UIContainer(200, 100);
+        cont1.setAlignment(UIAlignment.SOUTH_WEST);
+        cont1.setBackground(Color.BLUE);
+
+        UIContainer cont2 = new UIContainer(10, 50);
+        cont2.setBackground(Color.GREEN);
+        cont1.add(cont2);
+
+        UIContainer cont3 = new UIContainer(50, 50);
+        cont3.setBackground(Color.BLACK);
+        cont2.add(cont3);
+
+        UIContainer cont4 = new UIContainer(10, 20);
+        cont4.setBackground(Color.cyan);
+        cont3.add(cont4);
+        test3.add(cont1);
+
+        test3.setAlignment(UIAlignment.EAST);
+
+
 
 
 
 //        test3.add(new UITextBox("Yes"));
+
+        container.add(test3);
+
+
+        UI_Champ championsSelect = new UI_Champ(360, 150);
+        championsSelect.setAlignment(UIAlignment.SOUTH_WEST);
+        container.add(championsSelect);
+
+
 
 
     }
