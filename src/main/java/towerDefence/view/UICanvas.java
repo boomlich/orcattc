@@ -3,14 +3,18 @@ package towerDefence.view;
 import towerDefence.view.UI.*;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class UICanvas implements ICanvas {
 
-    GameRenderable gameModel;
-    UI_HUD HUD;
+    private GameRenderable gameModel;
+    private UI_HUD HUD;
 
-    UIContainer container;
+    private final UIContainer container;
+
+    private final List<UIButton> interacable = new ArrayList<>();
 
     public UICanvas(GameRenderable gameModel, int width, int height) {
 
@@ -32,7 +36,7 @@ public class UICanvas implements ICanvas {
 
         UIContainer test3 = new UIContainer(500,250);
         test3.setBackground(Color.RED);
-        test3.setAlignment(UIAlignment.SOUTH_EAST);
+        test3.setAlignment(UIAlignment.NORTH_EAST);
         container.add(test3);
 
         test3.setPadding(new ContainerPadding(10));
@@ -48,6 +52,14 @@ public class UICanvas implements ICanvas {
         testText2.setSize(25);
         test3.add(testText2);
 
+        test3.setBackgroundImage("TestSpriteSheet.png");
+
+        UIButton testButton = new UIButton();
+        testButton.setAlignment(UIAlignment.CENTER);
+        test3.add(testButton);
+
+        testButton.add(new UITextBox("Press"));
+
 
 
 //        test3.add(new UITextBox("Yes"));
@@ -55,12 +67,12 @@ public class UICanvas implements ICanvas {
 
     }
 
+    public void addInteractable(UIButton button) {
+        interacable.add(button);
+    }
+
     @Override
     public void paint(Graphics2D g2D) {
         container.paint(g2D);
-
-        int size = 20;
-        g2D.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, size));
-        g2D.drawString("TESTING123", 0, size);
     }
 }

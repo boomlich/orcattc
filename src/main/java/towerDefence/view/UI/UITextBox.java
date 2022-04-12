@@ -9,7 +9,7 @@ public class UITextBox extends UIComponentTemplate {
     private String text;
     private Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
     private final Graphics2D graphics;
-    private Color color = Color.WHITE;
+    private Color color = Color.BLACK;
 
     public UITextBox(String text) {
         super(0, 0);
@@ -48,14 +48,7 @@ public class UITextBox extends UIComponentTemplate {
         font = new Font(font.getFontName(), font.getStyle(), size);
         setWidth(calculateStringWidth());
         setHeight(size);
-//        System.out.println("BEFORE: " + getY());
-////        setY(newYValue(size));
-//        System.out.println("AFTER: " + getY());
     }
-
-//    private int newYValue(int size) {
-//        return getY() + size;
-//    }
 
     @Override
     public void paint(Graphics2D g2D) {

@@ -3,21 +3,24 @@ package towerDefence.controller;
 import towerDefence.view.GameRender;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public class GameController implements ActionListener, KeyListener {
     Timer timer;
     GameControllable gameModel;
     GameRender gameRender;
+    MouseController mouseController;
 
     public GameController(GameRender gameRender, GameControllable gameModel) {
         this.gameModel = gameModel;
         this.gameRender = gameRender;
 
+        mouseController = new MouseController(gameRender, gameModel);
+
+
         gameRender.addKeyListener(this);
+        gameRender.addMouseMotionListener(mouseController);
+        gameRender.addMouseListener(mouseController);
 
         timer = new Timer(1 / gameModel.getFPS(), this);
         timer.start();
@@ -50,4 +53,7 @@ public class GameController implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {
 
     }
+
+
+
 }

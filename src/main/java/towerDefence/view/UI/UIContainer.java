@@ -1,6 +1,10 @@
 package towerDefence.view.UI;
 
+import towerDefence.view.ImageLoader;
+
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +17,8 @@ public class UIContainer extends UIComponentTemplate{
     private Color background;
 
     private UILayoutManager layoutManager;
+
+    private BufferedImage backgroundImg;
 
     public UIContainer(int width, int height) {
         super(width, height);
@@ -30,6 +36,18 @@ public class UIContainer extends UIComponentTemplate{
 
     public void setLayoutManager(UILayout layout) {
         layoutManager = new UILayoutManager(layout);
+    }
+
+    public void setBackgroundImage(String path) {
+        try {
+            backgroundImg = ImageLoader.loadBufferedImage(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setBackgroundImage(BufferedImage image) {
+        backgroundImg = image;
     }
 
     public void setBorder(ContainerBorder border) {
@@ -51,6 +69,7 @@ public class UIContainer extends UIComponentTemplate{
     public void add(UIComponent component) {
         positionComponent(component);
         components.add(component);
+
     }
 
     private void positionComponent(UIComponent component) {
@@ -79,9 +98,12 @@ public class UIContainer extends UIComponentTemplate{
     public void paint(Graphics2D g2D){
         if (background != null) {
             g2D.setColor(background);
+            g2D.fill(new Rectangle(getX(), getY(), getWidth(), getHeight()));
         }
-        g2D.fill(new Rectangle(getX(), getY(), getWidth(), getHeight()));
 
+        if (backgroundImg != null) {
+            g2D.drawImage(backgroundImg, getX(), getY(), getWidth(), getHeight(), null);
+        }
 
         for (UIComponent component: components) {
             component.paint(g2D);

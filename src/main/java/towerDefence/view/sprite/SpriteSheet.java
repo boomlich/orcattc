@@ -1,5 +1,7 @@
 package towerDefence.view.sprite;
 
+import towerDefence.view.ImageLoader;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,7 +15,7 @@ public class SpriteSheet {
 
     public SpriteSheet(String path, int rows, int columns) {
         try {
-            image = loadSpriteSheet(path);
+            image = ImageLoader.loadBufferedImage(path);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -24,10 +26,6 @@ public class SpriteSheet {
     protected SpriteSheet(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
-    }
-
-    private BufferedImage loadSpriteSheet(String path) throws IOException {
-        return ImageIO.read(ClassLoader.getSystemResource( path ));
     }
 
     /**
