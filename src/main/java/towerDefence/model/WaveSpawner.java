@@ -19,6 +19,8 @@ public class WaveSpawner {
     }
 
     protected void update(double deltaSteps) {
+
+
         spawnEnemies(deltaSteps);
     }
 

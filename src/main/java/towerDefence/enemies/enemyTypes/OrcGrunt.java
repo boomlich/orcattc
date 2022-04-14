@@ -7,12 +7,12 @@ import towerDefence.enemies.Enemy;
 import towerDefence.level.path.SplinePathData;
 import towerDefence.view.sprite.SpriteEngine;
 
-public class OrcPeon extends Enemy {
+public class OrcGrunt extends Enemy {
 
-    public OrcPeon() {
+    public OrcGrunt() {
     }
 
-    public OrcPeon(SplinePathData path) {
+    public OrcGrunt(SplinePathData path) {
         super(100,
                 new SplineMovement(path, 1),
                 new SpriteEngine("Sheet_OrcAxer.png", 2, 8, 10, 0),

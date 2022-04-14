@@ -75,7 +75,7 @@ public class EnemyWave {
         IEnemy selectedEnemy = null;
 
         switch (enemyCode) {
-            case 'a' -> selectedEnemy = new OrcPeon(path);
+            case 'a' -> selectedEnemy = new OrcGrunt(path);
             case 'b' -> selectedEnemy = new OrcBrute(path);
             case 'c' -> selectedEnemy = new AttackShip();
             case 'd' -> selectedEnemy = new BattleShip();

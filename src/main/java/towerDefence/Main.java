@@ -17,12 +17,14 @@ public class Main {
 
         int width = device.getDisplayMode().getWidth();
         int height = device.getDisplayMode().getHeight();
+//
+//        width = 960;
+//        height = 540;
 
 
         GameRenderable gameModel = new GameModel();
-        GameRender gameRender = new GameRender(gameModel, width, height);
+        GameRender gameRender = new GameRender(device, gameModel);
         GameController gameController = new GameController(gameRender, (GameControllable) gameModel);
-//        UICanvas uiCanvas = new UICanvas(gameModel, width, height);
 
         JFrame frame = new JFrame();
         frame.setContentPane(gameRender);
@@ -31,17 +33,15 @@ public class Main {
         frame.setUndecorated(true);
         frame.setVisible(true);
 
-
-
         device.setFullScreenWindow(frame);
-        System.out.println(device.getDisplayMode());
 
 //        DisplayMode testMode = new DisplayMode(1280, 720, device.getDisplayMode().getBitDepth(), device.getDisplayMode().getRefreshRate());
 //        device.setDisplayMode(testMode);
 
-//        device.getDisplayModes();
 
-//        System.out.println("RESOLUTION:    " + Toolkit.getDefaultToolkit().getScreenResolution());
+//        for (DisplayMode dm: device.getDisplayModes()) {
+//            System.out.println(dm);
+//        }
 
     }
 }

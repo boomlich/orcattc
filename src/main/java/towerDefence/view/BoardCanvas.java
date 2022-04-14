@@ -19,30 +19,20 @@ public class BoardCanvas implements ICanvas{
     private int width;
     private int height;
 
-    SpriteEngine testSprite = new SpriteEngine("TestSpriteSheet.png", 4, 5, 10, 0);
-
-//
-//    Path2D test = new Path2D.Double();
-//    List<Point2D> testPath = new ArrayList<>();
-
     public BoardCanvas(GameRenderable gameModel, int width, int height) {
         this.gameModel = gameModel;
 
-
         this.width = width;
         this.height = height;
-
-//        testSprite.start(new Animation(0, 18, true));
     }
-
-
 
     @Override
     public void paint(Graphics2D g2D) {
 
-        // Sprite engine test
-        drawSprite(g2D, testSprite.getSprite(), new Point2D.Double(400, 100));
-        testSprite.update(1);
+        g2D.setColor(new Color(38, 92, 66));
+        g2D.fill(new Rectangle(0, 0, width, height));
+
+        g2D.setColor(Color.black);
 
         // TrackPath
         for (PathPoint point: gameModel.getTrackPath()) {
@@ -57,8 +47,11 @@ public class BoardCanvas implements ICanvas{
 
         // Render out in z-depth order
         for (int i: gameModel.getZDepthRange()) {
+            System.out.println(i);
 
             // Enemies
+
+
             HashMap<Integer, java.util.List<IEnemy>> enemies = gameModel.getEnemies();
             if (enemies.containsKey(i)) {
                 for (IEnemy enemy: enemies.get(i)) {

@@ -11,15 +11,30 @@ public class UITextBox extends UIComponentTemplate {
     private Color color = Color.BLACK;
 
     public UITextBox(String text) {
+        this(text, 15, Color.DARK_GRAY);
+    }
+
+    public UITextBox(String text, int size) {
+        this(text, size, Color.DARK_GRAY);
+    }
+
+    public UITextBox(String text, int size, Color color) {
         super(0, 0);
         this.text = text;
         graphics = generateGraphics();
-        setSize(font.getSize());
+        setSize(size);
+        this.color = color;
     }
+
+
 
     private Graphics2D generateGraphics() {
         BufferedImage graphicsImage = new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR);
         return (Graphics2D) graphicsImage.getGraphics();
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public void setFont(Font font) {

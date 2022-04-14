@@ -21,10 +21,13 @@ public class GameModel implements GameRenderable, GameControllable {
     private GameEntities gameEntities;
     private WaveSpawner waveSpawner;
     private LevelManager levelManager;
+    private int waveNumber;
+    GameMode gameMode;
+
+    private boolean placingTower = false;
 
     public GameModel() {
         loadLevel(Level.A);
-        startRound();
     }
 
 
@@ -34,16 +37,26 @@ public class GameModel implements GameRenderable, GameControllable {
         levelManager.loadLevel(level);
         gameEntities = new GameEntities();
         waveSpawner = new WaveSpawner(gameEntities);
+        waveNumber = 0;
+        gameMode = GameMode.BUILD_PHASE;
     }
 
     @Override
     public void startRound() {
         System.out.println("ROUND STARTED");
-        waveSpawner.setCurrentWave(levelManager.getCurrentWave(0));
+        waveSpawner.setCurrentWave(levelManager.getCurrentWave(waveNumber));
+        waveNumber ++;
+        gameMode = GameMode.INVASION_PHASE;
     }
 
     @Override
     public void addTower(ITower target) {
+        placingTower = true;
+
+
+        gameEntities.addTower(target);
+
+
 
     }
 
@@ -61,8 +74,10 @@ public class GameModel implements GameRenderable, GameControllable {
     public void update() {
         double deltaSteps = 1;
 
-        gameEntities.update(deltaSteps);
-        waveSpawner.update(deltaSteps);
+        if (gameMode == GameMode.INVASION_PHASE) {
+            gameEntities.update(deltaSteps);
+            waveSpawner.update(deltaSteps);
+        }
     }
 
     @Override

@@ -20,13 +20,14 @@ public class GameEntities {
     private List<ParticleEmitter> particleEmitters = new ArrayList<>();
 
     // Z-depth ordered renderable objects
-    private HashMap<Integer, List<IEnemy>> renderEnemies;
-    private HashMap<Integer, List<ITower>> renderTowers;
+    private HashMap<Integer, List<IEnemy>> renderEnemies = new HashMap<>();
+    private HashMap<Integer, List<ITower>> renderTowers = new HashMap<>();
     private TreeSet<Integer> zDepthRange = new TreeSet<>();
 
     public GameEntities() {
 
         addTower(new Rifleman(new Point2D.Double(325, 250)));
+
 
     }
 

@@ -26,27 +26,21 @@ public class UIButton extends UIContainer implements Interactable {
     UIButtonState buttonState = UIButtonState.NORMAL;
     InteractCode interactCode = InteractCode.DEFAULT;
 
-    public UIButton() {
-        super(50, 50);
+    public UIButton(int width, int height) {
+        super(width, height);
         InteractionManager.addIntractable(this);
     }
 
-    public UIButton(String label) {
-        this();
-        add(new UITextBox(label));
-    }
-
     public UIButton(String label, int width, int height) {
-        this(label);
-        setWidth(width);
-        setHeight(height);
+        this(width, height);
+        add(new UITextBox(label));
     }
 
     public void setInteractCode(InteractCode interactCode) {
         this.interactCode = interactCode;
     }
 
-    private BufferedImage load(String path) {
+    private BufferedImage loadImage(String path) {
         try {
             return ImageLoader.loadBufferedImage(path);
         } catch (IOException e) {
@@ -56,47 +50,58 @@ public class UIButton extends UIContainer implements Interactable {
     }
 
     public void setButtonNormal(String path) {
-        buttonNormal = load(path);
+        buttonNormal = loadImage(path);
     }
 
     public void setButtonHover(String path) {
-        buttonHover = load(path);
+        buttonHover = loadImage(path);
     }
 
     public void setButtonClicked(String path) {
-        buttonClicked = load(path);
+        buttonClicked = loadImage(path);
     }
 
     public void setButtonDisabled(String path) {
-        buttonDisabled = load(path);
+        buttonDisabled = loadImage(path);
     }
 
     @Override
     public void paint(Graphics2D g2D) {
 
+        boolean emptyImage = true;
+
         switch (buttonState) {
             case NORMAL -> {
                 g2D.setColor(normalColor);
-                setBackgroundImage(buttonNormal);
+                emptyImage = isEmptyImage(buttonNormal);
             }
             case HOVER -> {
                 g2D.setColor(hoverColor);
-                setBackgroundImage(buttonHover);
+                emptyImage = isEmptyImage(buttonHover);
             }
             case CLICKED -> {
                 g2D.setColor(clickedColor);
-                setBackgroundImage(buttonClicked);
+                emptyImage = isEmptyImage(buttonClicked);
             }
             case DISABLED -> {
                 g2D.setColor(disabledColor);
-                setBackgroundImage(buttonDisabled);
+                emptyImage = isEmptyImage(buttonDisabled);
             }
         }
-        g2D.fill(new Rectangle(getX(), getY(), getWidth(), getHeight()));
+        if (emptyImage) {
+            g2D.fill(new Rectangle(getX(), getY(), getWidth(), getHeight()));
+        }
 
         super.paint(g2D);
     }
 
+    private boolean isEmptyImage(BufferedImage image) {
+        if (image != null) {
+            setBackgroundImage(image);
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public String getTooltip() {
