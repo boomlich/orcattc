@@ -12,7 +12,7 @@ public class Rifleman extends Tower {
     public Rifleman(Point2D position) {
         super(position,
                 new Collision(100, false),
-                new Collision(20, false),
+                new Collision(20, true),
                 new Weapon(),
                 new SpriteEngine("TestSpriteSheet.png", 4, 5, 10, 5));
     }

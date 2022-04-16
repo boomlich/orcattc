@@ -8,7 +8,6 @@ import towerDefence.view.IRenderableObject;
 import towerDefence.view.sprite.Sprite;
 
 import java.awt.geom.Point2D;
-import java.util.List;
 
 public interface ITower extends IRenderableObject {
 
@@ -33,6 +32,8 @@ public interface ITower extends IRenderableObject {
 
     public Collision getSearchRadius();
 
+    public Collision getPlacementRadius();
+
     public boolean activeSpawnMode();
 
     public void setGameEntities(GameEntities gameEntities);
@@ -40,4 +41,7 @@ public interface ITower extends IRenderableObject {
     public void setTargetingMode(TargetingMode targetingMode);
 
     public IEnemy getTarget();
+
+    public boolean hasValidPlacement();
+
 }

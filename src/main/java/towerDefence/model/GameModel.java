@@ -37,6 +37,7 @@ public class GameModel implements GameRenderable, GameControllable {
         levelManager = new LevelManager();
         levelManager.loadLevel(level);
         gameEntities = new GameEntities();
+        gameEntities.addBoardCollisions(levelManager.getPath().getPathCollision());
         waveSpawner = new WaveSpawner(gameEntities);
         waveNumber = 0;
         gameMode = GameMode.BUILD_PHASE;
@@ -55,6 +56,7 @@ public class GameModel implements GameRenderable, GameControllable {
 
         if (!isActiveTowerInSpawnMode()) {
             activeTower = target;
+            activeTower.setGameEntities(gameEntities);
         }
     }
 
@@ -78,10 +80,13 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void placeTower() {
-        gameEntities.addTower(activeTower);
-        activeTower.disableSpawnMode();
-        activeTower.setGameEntities(gameEntities);
-        activeTower = null;
+        if (activeTower.hasValidPlacement()) {
+            gameEntities.addTower(activeTower);
+            activeTower.disableSpawnMode();
+            activeTower = null;
+        } else {
+            System.out.println("INVALID PLACEMENT");
+        }
     }
 
     @Override

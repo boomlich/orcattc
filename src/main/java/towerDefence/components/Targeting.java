@@ -46,12 +46,12 @@ public class Targeting {
 
     private IEnemy targetStrongest(List<IEnemy> potentialTargets) {
         IEnemy strongest = null;
-        double strongestHelth = 0;
+        double strongestHealth = 0;
 
         for (IEnemy enemy: potentialTargets) {
-            if (enemy.getHealth() > strongestHelth) {
+            if (enemy.getHealth() > strongestHealth) {
                 strongest = enemy;
-                strongestHelth = enemy.getHealth();
+                strongestHealth = enemy.getHealth();
             }
         }
         return strongest;
@@ -59,7 +59,7 @@ public class Targeting {
 
     private IEnemy targetClosest(List<IEnemy> potentialTargets) {
         IEnemy closest = null;
-        double closestDistance = tower.getSearchRadius().getRadius();
+        double closestDistance = 100000;
 
         for (IEnemy enemy: potentialTargets) {
             double distance = MathHelperMethods.vectorLength(

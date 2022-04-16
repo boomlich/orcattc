@@ -36,17 +36,26 @@ public class UICanvas implements ICanvas {
             double collisionX = tower.getSearchRadius().getPosition().getX() - radius;
             double collisionY = tower.getSearchRadius().getPosition().getY() - radius;
 
+            if (tower.hasValidPlacement()){
+                // Draw
+                g2D.setColor(new Color(100, 100, 100, 100));
+                g2D.fill(new Ellipse2D.Double(collisionX, collisionY, 2 * radius, 2 * radius));
+                g2D.setColor(Color.WHITE);
+                g2D.draw(new Ellipse2D.Double(collisionX, collisionY, 2 * radius, 2 * radius));
+            } else {
+                // Draw
+                g2D.setColor(new Color(255, 0, 0, 40));
+                g2D.fill(new Ellipse2D.Double(collisionX, collisionY, 2 * radius, 2 * radius));
+                g2D.setColor(new Color(255, 0, 0, 150));
+                g2D.draw(new Ellipse2D.Double(collisionX, collisionY, 2 * radius, 2 * radius));
+            }
 
-            // Draw
-            g2D.setColor(new Color(100, 100, 100, 100));
-            g2D.fill(new Ellipse2D.Double(collisionX, collisionY, 2 * radius, 2 * radius));
-            g2D.setColor(Color.WHITE);
-            g2D.draw(new Ellipse2D.Double(collisionX, collisionY, 2 * radius, 2 * radius));
 
             DrawGraphics.drawSprite(g2D, tower.getBodySprite(), tower.getBodyPosition());
 
             // Center of Collision
             g2D.draw(new Rectangle2D.Double(tower.getSearchRadius().getPosition().getX(), tower.getSearchRadius().getPosition().getY(), 1, 1));
+//            g2D.draw(new Rectangle2D.Double(tower.getPlacementRadius().getPosition().getX(), tower.getPlacementRadius().getPosition().getY(), 2, 2));
         }
     }
 

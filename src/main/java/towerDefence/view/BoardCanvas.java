@@ -48,9 +48,18 @@ public class BoardCanvas implements ICanvas{
         }
 
         // Draw path collision
-        for (Collision collision: gameModel.getPathCollision()) {
-            g2D.draw(new Ellipse2D.Double(collision.getPosition().getX(), collision.getPosition().getY(), 2 * collision.getRadius(), 2 * collision.getRadius()));
+        if (RenderingOptions.DEBUG){
+            if (RenderingOptions.PATH_COLLISION) {
+                for (Collision collision: gameModel.getPathCollision()) {
+                    g2D.fill(new Ellipse2D.Double(
+                            collision.getPosition().getX() - collision.getRadius(),
+                            collision.getPosition().getY() - collision.getRadius(),
+                            2 * collision.getRadius(),
+                            2 * collision.getRadius()));
+                }
+            }
         }
+
 
 
         // Render out in z-depth order
@@ -62,15 +71,17 @@ public class BoardCanvas implements ICanvas{
                 for (IEnemy enemy: enemies.get(i)) {
                     DrawGraphics.drawSprite(g2D, enemy.getSprite(), enemy.getPosition());
 
-                    double radius = enemy.getCollision().getRadius();
-                    double collisionX = enemy.getCollision().getPosition().getX() - radius;
-                    double collisionY = enemy.getCollision().getPosition().getY() - radius;
 
+                    if (RenderingOptions.DEBUG) {
+                        if (RenderingOptions.ENEMY_COLLISION) {
+                            double radius = enemy.getCollision().getRadius();
+                            double collisionX = enemy.getCollision().getPosition().getX() - radius;
+                            double collisionY = enemy.getCollision().getPosition().getY() - radius;
 
-                    g2D.setColor(Color.BLUE);
-                    g2D.draw(new Ellipse2D.Double(collisionX, collisionY, 2 * radius,  2 * radius));
-                    g2D.draw(new Rectangle2D.Double(enemy.getCollision().getPosition().getX(),
-                            enemy.getCollision().getPosition().getY(), 1, 1));
+                            g2D.setColor(Color.BLUE);
+                            g2D.draw(new Ellipse2D.Double(collisionX, collisionY, 2 * radius,  2 * radius));
+                        }
+                    }
                 }
             }
 
@@ -82,15 +93,28 @@ public class BoardCanvas implements ICanvas{
                     DrawGraphics.drawSprite(g2D, tower.getBodySprite(), tower.getBodyPosition());
 
 
+                    if (RenderingOptions.DEBUG) {
+                        double collisionX = tower.getSearchRadius().getPosition().getX();
+                        double collisionY = tower.getSearchRadius().getPosition().getY();
 
-                    // Collision detection debug
-                    if (tower.getTarget() != null) {
-                        g2D.setColor(Color.RED);
-                        g2D.draw(new Line2D.Double(
-                                tower.getSearchRadius().getPosition().getX(),
-                                tower.getSearchRadius().getPosition().getY(),
-                                tower.getTarget().getCollision().getPosition().getX(),
-                                tower.getTarget().getCollision().getPosition().getY()));
+                        if (RenderingOptions.TOWER_TARGETING) {
+                            if (tower.getTarget() != null) {
+                                g2D.setColor(Color.RED);
+                                g2D.draw(new Line2D.Double(
+                                        collisionX, collisionY,
+                                        tower.getTarget().getCollision().getPosition().getX(),
+                                        tower.getTarget().getCollision().getPosition().getY()));
+                            }
+                        }
+                        if (RenderingOptions.TOWER_SEARCH_RADIUS) {
+                            g2D.setColor(Color.BLUE);
+                            double radius = tower.getSearchRadius().getRadius();
+                            g2D.draw(new Ellipse2D.Double(collisionX - radius, collisionY - radius, 2 * radius, 2 * radius));
+                        }
+                        if (RenderingOptions.TOWER_PLACEMENT_RADIUS) {
+                            double radius = tower.getPlacementRadius().getRadius();
+                            g2D.draw(new Ellipse2D.Double(collisionX - radius, collisionY - radius, 2 * radius, 2 * radius));
+                        }
                     }
                 }
             }

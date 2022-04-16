@@ -1,5 +1,6 @@
 package towerDefence.model;
 
+import towerDefence.components.Collision;
 import towerDefence.components.Projectile;
 import towerDefence.enemies.IEnemy;
 import towerDefence.particles.Particle;
@@ -18,6 +19,7 @@ public class GameEntities {
     private List<Projectile> projectiles = new ArrayList<>();
     private List<Particle> particles = new ArrayList<>();
     private List<ParticleEmitter> particleEmitters = new ArrayList<>();
+    private List<Collision> boardCollisions = new ArrayList<>();
 
     // Z-depth ordered renderable objects
     private HashMap<Integer, List<IEnemy>> renderEnemies = new HashMap<>();
@@ -25,8 +27,14 @@ public class GameEntities {
     private TreeSet<Integer> zDepthRange = new TreeSet<>();
 
     public GameEntities() {
+    }
 
-//        addTower(new Rifleman(new Point2D.Double(325, 250)));
+    public void addBoardCollisions(List<Collision> collisionsObjects) {
+        boardCollisions.addAll(collisionsObjects);
+    }
+
+    public List<Collision> getBoardCollisions() {
+        return boardCollisions;
     }
 
     private List<IEnemy> sortEnemiesByPathProgression() {

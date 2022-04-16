@@ -9,7 +9,6 @@ import towerDefence.view.sprite.Sprite;
 import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Tower implements ITower, Interactable{
@@ -27,6 +26,7 @@ public class Tower implements ITower, Interactable{
     private GameEntities gameEntities;
     private Targeting targeting;
     private IEnemy target;
+    private boolean validPlacement;
 
     public Tower(Point2D position, Collision searchRadius, Collision placementRadius, Weapon weapon,
                  SpriteEngine spriteBody){
@@ -58,7 +58,17 @@ public class Tower implements ITower, Interactable{
             } else if (target != null){
                 target = null;
             }
+        } else {
+            validPlacement = positionNotBlocked();
+            System.out.println(validPlacement);
         }
+    }
+
+    private boolean positionNotBlocked() {
+        if (placementRadius.updateCollision(gameEntities.getBoardCollisions()).size() > 0) {
+            return false;
+        }
+        return true;
     }
 
 
@@ -88,8 +98,18 @@ public class Tower implements ITower, Interactable{
     }
 
     @Override
+    public boolean hasValidPlacement() {
+        return validPlacement;
+    }
+
+    @Override
     public Collision getSearchRadius() {
         return searchRadius;
+    }
+
+    @Override
+    public Collision getPlacementRadius() {
+        return placementRadius;
     }
 
     private void rank1() {

@@ -53,8 +53,8 @@ public class SplinePathData {
             if (i % intervalLength == 0) {
                 Collision collision = new Collision(radius);
                 collision.setPosition(new Point2D.Double(
-                        pathPoints.get(i).coordinate.getX() - radius,
-                        pathPoints.get(i).coordinate.getY() - radius));
+                        pathPoints.get(i).coordinate.getX(),
+                        pathPoints.get(i).coordinate.getY()));
                 collisions.add(collision);
             }
         }
