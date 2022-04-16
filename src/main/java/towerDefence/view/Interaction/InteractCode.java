@@ -12,5 +12,9 @@ public enum InteractCode {
     SELL,
     OPTIONS,
     MUTE,
-    DEFAULT
+    DEFAULT,
+    TARGET_A,
+    TARGET_B,
+    TARGET_C,
+    TARGET_D,
 }

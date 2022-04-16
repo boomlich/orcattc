@@ -14,10 +14,10 @@ public class OrcBrute extends Enemy {
     }
 
     public OrcBrute(SplinePathData path) {
-        super(100,
+        super(300,
                 new SplineMovement(path, 0.75),
                 new SpriteEngine("graphics/enemies/Sheet_Orc_Brute.png", 2, 12, 10, 0),
-                new Collision(10),
+                new Collision(30),
                 new Animation(0, 12, true),
                 new Animation(12, 24, true),
                 new Animation(0, 0, true));

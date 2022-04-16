@@ -13,13 +13,17 @@ public class Main {
     public static void main(String[] args) {
         GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = graphics.getDefaultScreenDevice();
+//        GraphicsDevice device = graphics.getScreenDevices()[1];
+
+//        System.out.println(device.getDisplayMode());
 
 
-        int width = device.getDisplayMode().getWidth();
-        int height = device.getDisplayMode().getHeight();
+
+//        int width = device.getDisplayMode().getWidth();
+//        int height = device.getDisplayMode().getHeight();
 //
-//        width = 960;
-//        height = 540;
+//        width = 1280;
+//        height = 720;
 
 
         GameRenderable gameModel = new GameModel();
@@ -27,6 +31,10 @@ public class Main {
         GameController gameController = new GameController(gameRender, (GameControllable) gameModel);
 
         JFrame frame = new JFrame();
+
+//        frame.setSize(new Dimension(width, height));
+
+//        frame.setPreferredSize(new Dimension(1280, 720));
         frame.setContentPane(gameRender);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);

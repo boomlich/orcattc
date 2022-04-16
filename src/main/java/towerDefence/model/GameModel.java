@@ -1,5 +1,6 @@
 package towerDefence.model;
 
+import towerDefence.components.Collision;
 import towerDefence.controller.GameControllable;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.IGameLevel;
@@ -8,6 +9,8 @@ import towerDefence.level.levels.Level;
 import towerDefence.level.path.PathPoint;
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
+import towerDefence.view.Interaction.Interactable;
+import towerDefence.view.Interaction.InteractionManager;
 
 import java.awt.geom.Point2D;
 import java.util.HashMap;
@@ -22,14 +25,12 @@ public class GameModel implements GameRenderable, GameControllable {
     private WaveSpawner waveSpawner;
     private LevelManager levelManager;
     private int waveNumber;
-    GameMode gameMode;
-
-    private boolean placingTower = false;
+    private GameMode gameMode;
+    private ITower activeTower;
 
     public GameModel() {
         loadLevel(Level.A);
     }
-
 
     @Override
     public void loadLevel(Level level) {
@@ -51,13 +52,41 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void addTower(ITower target) {
-        placingTower = true;
 
+        if (!isActiveTowerInSpawnMode()) {
+            activeTower = target;
+        }
+    }
 
-        gameEntities.addTower(target);
+    @Override
+    public boolean hasActiveTower() {
+        return activeTower != null;
+    }
 
+    @Override
+    public boolean isActiveTowerInSpawnMode() {
+        if (hasActiveTower()) {
+            return activeTower.activeSpawnMode();
+        }
+        return false;
+    }
 
+    @Override
+    public void selectTower(ITower tower) {
+        activeTower = tower;
+    }
 
+    @Override
+    public void placeTower() {
+        gameEntities.addTower(activeTower);
+        activeTower.disableSpawnMode();
+        activeTower.setGameEntities(gameEntities);
+        activeTower = null;
+    }
+
+    @Override
+    public ITower getActiveTower() {
+        return activeTower;
     }
 
     @Override
@@ -74,6 +103,10 @@ public class GameModel implements GameRenderable, GameControllable {
     public void update() {
         double deltaSteps = 1;
 
+        if (hasActiveTower() && activeTower.activeSpawnMode()) {
+            activeTower.update(deltaSteps);
+        }
+
         if (gameMode == GameMode.INVASION_PHASE) {
             gameEntities.update(deltaSteps);
             waveSpawner.update(deltaSteps);
@@ -83,6 +116,14 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public int getFPS() {
         return 60;
+    }
+
+
+    @Override
+    public void updateMousePosition(Point2D mousePosition) {
+        if (hasActiveTower() && activeTower.activeSpawnMode()) {
+            activeTower.updatePosition(mousePosition);
+        }
     }
 
 
@@ -124,6 +165,11 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public List<PathPoint> getTrackPath() {
         return levelManager.getPath().getPathPoints();
+    }
+
+    @Override
+    public List<Collision> getPathCollision() {
+        return levelManager.getPath().getPathCollision();
     }
 
     @Override

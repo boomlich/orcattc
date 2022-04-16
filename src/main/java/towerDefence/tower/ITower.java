@@ -1,9 +1,14 @@
 package towerDefence.tower;
 
+import towerDefence.components.Collision;
+import towerDefence.components.TargetingMode;
+import towerDefence.enemies.IEnemy;
+import towerDefence.model.GameEntities;
 import towerDefence.view.IRenderableObject;
 import towerDefence.view.sprite.Sprite;
 
 import java.awt.geom.Point2D;
+import java.util.List;
 
 public interface ITower extends IRenderableObject {
 
@@ -23,4 +28,16 @@ public interface ITower extends IRenderableObject {
     public Point2D getBodyPosition();
 
     public Point2D getBasePosition();
+
+    public void disableSpawnMode();
+
+    public Collision getSearchRadius();
+
+    public boolean activeSpawnMode();
+
+    public void setGameEntities(GameEntities gameEntities);
+
+    public void setTargetingMode(TargetingMode targetingMode);
+
+    public IEnemy getTarget();
 }

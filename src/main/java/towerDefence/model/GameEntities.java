@@ -5,10 +5,10 @@ import towerDefence.enemies.IEnemy;
 import towerDefence.particles.Particle;
 import towerDefence.particles.ParticleEmitter;
 import towerDefence.tower.ITower;
-import towerDefence.tower.towerTypes.Rifleman;
 import towerDefence.view.IRenderableObject;
+import towerDefence.view.Interaction.Interactable;
+import towerDefence.view.Interaction.InteractionManager;
 
-import java.awt.geom.Point2D;
 import java.util.*;
 
 public class GameEntities {
@@ -26,16 +26,23 @@ public class GameEntities {
 
     public GameEntities() {
 
-        addTower(new Rifleman(new Point2D.Double(325, 250)));
-
-
+//        addTower(new Rifleman(new Point2D.Double(325, 250)));
     }
 
-    private List<IEnemy> sortEnemiesByProgression() {
+    private List<IEnemy> sortEnemiesByPathProgression() {
 
+        List<IEnemy> sortedEnemies = new ArrayList<>(List.copyOf(enemies));
 
-        return null;
+        sortedEnemies.sort(new Comparator<IEnemy>() {
+            @Override
+            public int compare(IEnemy o1, IEnemy o2) {
+                return Double.compare(o2.getPathProgression(), o1.getPathProgression());
+            }
+        });
+
+        return sortedEnemies;
     }
+
 
     /**
      * Take in renderable objects and sort them by their z-depth value, such that
@@ -65,7 +72,24 @@ public class GameEntities {
         return sortedObjects;
     }
 
+    private void updateTowers(double deltaSteps){
+        for (ITower tower: towers) {
+            tower.update(deltaSteps);
+        }
+    }
+
     protected void update(double deltaSteps) {
+
+//        System.out.println();
+//        System.out.println();
+//        System.out.println("Before: " + enemies);
+        enemies = sortEnemiesByPathProgression();
+//        System.out.println();
+//        System.out.println("After : " + enemies);
+
+
+
+        updateTowers(deltaSteps);
 
         List<IEnemy> deadEnemies = new ArrayList<>();
 
@@ -114,6 +138,7 @@ public class GameEntities {
 
     public void addTower(ITower tower){
         towers.add(tower);
+        InteractionManager.addIntractable((Interactable) tower);
         renderTowers = sortByZDepth(towers);
         System.out.println(renderTowers);
     }
@@ -148,6 +173,10 @@ public class GameEntities {
 
     public void removeEnemy(IEnemy enemy) {
         enemies.remove(enemy);
+    }
+
+    public List<IEnemy> getSortedEnemies() {
+        return enemies;
     }
 }
 

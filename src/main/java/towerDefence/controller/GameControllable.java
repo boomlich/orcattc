@@ -3,6 +3,8 @@ package towerDefence.controller;
 import towerDefence.level.levels.Level;
 import towerDefence.tower.ITower;
 
+import java.awt.geom.Point2D;
+
 public interface GameControllable {
 
     public void loadLevel(Level level);
@@ -21,4 +23,12 @@ public interface GameControllable {
      * @return number of frames per second
      */
     public int getFPS();
+
+    public void updateMousePosition(Point2D mousePosition);
+
+    public boolean isActiveTowerInSpawnMode();
+
+    public void selectTower(ITower tower);
+
+    public void placeTower();
 }

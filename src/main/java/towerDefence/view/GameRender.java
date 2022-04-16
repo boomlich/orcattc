@@ -16,6 +16,8 @@ public class GameRender extends JPanel {
     private double scaleX;
     private double scaleY;
 
+    private boolean fullscreen = true;
+
 
     public GameRender(GraphicsDevice device, GameRenderable gameModel){
         {
@@ -30,8 +32,10 @@ public class GameRender extends JPanel {
     }
 
     private void setScale() {
-        scaleX = (float) device.getDisplayMode().getWidth() / (float) gameWidth;
-        scaleY = (float) device.getDisplayMode().getHeight() / (float) gameHeight;
+        if (fullscreen) {
+            scaleX = (float) device.getDisplayMode().getWidth() / (float) gameWidth;
+            scaleY = (float) device.getDisplayMode().getHeight() / (float) gameHeight;
+        }
 
     }
 
@@ -61,8 +65,8 @@ public class GameRender extends JPanel {
         gameUI.paint(g2D);
 
 //        // Center lines
-        g2D.draw(new Rectangle2D.Double(gameWidth / 2.0 - 2, 0, 4, gameHeight));
-        g2D.draw(new Rectangle2D.Double(0, gameHeight / 2.0 -2, gameWidth, 4));
+//        g2D.draw(new Rectangle2D.Double(gameWidth / 2.0 - 2, 0, 4, gameHeight));
+//        g2D.draw(new Rectangle2D.Double(0, gameHeight / 2.0 -2, gameWidth, 4));
 
     }
 }

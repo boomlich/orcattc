@@ -14,7 +14,7 @@ import towerDefence.view.sprite.SpriteEngine;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
-public class Enemy implements IEnemy, IDamageable, CollisionObject {
+public class Enemy implements IEnemy, IDamageable {
 
     private int health;
     private DamageOverTime damageOverTime;
@@ -74,7 +74,11 @@ public class Enemy implements IEnemy, IDamageable, CollisionObject {
     @Override
     public void update(double deltaSteps) {
         splineMovement.update(deltaSteps);
-        collision.setPosition(getPosition());
+
+        Point2D pos = getPosition();
+        collision.setPosition(new Point2D.Double(
+                pos.getX() + getSprite().width / 2.0,
+                pos.getY() + collision.getRadius() / 2.0));
 
         if (splineMovement.movementDone()) {
             death();
@@ -116,11 +120,12 @@ public class Enemy implements IEnemy, IDamageable, CollisionObject {
     @Override
     public Point2D getPosition() {
         Point2D position = splineMovement.getPosition();
-        double offsetY = spriteEngine.getSprite().height / 2.0;
+        double offsetX = getSprite().width / 2.0;
+        double offsetY = getSprite().height;
 
         Point2D normal = splineMovement.getUnitNormalVector();
 
-        double x = position.getX() + normal.getX() * pathOffset;
+        double x = position.getX() + normal.getX() * pathOffset - offsetX;
         double y = position.getY() - offsetY + normal.getY() * pathOffset;
 
         return new Point2D.Double(x, y);
@@ -129,6 +134,16 @@ public class Enemy implements IEnemy, IDamageable, CollisionObject {
     @Override
     public Collision getCollision() {
         return collision;
+    }
+
+    @Override
+    public double getHealth() {
+        return health;
+    }
+
+    @Override
+    public double getPathProgression() {
+        return splineMovement.getPathProgression();
     }
 
     @Override

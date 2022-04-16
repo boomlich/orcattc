@@ -33,6 +33,11 @@ public class SplineMovement implements IMovement{
         return calculateNormalizedPosition(currentLength);
     }
 
+    @Override
+    public double getPathProgression() {
+        return currentLength / path.getTotalLength();
+    }
+
     private double getNormalisedOffset(double currentLength) {
         int i = 0;
         while (currentLength > path.getSegmentLength().get(i)) {

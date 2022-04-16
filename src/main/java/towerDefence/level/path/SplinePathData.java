@@ -1,6 +1,9 @@
 package towerDefence.level.path;
 
+import towerDefence.components.Collision;
+
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SplinePathData {
@@ -14,6 +17,8 @@ public class SplinePathData {
 
     private final Point2D[] splineControls;
 
+    private final List<Collision> pathCollision;
+
     protected SplinePathData(List<PathPoint> pathPoints, int segmentResolution,
                              List<Double> segmentLength, Point2D[] splineControls) {
         this.pathPoints = pathPoints;
@@ -21,6 +26,7 @@ public class SplinePathData {
         this.segmentLength = segmentLength;
         this.splineControls = splineControls;
         totalLength = calculateTotalLength(segmentLength);
+        pathCollision = calculatePathCollision(pathPoints, 4);
     }
 
     private double calculateTotalLength (List<Double> segmentLength) {
@@ -29,6 +35,30 @@ public class SplinePathData {
             totalLength += segment;
         }
         return totalLength;
+    }
+
+    /**
+     * Add a collision circle at a regular interval on the path points.
+     *
+     * @param pathPoints
+     * @param intervalLength the number of points between each collision circle
+     * @return List of all collisions circles distributed on the path points
+     */
+    private List<Collision> calculatePathCollision(List<PathPoint> pathPoints, int intervalLength) {
+
+        double radius = 32;
+
+        List<Collision> collisions = new ArrayList<>();
+        for (int i = 0; i < pathPoints.size(); i++) {
+            if (i % intervalLength == 0) {
+                Collision collision = new Collision(radius);
+                collision.setPosition(new Point2D.Double(
+                        pathPoints.get(i).coordinate.getX() - radius,
+                        pathPoints.get(i).coordinate.getY() - radius));
+                collisions.add(collision);
+            }
+        }
+        return collisions;
     }
 
     public List<PathPoint> getPathPoints() {
@@ -49,5 +79,9 @@ public class SplinePathData {
 
     public Point2D[] getSplineControls() {
         return splineControls;
+    }
+
+    public List<Collision> getPathCollision() {
+        return pathCollision;
     }
 }

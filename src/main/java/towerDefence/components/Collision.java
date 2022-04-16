@@ -1,6 +1,7 @@
 package towerDefence.components;
 
 import towerDefence.Math.MathHelperMethods;
+import towerDefence.view.IRenderableObject;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -25,16 +26,16 @@ public class Collision implements CollisionObject {
 
     /**
      * Sweap and prune algorithm for collision detection. Filter out potential
-     * objects that is outside of the x-values, before checking collision. If
-     * only singletarget selected, the first detected collision target is returned.
+     * objects that is outside the x-values, before checking collision. If
+     * only single-target selected, the first detected collision target is returned.
      *
      * @param targets potential objects
      * @return List of all objects collided with
      */
-    public List<CollisionObject> updateCollision(List<CollisionObject> targets) {
-        List<CollisionObject> detectedTargets = new ArrayList<>();
+    public <T extends CollisionObject> List<T> updateCollision(List<T> targets) {
+        List<T> detectedTargets = new ArrayList<>();
 
-        for (CollisionObject target: targets) {
+        for (T target: targets) {
             // Filter out enemies outside of bounds
             if (inBounds(target)) {
                 if (collisionDetected(target)) {
@@ -49,16 +50,15 @@ public class Collision implements CollisionObject {
     }
 
     private boolean inBounds(CollisionObject target) {
-        double targetMinX = target.getPosition().getX() - target.getCollision().getRadius();
-        double targetMaxX = target.getPosition().getX() + target.getCollision().getRadius();
-        return targetMinX > position.getX() - radius || targetMaxX < position.getX() + radius;
+        double targetMinX = target.getCollision().getPosition().getX() - target.getCollision().getRadius();
+        double targetMaxX = target.getCollision().getPosition().getX() + target.getCollision().getRadius();
+        return targetMinX < position.getX() + radius && targetMaxX > position.getX() - radius;
     }
 
     private boolean collisionDetected(CollisionObject target) {
-        double distance = MathHelperMethods.vectorLength(target.getPosition(), this.position);
+        double distance = MathHelperMethods.vectorLength(target.getCollision().getPosition(), this.position);
         return distance < target.getCollision().getRadius() + this.radius;
     }
-
 
     public double getRadius() {
         return radius;
@@ -77,4 +77,5 @@ public class Collision implements CollisionObject {
     public Collision getCollision() {
         return this;
     }
+
 }

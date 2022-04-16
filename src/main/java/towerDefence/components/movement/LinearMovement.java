@@ -28,6 +28,11 @@ public class LinearMovement implements IMovement {
         return position;
     }
 
+    @Override
+    public double getPathProgression() {
+        return 0;
+    }
+
     private Point2D applyVelocity(double deltaSteps, Point2D currentLocation) {
 
         double x = currentLocation.getX() + (velocity.getX() * deltaSteps);

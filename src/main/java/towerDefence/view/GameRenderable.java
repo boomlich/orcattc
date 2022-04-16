@@ -1,5 +1,6 @@
 package towerDefence.view;
 
+import towerDefence.components.Collision;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.path.PathPoint;
 import towerDefence.tower.ITower;
@@ -37,4 +38,10 @@ public interface GameRenderable {
     public List<PathPoint> getTrackPath();
 
     public Point2D[] getSplineControls();
+
+    public ITower getActiveTower();
+
+    public List<Collision> getPathCollision();
+
+    public boolean hasActiveTower();
 }

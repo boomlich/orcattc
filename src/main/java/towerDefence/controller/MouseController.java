@@ -1,5 +1,6 @@
 package towerDefence.controller;
 
+import towerDefence.tower.ITower;
 import towerDefence.tower.towerTypes.Rifleman;
 import towerDefence.view.GameRender;
 import towerDefence.view.Interaction.InteractCode;
@@ -23,7 +24,7 @@ public class MouseController implements MouseMotionListener, MouseListener {
         this.gameModel = gameModel;
     }
 
-    private void checkInteraction(Point mousePosition) {
+    private void checkInteraction(Point2D mousePosition) {
 
         for (Interactable object: InteractionManager.getIntractable()) {
 
@@ -53,12 +54,9 @@ public class MouseController implements MouseMotionListener, MouseListener {
         }
     }
 
-    private boolean inBounds(Point mousePoint, Interactable object) {
-        double scaleX = gameRender.getScaleX();
-        double scaleY = gameRender.getScaleY();
-
-        return mousePoint.x > object.getX() * scaleX && mousePoint.x < (object.getX() + object.getWidth()) * scaleX &&
-                mousePoint.y > object.getY() * scaleY && mousePoint.y < (object.getY() + object.getHeight()) * scaleY;
+    private boolean inBounds(Point2D mousePoint, Interactable object) {
+        return mousePoint.getX() > object.getX() && mousePoint.getX() < (object.getX() + object.getWidth()) &&
+                mousePoint.getY() > object.getY() && mousePoint.getY() < (object.getY() + object.getHeight());
     }
 
     private void toggleClick(Point mousePoint) {
@@ -69,10 +67,13 @@ public class MouseController implements MouseMotionListener, MouseListener {
         }
     }
 
-    private void clickPressed() {
+    private void clickPressed(Point2D mousePoint) {
+        checkInteraction(mousePoint);
         if (currentInteractable != null) {
             currentInteractable.toggleClick();
-            interactAction(currentInteractable.getInteractCode());
+            interactAction(currentInteractable.getInteractCode(), mousePoint);
+        } else {
+            interactEmptySpace();
         }
     }
 
@@ -92,7 +93,20 @@ public class MouseController implements MouseMotionListener, MouseListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        checkInteraction(e.getPoint());
+        Point2D scaledMousePos = scaleMousePosition(e.getPoint());
+
+        if (gameModel.isActiveTowerInSpawnMode()) {
+            gameModel.updateMousePosition(scaledMousePos);
+        } else {
+            checkInteraction(scaledMousePos);
+        }
+    }
+
+    private Point2D scaleMousePosition(Point2D mousePosition) {
+        double scaleX = gameRender.getScaleX();
+        double scaleY = gameRender.getScaleY();
+
+        return new Point2D.Double(mousePosition.getX() / scaleX, mousePosition.getY() / scaleY);
     }
 
     @Override
@@ -102,7 +116,8 @@ public class MouseController implements MouseMotionListener, MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        clickPressed();
+        Point2D scaledMousePos = scaleMousePosition(e.getPoint());
+        clickPressed(scaledMousePos);
     }
 
     @Override
@@ -120,20 +135,36 @@ public class MouseController implements MouseMotionListener, MouseListener {
 
     }
 
-    private void interactAction(InteractCode interactCode) {
+    private void interactAction(InteractCode interactCode, Point2D mousePosition) {
+
+        double mouseX = mousePosition.getX();
+        double mouseY = mousePosition.getY();
+
+        System.out.println(interactCode);
 
         if (interactCode == InteractCode.DEFAULT) {
             System.out.println("DEFAULT");
         }
         else if (interactCode == InteractCode.SPAWN_A) {
-            gameModel.addTower(new Rifleman(new Point2D.Double(100, 100)));
+            gameModel.addTower(new Rifleman(new Point2D.Double(mouseX, mouseY)));
         }
         else if (interactCode == InteractCode.SPAWN_B) {
-            gameModel.addTower(new Rifleman(new Point2D.Double(150, 150)));
+            gameModel.addTower(new Rifleman(new Point2D.Double(mouseX, mouseY)));
         }
         else if (interactCode == InteractCode.PLAY) {
             gameModel.startRound();
         }
+        else if (interactCode == InteractCode.TARGET_A) {
+            gameModel.selectTower((ITower) currentInteractable);
+        }
     }
 
+    private void interactEmptySpace() {
+
+        if (gameModel.isActiveTowerInSpawnMode()) {
+            gameModel.placeTower();
+        } else {
+            gameModel.selectTower(null);
+        }
+    }
 }
