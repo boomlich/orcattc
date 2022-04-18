@@ -1,23 +1,21 @@
 package towerDefence.enemies;
 
 import towerDefence.components.Animation;
-import towerDefence.components.CollisionObject;
 import towerDefence.components.Collision;
 import towerDefence.components.damage.Damage;
-import towerDefence.components.damage.DamageOverTime;
 import towerDefence.components.damage.IDamageable;
 import towerDefence.components.movement.SplineMovement;
-import towerDefence.view.IRenderableObject;
 import towerDefence.view.sprite.Sprite;
 import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.geom.Point2D;
+import java.sql.SQLOutput;
 import java.util.Random;
 
-public class Enemy implements IEnemy, IDamageable {
+public class Enemy implements IEnemy {
 
     private int health;
-    private DamageOverTime damageOverTime;
+    private Damage damageOverTime;
 
     private SplineMovement splineMovement;
     private double pathOffset;
@@ -137,26 +135,13 @@ public class Enemy implements IEnemy, IDamageable {
     }
 
     @Override
-    public double getHealth() {
+    public int getHealth() {
         return health;
     }
 
     @Override
     public double getPathProgression() {
         return splineMovement.getPathProgression();
-    }
-
-    @Override
-    public void applyDamageOverTime(Damage damage) {
-
-    }
-
-    @Override
-    public void applyDamage(int damageValue) {
-        health -= damageValue;
-        if (health < 0) {
-            death();
-        }
     }
 
     private void death() {
@@ -176,5 +161,13 @@ public class Enemy implements IEnemy, IDamageable {
     @Override
     public boolean isDead() {
         return isDead;
+    }
+
+    @Override
+    public void applyDamage(Damage damage) {
+        health = damage.applyDamage(health);
+        if (health <= 0) {
+            death();
+        }
     }
 }

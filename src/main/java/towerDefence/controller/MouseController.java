@@ -1,5 +1,6 @@
 package towerDefence.controller;
 
+import towerDefence.components.TargetingMode;
 import towerDefence.tower.ITower;
 import towerDefence.tower.towerTypes.Rifleman;
 import towerDefence.view.GameRender;
@@ -156,6 +157,14 @@ public class MouseController implements MouseMotionListener, MouseListener {
         }
         else if (interactCode == InteractCode.TARGET_A) {
             gameModel.selectTower((ITower) currentInteractable);
+        } else if (interactCode == InteractCode.TARGET_FIRST) {
+            gameModel.setTowerTargetingMode(TargetingMode.FIRST);
+        } else if (interactCode == InteractCode.TARGET_LAST) {
+            gameModel.setTowerTargetingMode(TargetingMode.LAST);
+        } else if (interactCode == InteractCode.TARGET_STRONG) {
+            gameModel.setTowerTargetingMode(TargetingMode.STRONGEST);
+        } else if (interactCode == InteractCode.TARGET_CLOSE) {
+            gameModel.setTowerTargetingMode(TargetingMode.CLOSEST);
         }
     }
 

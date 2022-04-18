@@ -1,11 +1,14 @@
 package towerDefence.view.UI.components;
 
 import towerDefence.view.ImageLoader;
+import towerDefence.view.Interaction.Interactable;
+import towerDefence.view.Interaction.InteractionManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class UIContainer extends UIComponentTemplate{
@@ -15,6 +18,8 @@ public class UIContainer extends UIComponentTemplate{
     private ContainerBorder border = new ContainerBorder(0);
     private ContainerPadding padding = new ContainerPadding(0);
     private Color background;
+
+    private boolean inactive;
 
     private UILayoutManager layoutManager;
 
@@ -73,6 +78,25 @@ public class UIContainer extends UIComponentTemplate{
         updateAllPositions(component);
     }
 
+    public void remove(UIComponent component) {
+        setAllSubComponentsInactive(component);
+        components.remove(component);
+        InteractionManager.removeInactive();
+    }
+
+    @Override
+    public void setAllSubComponentsInactive(UIComponent component) {
+        if (component instanceof Interactable) {
+            ((Interactable) component).setInactive();
+        }
+        if (component.getComponents() != null) {
+            for (UIComponent subcomponent: component.getComponents()) {
+                subcomponent.setAllSubComponentsInactive(subcomponent);
+            }
+        }
+    }
+
+    @Override
     public void updateAllPositions(UIComponent component) {
         if (component.getComponents() != null) {
             for (UIComponent subComponent: component.getComponents()) {
@@ -80,7 +104,6 @@ public class UIContainer extends UIComponentTemplate{
                 updateAllPositions(subComponent);
             }
         }
-
     }
 
     @Override

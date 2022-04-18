@@ -33,4 +33,6 @@ public interface UIComponent {
 
     public void updateAllPositions(UIComponent component);
 
+    public void setAllSubComponentsInactive(UIComponent component);
+
 }

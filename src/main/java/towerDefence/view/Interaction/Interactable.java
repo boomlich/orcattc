@@ -17,4 +17,6 @@ public interface Interactable {
     public void toggleClick();
 
     public InteractCode getInteractCode();
+
+    public void setInactive();
 }

@@ -51,7 +51,11 @@ public class UILayoutManager {
         // Find total length of the horizontal sequence with the new component is included
         int length = componentSize;
         for (UIComponent equalComponent: components) {
-            length += equalComponent.getWidth() + padding;
+            if (xAxis) {
+                length += equalComponent.getWidth() + padding;
+            } else {
+                length += equalComponent.getHeight() + padding;
+            }
         }
 
         // Distribute components evenly over the new length
@@ -212,11 +216,6 @@ public class UILayoutManager {
                 x = rightXValue;
                 y = calcAxisLastRowOrColumn(y, height, component.getHeight(), false, padding.vertical, border.south, equalAlignmentComponents);
             }
-        }
-
-        // Adjust for text, which has point of origin at bottom left, instead of top left as other components.
-        if (component.getClass().equals(UITextBox.class)) {
-            y += component.getHeight();
         }
 
         return new Point(x, y);

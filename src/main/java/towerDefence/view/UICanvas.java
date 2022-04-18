@@ -13,12 +13,14 @@ public class UICanvas implements ICanvas {
 
     private final GameRenderable gameModel;
     private final UIContainer UIContainer;
+    private final UI_HUD HUD;
 
 
     public UICanvas(GameRenderable gameModel, int width, int height) {
         this.gameModel = gameModel;
         UIContainer = new UIContainer(width, height);
-        UIContainer.add(new UI_HUD(width, height));
+        HUD = new UI_HUD(width, height, gameModel);
+        UIContainer.add(HUD);
     }
 
     @Override
@@ -29,10 +31,8 @@ public class UICanvas implements ICanvas {
         // Draw active/highlighted tower
         if (gameModel.hasActiveTower()) {
             ITower tower = gameModel.getActiveTower();
-            int x = (int) tower.getBodyPosition().getX();
-            int y = (int) tower.getBodyPosition().getY();
-            double radius = tower.getSearchRadius().getRadius();
 
+            double radius = tower.getSearchRadius().getRadius();
             double collisionX = tower.getSearchRadius().getPosition().getX() - radius;
             double collisionY = tower.getSearchRadius().getPosition().getY() - radius;
 
@@ -55,7 +55,17 @@ public class UICanvas implements ICanvas {
 
             // Center of Collision
             g2D.draw(new Rectangle2D.Double(tower.getSearchRadius().getPosition().getX(), tower.getSearchRadius().getPosition().getY(), 1, 1));
-//            g2D.draw(new Rectangle2D.Double(tower.getPlacementRadius().getPosition().getX(), tower.getPlacementRadius().getPosition().getY(), 2, 2));
+        }
+    }
+
+    @Override
+    public void update(double deltaSteps) {
+        if (gameModel.hasActiveTower()) {
+            if (!gameModel.getActiveTower().activeSpawnMode()) {
+                HUD.addTowerMenu(gameModel.getActiveTower());
+            }
+        } else {
+            HUD.removeTowerMenu();
         }
     }
 

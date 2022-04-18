@@ -1,7 +1,9 @@
 package towerDefence.controller;
 
+import towerDefence.components.TargetingMode;
 import towerDefence.level.levels.Level;
 import towerDefence.tower.ITower;
+import towerDefence.view.Interaction.InteractCode;
 
 import java.awt.geom.Point2D;
 
@@ -17,7 +19,9 @@ public interface GameControllable {
 
     public void sellTower(ITower target);
 
-    public void update();
+    public void setTowerTargetingMode(TargetingMode targetingMode);
+
+    public void update(double deltaSteps);
 
     /**
      * @return number of frames per second

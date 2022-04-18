@@ -6,7 +6,10 @@ public enum InteractCode {
     SPAWN_B,
     SPAWN_C,
     SPAWN_D,
-    FIRE_MODE,
+    TARGET_FIRST,
+    TARGET_LAST,
+    TARGET_CLOSE,
+    TARGET_STRONG,
     PLAY,
     UPGRADE,
     SELL,
@@ -17,4 +20,5 @@ public enum InteractCode {
     TARGET_B,
     TARGET_C,
     TARGET_D,
+    INACTIVE
 }

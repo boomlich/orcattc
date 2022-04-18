@@ -3,19 +3,18 @@ package towerDefence.enemies;
 import towerDefence.components.Collision;
 import towerDefence.components.CollisionObject;
 import towerDefence.components.damage.Damage;
+import towerDefence.components.damage.IDamageable;
 import towerDefence.model.GameEntities;
 import towerDefence.view.IRenderableObject;
 import towerDefence.view.sprite.Sprite;
 
 import java.awt.geom.Point2D;
 
-public interface IEnemy extends IRenderableObject, CollisionObject {
+public interface IEnemy extends IRenderableObject, CollisionObject, IDamageable {
 
     public void update(double deltaSteps);
 
     public Point2D getPosition();
-
-    public void applyDamageOverTime(Damage damage);
 
     public Sprite getSprite();
 
@@ -25,5 +24,5 @@ public interface IEnemy extends IRenderableObject, CollisionObject {
 
     public double getPathProgression();
 
-    public double getHealth();
+    public int getHealth();
 }

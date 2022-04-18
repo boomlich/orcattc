@@ -7,4 +7,6 @@ public interface IRenderableObject {
     public int getZDepth();
 
     public Sprite getSprite();
+
+    public void update(double deltaSteps);
 }

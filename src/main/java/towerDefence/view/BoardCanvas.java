@@ -1,6 +1,7 @@
 package towerDefence.view;
 
 import towerDefence.components.Collision;
+import towerDefence.components.Projectile;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.path.PathPoint;
 import towerDefence.tower.ITower;
@@ -89,7 +90,7 @@ public class BoardCanvas implements ICanvas{
             HashMap<Integer, List<ITower>> towers = gameModel.getTowers();
             if (towers.containsKey(i)) {
                 for (ITower tower: towers.get(i)) {
-                    DrawGraphics.drawSprite(g2D, tower.getBaseSprite(), tower.getBasePosition());
+//                    DrawGraphics.drawSprite(g2D, tower.getBaseSprite(), tower.getBasePosition());
                     DrawGraphics.drawSprite(g2D, tower.getBodySprite(), tower.getBodyPosition());
 
 
@@ -119,5 +120,16 @@ public class BoardCanvas implements ICanvas{
                 }
             }
         }
+
+
+        for (Projectile projectile: gameModel.getProjectiles()) {
+            g2D.setColor(Color.RED);
+            g2D.fill(new Ellipse2D.Double(projectile.getPosition().getX()-5, projectile.getPosition().getY() - 5, 10, 10));
+        }
+    }
+
+    @Override
+    public void update(double deltaSteps) {
+
     }
 }

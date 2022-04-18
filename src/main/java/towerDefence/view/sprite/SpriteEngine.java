@@ -48,27 +48,14 @@ public class SpriteEngine {
 //     * @param endFrame End frame of the sprite-sheet of the animation
 //     * @param loopAnimation set true to enable looping of the animation
      */
-//    public void start(int startFrame, int endFrame, boolean loopAnimation) {
-//        hasActiveAnimation = true;
-//        this.startFrame = startFrame;
-//        currentFrame = startFrame;
-//        previousFrame = startFrame - 1;
-//        this.endFrame = endFrame + 2;
-//        this.loopAnimation = loopAnimation;
-//
-//        playAnimation(1);
-//    }
-
     public void start(Animation animation) {
         if (animation != currentAnimation) {
-//            System.out.println("Anim start: " + animation.endFrame);
             this.currentAnimation = animation;
             this.startFrame = animation.startFrame;
             currentFrame = startFrame;
             previousFrame = startFrame - 1;
             this.endFrame = animation.endFrame;
             this.loopAnimation = animation.loop;
-//            System.out.println(startFrame + "  ::  " + endFrame + "  ::  " + loopAnimation);
         }
 
     }
@@ -80,7 +67,6 @@ public class SpriteEngine {
 
     public void update(double deltaSteps) {
         if (currentAnimation != null) {
-//            System.out.println("Current anim:" + currentAnimation);
             playAnimation(deltaSteps);
         }
     }
@@ -108,7 +94,15 @@ public class SpriteEngine {
     }
 
     public void setDefaultSprite() {
-        sprite = new Sprite(spriteSheet.grabSprite(defaultFrame));
+        sprite = grabFrame(defaultFrame);
+    }
+
+    public void setFrame(int frameNumber) {
+        sprite = grabFrame(frameNumber);
+    }
+
+    public Sprite grabFrame(int frameNumber) {
+        return new Sprite(spriteSheet.grabSprite(frameNumber));
     }
 
     public Sprite getSprite() {

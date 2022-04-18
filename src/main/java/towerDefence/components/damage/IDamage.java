@@ -2,7 +2,7 @@ package towerDefence.components.damage;
 
 public interface IDamage {
 
-    public void applyDamage(IDamageable target);
+    public int applyDamage(int health);
 
     public int getDamageValue();
 }

@@ -67,4 +67,18 @@ public class MathHelperMethodsTest {
 
         System.out.println(angle);
     }
+
+    @Test
+    void vectorAngleTest() {
+        Point2D pointA = new Point2D.Double(3, 3);
+        Point2D pointB = new Point2D.Double(5, 1);
+
+        Point2D vector = MathHelperMethods.pointsToVector(pointA, pointB);
+
+        System.out.println(vector);
+
+        double angle = MathHelperMethods.calculateVectorAngle(vector);
+
+        System.out.println(Math.toDegrees(angle));
+    }
 }

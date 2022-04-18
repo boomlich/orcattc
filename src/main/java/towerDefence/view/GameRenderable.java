@@ -1,6 +1,7 @@
 package towerDefence.view;
 
 import towerDefence.components.Collision;
+import towerDefence.components.Projectile;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.path.PathPoint;
 import towerDefence.tower.ITower;
@@ -29,7 +30,7 @@ public interface GameRenderable {
      */
     public HashMap<Integer, List<IEnemy>> getEnemies();
 
-    public void getProjectiles();
+    public List<Projectile> getProjectiles();
 
     public void getParticles();
 
@@ -44,4 +45,6 @@ public interface GameRenderable {
     public List<Collision> getPathCollision();
 
     public boolean hasActiveTower();
+
+    public boolean isActiveTowerInSpawnMode();
 }

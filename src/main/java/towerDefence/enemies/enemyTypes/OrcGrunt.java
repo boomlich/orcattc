@@ -16,7 +16,7 @@ public class OrcGrunt extends Enemy {
         super(100,
                 new SplineMovement(path, 1),
                 new SpriteEngine("Sheet_OrcAxer.png", 2, 8, 10, 0),
-                new Collision(22),
+                new Collision(12),
                 new Animation(0, 8, true),
                 new Animation(8, 16, true),
                 new Animation(0, 0, false));

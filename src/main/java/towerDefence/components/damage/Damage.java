@@ -2,19 +2,34 @@ package towerDefence.components.damage;
 
 public class Damage implements IDamage {
 
-    private int damageValue = 100;
+    private int damage = 100;
+    private int duration = 0;
+    private int totalTicks = 0;
 
-    public Damage(int damageValue) {
-        this.damageValue = damageValue;
+    public Damage(int totalDamage, int totalTicks, int duration) {
+        this.damage = totalDamage;
+        this.totalTicks = totalTicks;
+        this.duration = duration;
+    }
+
+    public Damage() {
+    }
+
+    public Damage(int damage) {
+        this.damage = damage;
+    }
+
+    public boolean isDamageOverTime() {
+        return duration != 0;
     }
 
     @Override
-    public void applyDamage(IDamageable target) {
-        target.applyDamage(damageValue);
+    public int applyDamage(int health) {
+        return health - damage;
     }
 
     @Override
     public int getDamageValue() {
-        return 0;
+        return damage;
     }
 }

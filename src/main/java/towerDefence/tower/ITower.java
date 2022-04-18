@@ -2,6 +2,7 @@ package towerDefence.tower;
 
 import towerDefence.components.Collision;
 import towerDefence.components.TargetingMode;
+import towerDefence.components.Weapon;
 import towerDefence.enemies.IEnemy;
 import towerDefence.model.GameEntities;
 import towerDefence.view.IRenderableObject;
@@ -43,5 +44,19 @@ public interface ITower extends IRenderableObject {
     public IEnemy getTarget();
 
     public boolean hasValidPlacement();
+
+    public String getPortraitPath();
+
+    public String getName();
+
+    public int getTotalKills();
+
+    public int getDamageDone();
+
+    public void addKills(int deltaKills);
+
+    public void addDamageDone(int deltaDamage);
+
+    public Weapon getWeapon();
 
 }

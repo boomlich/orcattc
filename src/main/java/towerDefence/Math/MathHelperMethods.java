@@ -21,7 +21,7 @@ public class MathHelperMethods {
 
     public static Point2D pointsToVector(Point2D pointA, Point2D pointB) {
         double x = pointB.getX() - pointA.getX();
-        double y = pointB.getY() - pointA.getY();
+        double y = pointA.getY() - pointB.getY();
 
         return new Point2D.Double(x, y);
     }
@@ -71,4 +71,16 @@ public class MathHelperMethods {
 
         return new Point2D.Double(xValue, yValue);
     }
+
+    public static double calculateVectorAngle(Point2D direction) {
+        double sinAngle = direction.getY() / Math.sqrt(Math.pow(direction.getX(), 2) + Math.pow(direction.getY(), 2));
+
+        if (direction.getX() < 0) {
+            return Math.PI - Math.asin(sinAngle);
+        } else {
+            return Math.asin(sinAngle);
+        }
+    }
+
+
 }

@@ -88,16 +88,19 @@ public class GameEntities {
 
     protected void update(double deltaSteps) {
 
-//        System.out.println();
-//        System.out.println();
-//        System.out.println("Before: " + enemies);
         enemies = sortEnemiesByPathProgression();
-//        System.out.println();
-//        System.out.println("After : " + enemies);
-
-
 
         updateTowers(deltaSteps);
+
+        List<Projectile> deadProjectiles = new ArrayList<>();
+        for (Projectile projectile: projectiles) {
+            projectile.update(deltaSteps);
+            if (projectile.isDead()) {
+                deadProjectiles.add(projectile);
+            }
+        }
+        removeDead(deadProjectiles, projectiles);
+
 
         List<IEnemy> deadEnemies = new ArrayList<>();
 
@@ -185,6 +188,10 @@ public class GameEntities {
 
     public List<IEnemy> getSortedEnemies() {
         return enemies;
+    }
+
+    public void addProjectile(Projectile projectile) {
+        projectiles.add(projectile);
     }
 }
 

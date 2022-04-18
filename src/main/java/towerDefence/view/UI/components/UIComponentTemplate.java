@@ -42,6 +42,10 @@ public class UIComponentTemplate implements UIComponent{
 
     @Override
     public void updateAllPositions(UIComponent component) {
+    }
+
+    @Override
+    public void setAllSubComponentsInactive(UIComponent component){
 
     }
 

@@ -1,5 +1,6 @@
 package towerDefence.tower;
 
+import towerDefence.Math.MathHelperMethods;
 import towerDefence.components.*;
 import towerDefence.enemies.IEnemy;
 import towerDefence.model.GameEntities;
@@ -28,15 +29,23 @@ public class Tower implements ITower, Interactable{
     private IEnemy target;
     private boolean validPlacement;
 
-    public Tower(Point2D position, Collision searchRadius, Collision placementRadius, Weapon weapon,
-                 SpriteEngine spriteBody){
+    // Tower menu options
+    private final String portraitPath;
+    private final String towerName;
+    private int totalKills = 0;
+    private int totalDamageDone = 0;
+
+    public Tower(String towerName, String portraitPath, Point2D position, Collision searchRadius, Collision placementRadius,
+                 Weapon weapon, SpriteEngine spriteBody){
+        this.towerName = towerName;
+        this.portraitPath = portraitPath;
         this.position = position;
         this.searchRadius = searchRadius;
         this.placementRadius = placementRadius;
         this.weapon = weapon;
         this.spriteBody = spriteBody;
         spriteBase = new SpriteEngine("TestSpriteSheet.png", 4, 5, 10, 10);
-        targeting = new Targeting(TargetingMode.CLOSEST, this);
+        targeting = new Targeting(TargetingMode.FIRST, this);
     }
 
     @Override
@@ -52,16 +61,50 @@ public class Tower implements ITower, Interactable{
         if (!spawnMode) {
             // Detect enemies
             List<IEnemy> detectedEnemies = searchRadius.updateCollision(gameEntities.getSortedEnemies());
-            // Target an enemy
+            // Target and fire at enemy
             if (detectedEnemies.size() > 0) {
                 target = targeting.getTarget(detectedEnemies);
+                updateTargetDirection(target);
+                updateWeapon(deltaSteps, target);
             } else if (target != null){
                 target = null;
             }
         } else {
             validPlacement = positionNotBlocked();
-            System.out.println(validPlacement);
         }
+    }
+
+    private void updateWeapon(double deltaSteps, IEnemy target) {
+        weapon.setProjectileSpawn(searchRadius.getPosition());
+        weapon.setTarget(target.getCollision().getPosition());
+        weapon.update(deltaSteps);
+    }
+
+    private void updateTargetDirection(IEnemy target) {
+
+        int numberOfRotations = 16;
+        double anglePerRotation = 2.0 * Math.PI / numberOfRotations;
+        double firstFrameRange = -(Math.PI + anglePerRotation) / 2.0;
+
+        Point2D vectorToTarget = MathHelperMethods.pointsToVector(searchRadius.getPosition(), target.getCollision().getPosition());
+        double angleToTarget = MathHelperMethods.calculateVectorAngle(vectorToTarget);
+
+        if (angleToTarget < Math.PI && angleToTarget > Math.PI - anglePerRotation / 2.0) {
+            spriteBody.setFrame(8);
+        } else if (angleToTarget < firstFrameRange) {
+            spriteBody.setFrame(0);
+        } else {
+            spriteBody.setFrame(calculateFrameNumber(firstFrameRange, angleToTarget, anglePerRotation));
+        }
+    }
+
+    private int calculateFrameNumber(double firstFrameRange, double angleToTarget, double anglePerRotation) {
+        int frameNumber = (int) Math.ceil(Math.abs(firstFrameRange - angleToTarget) / anglePerRotation) - 1;
+
+        if (angleToTarget > Math.PI) {
+            frameNumber ++;
+        }
+        return frameNumber;
     }
 
     private boolean positionNotBlocked() {
@@ -85,6 +128,7 @@ public class Tower implements ITower, Interactable{
     @Override
     public void setGameEntities(GameEntities gameEntities) {
         this.gameEntities = gameEntities;
+        weapon.setGameEntities(gameEntities);
     }
 
     @Override
@@ -100,6 +144,41 @@ public class Tower implements ITower, Interactable{
     @Override
     public boolean hasValidPlacement() {
         return validPlacement;
+    }
+
+    @Override
+    public String getPortraitPath() {
+        return portraitPath;
+    }
+
+    @Override
+    public String getName() {
+        return towerName;
+    }
+
+    @Override
+    public int getTotalKills() {
+        return totalKills;
+    }
+
+    @Override
+    public int getDamageDone() {
+        return totalDamageDone;
+    }
+
+    @Override
+    public void addKills(int deltaKills) {
+        totalKills += deltaKills;
+    }
+
+    @Override
+    public void addDamageDone(int deltaDamage) {
+        totalDamageDone += deltaDamage;
+    }
+
+    @Override
+    public Weapon getWeapon() {
+        return weapon;
     }
 
     @Override
@@ -199,12 +278,15 @@ public class Tower implements ITower, Interactable{
 
     @Override
     public void toggleClick() {
-        spriteBody = new SpriteEngine("TestSpriteSheet.png", 4, 5, 10, 15);
-        spriteBody.start(new Animation(0, 11, false));
     }
 
     @Override
     public InteractCode getInteractCode() {
         return interactCode;
+    }
+
+    @Override
+    public void setInactive() {
+        interactCode = InteractCode.INACTIVE;
     }
 }

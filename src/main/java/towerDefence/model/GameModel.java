@@ -1,6 +1,8 @@
 package towerDefence.model;
 
 import towerDefence.components.Collision;
+import towerDefence.components.Projectile;
+import towerDefence.components.TargetingMode;
 import towerDefence.controller.GameControllable;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.IGameLevel;
@@ -105,8 +107,14 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     @Override
-    public void update() {
-        double deltaSteps = 1;
+    public void setTowerTargetingMode(TargetingMode targetingMode) {
+        if (hasActiveTower()) {
+            activeTower.setTargetingMode(targetingMode);
+        }
+    }
+
+    @Override
+    public void update(double deltaSteps) {
 
         if (hasActiveTower() && activeTower.activeSpawnMode()) {
             activeTower.update(deltaSteps);
@@ -153,8 +161,8 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     @Override
-    public void getProjectiles() {
-
+    public List<Projectile> getProjectiles() {
+        return gameEntities.getProjectiles();
     }
 
     @Override

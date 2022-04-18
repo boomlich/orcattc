@@ -30,8 +30,11 @@ public class GameController implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        gameModel.update();
+        double detaSteps = 1;
+
+        gameModel.update(detaSteps);
         gameRender.repaint();
+        gameRender.getGameUI().update(detaSteps);
     }
 
     @Override

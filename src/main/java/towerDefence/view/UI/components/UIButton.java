@@ -130,4 +130,9 @@ public class UIButton extends UIContainer implements Interactable {
     public InteractCode getInteractCode() {
         return interactCode;
     }
+
+    @Override
+    public void setInactive() {
+        interactCode = InteractCode.INACTIVE;
+    }
 }

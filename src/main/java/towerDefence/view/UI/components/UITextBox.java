@@ -6,16 +6,16 @@ import java.awt.image.BufferedImage;
 public class UITextBox extends UIComponentTemplate {
 
     private String text;
-    private Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 15);
+    private Font font = new Font("Calibri", Font.BOLD, 10);
     private final Graphics2D graphics;
-    private Color color = Color.BLACK;
+    private Color color;
 
     public UITextBox(String text) {
-        this(text, 15, Color.DARK_GRAY);
+        this(text, 10, Color.WHITE);
     }
 
     public UITextBox(String text, int size) {
-        this(text, size, Color.DARK_GRAY);
+        this(text, size, Color.WHITE);
     }
 
     public UITextBox(String text, int size, Color color) {
@@ -25,8 +25,6 @@ public class UITextBox extends UIComponentTemplate {
         setSize(size);
         this.color = color;
     }
-
-
 
     private Graphics2D generateGraphics() {
         BufferedImage graphicsImage = new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR);
@@ -39,6 +37,7 @@ public class UITextBox extends UIComponentTemplate {
 
     public void setFont(Font font) {
         this.font = font;
+        updateDimensions();
     }
 
     public Font getFont() {
@@ -60,8 +59,12 @@ public class UITextBox extends UIComponentTemplate {
 
     public void setSize(int size) {
         font = new Font(font.getFontName(), font.getStyle(), size);
+        updateDimensions();
+    }
+
+    public void updateDimensions() {
         setWidth(calculateStringWidth());
-        setHeight(size);
+        setHeight(font.getSize());
     }
 
     @Override
@@ -69,5 +72,10 @@ public class UITextBox extends UIComponentTemplate {
         g2D.setColor(color);
         g2D.setFont(font);
         g2D.drawString(text, getX(), getY());
+    }
+
+    @Override
+    public void setY(int y) {
+        super.setY(y + getHeight());
     }
 }
