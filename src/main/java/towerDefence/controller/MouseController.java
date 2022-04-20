@@ -173,6 +173,7 @@ public class MouseController implements MouseMotionListener, MouseListener {
         }
         else if (interactCode == InteractCode.PAUSE) {
             gameModel.togglePauseGame();
+            gameRender.getGameUI().togglePauseGame();
 
         }
     }

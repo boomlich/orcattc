@@ -8,5 +8,5 @@ public interface ICanvas {
 
     void update(double deltaSteps);
 
-    void pauseGame();
+    void togglePauseGame();
 }

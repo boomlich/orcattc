@@ -77,7 +77,8 @@ public class UICanvas implements ICanvas {
     }
 
     @Override
-    public void pauseGame() {
+    public void togglePauseGame() {
+
 
     }
 
