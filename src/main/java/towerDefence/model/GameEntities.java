@@ -179,7 +179,6 @@ public class GameEntities {
 
     public void addEnemy(IEnemy enemy) {
         enemies.add(enemy);
-        System.out.println("Enemy added:     " + enemy);
     }
 
     public void removeEnemy(IEnemy enemy) {

@@ -35,9 +35,10 @@ public class GameRender extends JPanel {
     }
 
     private void setScale() {
+        double dpiScale = Toolkit.getDefaultToolkit().getScreenResolution() / 96.0;
         if (fullscreen) {
-            scaleX = (float) device.getDisplayMode().getWidth() / (float) gameWidth;
-            scaleY = (float) device.getDisplayMode().getHeight() / (float) gameHeight;
+            scaleX = ((float) device.getDisplayMode().getWidth() / (float) gameWidth) / dpiScale;
+            scaleY = ((float) device.getDisplayMode().getHeight() / (float) gameHeight) / dpiScale;
         }
 
     }

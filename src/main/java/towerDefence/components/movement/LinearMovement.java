@@ -8,14 +8,24 @@ public class LinearMovement implements IMovement {
 
     private Point2D velocity;
     private Point2D position;
+    private Point2D targetPoint;
 
     public LinearMovement(double speed, Point2D spawnPoint, Point2D targetPoint) {
         calculateVelocity(spawnPoint, targetPoint, speed);
         position = spawnPoint;
+        this.targetPoint = targetPoint;
     }
 
     private void calculateVelocity(Point2D spawnPoint, Point2D targetPoint, double speed) {
         velocity = MathHelperMethods.vectorWithAmplitude(spawnPoint, targetPoint, speed);
+    }
+
+    public Point2D getVelocity() {
+        return velocity;
+    }
+
+    public Point2D getTargetPoint() {
+        return targetPoint;
     }
 
     @Override

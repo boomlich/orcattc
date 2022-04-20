@@ -2,9 +2,9 @@ package towerDefence.components;
 
 import towerDefence.components.damage.Damage;
 import towerDefence.components.damage.IDamageable;
-import towerDefence.components.movement.IMovement;
 import towerDefence.components.movement.LinearMovement;
 import towerDefence.enemies.IEnemy;
+import towerDefence.model.GameEntities;
 import towerDefence.tower.ITower;
 
 import java.awt.geom.Point2D;
@@ -15,18 +15,17 @@ public class Projectile implements IDamageable {
 
     private int health;
     private Damage damage;
-    private Damage penetrationDamage = new Damage(200);
+    private final Damage penetrationDamage = new Damage(100);
     private double speed;
     private Collision hitDetection;
     private Collision damageRadius;
-    private IMovement movement;
+    private LinearMovement movement;
     private List<IEnemy> enemies;
     private final List<IEnemy> alreadyDamagedEnemies = new ArrayList<>();
     private ITower towerOwner;
 
 
     public Projectile() {
-
     }
 
     public Projectile(int health, Damage damage, double speed, Collision hitDetection) {
@@ -36,7 +35,14 @@ public class Projectile implements IDamageable {
         this.hitDetection = hitDetection;
     }
 
-    public Projectile makeCopyWithTowerOwner() {
+    public void fireProjectile(Point2D spawn, Point2D target, ITower towerOwner, GameEntities gameEntities) {
+        this.setTowerOwner(towerOwner);
+        this.setLinearMovement(spawn, target);
+        this.setEnemies(gameEntities.getSortedEnemies());
+        gameEntities.addProjectile(this);
+    }
+
+    public Projectile makeCopy() {
         return new Projectile(health, damage, speed, hitDetection);
     }
 
@@ -53,8 +59,16 @@ public class Projectile implements IDamageable {
         updateCollision(deltaSteps);
     }
 
-    public void setPenetrationDamage(Damage penetrationDamage) {
-        this.penetrationDamage = penetrationDamage;
+    protected ITower getTowerOwner() {
+        return towerOwner;
+    }
+
+    protected List<IEnemy> getEnemies() {
+        return enemies;
+    }
+
+    protected LinearMovement getMovement() {
+        return movement;
     }
 
     private void updateCollision(double deltaSteps) {
@@ -63,8 +77,8 @@ public class Projectile implements IDamageable {
 
         if (detectedEnemies.size() > 0) {
 
+            // Apply self damage
             this.applyDamage(penetrationDamage);
-
 
             if (isSingleTarget()) {
                 IEnemy target = detectedEnemies.get(0);
@@ -73,8 +87,8 @@ public class Projectile implements IDamageable {
                 if (!alreadyDamagedEnemies.contains(target)) {
                     targetHit(target);
                 }
-
-            } else {
+            }
+            else {
                 List<IEnemy> enemiesToDamage = damageRadius.updateCollision(detectedEnemies);
                 for (IEnemy enemy: enemiesToDamage) {
                     // Only apply damage to new targets
@@ -83,7 +97,6 @@ public class Projectile implements IDamageable {
                     }
                 }
             }
-
         }
     }
 
@@ -131,5 +144,13 @@ public class Projectile implements IDamageable {
     @Override
     public void applyDamage(Damage damage) {
         health = damage.applyDamage(health);
+    }
+
+    protected void increasePenetration (int penetrationDelta) {
+        health += penetrationDamage.getDamageValue() * penetrationDelta;
+    }
+
+    protected void increaseDamage(double percentageDelta) {
+        damage = new Damage((int) (damage.getDamageValue() + (1.0 + percentageDelta)));
     }
 }

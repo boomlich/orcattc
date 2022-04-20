@@ -97,8 +97,10 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     @Override
-    public void upgradeTower(ITower target) {
-
+    public void upgradeTower() {
+        if (activeTower != null) {
+            activeTower.upgradeRank();
+        }
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface ITower extends IRenderableObject {
     /**
      * Upgrade the current rank of the tower.
      */
-    public void updateRank();
+    public void upgradeRank();
 
     public void update(double deltaSteps);
 

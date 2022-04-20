@@ -2,9 +2,11 @@ package towerDefence.tower.towerTypes;
 
 import towerDefence.components.Collision;
 import towerDefence.components.Projectile;
+import towerDefence.components.ProjectileTripleShot;
 import towerDefence.components.Weapon;
 import towerDefence.components.damage.Damage;
 import towerDefence.tower.Tower;
+import towerDefence.tower.TowerUpgrades;
 import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.geom.Point2D;
@@ -22,5 +24,21 @@ public class Rifleman extends Tower {
                 new SpriteEngine("graphics/tower/Sprite_Tower_RifleMan.png", 2, 9, 10, 4));
 
         getWeapon().setTowerOwner(this);
+    }
+
+    @Override
+    protected void rank1() {
+        setSearchRadius(TowerUpgrades.upgradeDetectionRange(getSearchRadius(), 0.25));
+    }
+
+    @Override
+    protected void rank2() {
+        getWeapon().increasePenetration(5);
+        getWeapon().increaseDamage(2);
+    }
+
+    @Override
+    protected void rank3() {
+
     }
 }

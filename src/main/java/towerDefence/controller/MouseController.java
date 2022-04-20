@@ -141,10 +141,9 @@ public class MouseController implements MouseMotionListener, MouseListener {
         double mouseX = mousePosition.getX();
         double mouseY = mousePosition.getY();
 
-        System.out.println(interactCode);
+//        System.out.println(interactCode);
 
         if (interactCode == InteractCode.DEFAULT) {
-            System.out.println("DEFAULT");
         }
         else if (interactCode == InteractCode.SPAWN_A) {
             gameModel.addTower(new Rifleman(new Point2D.Double(mouseX, mouseY)));
@@ -165,6 +164,10 @@ public class MouseController implements MouseMotionListener, MouseListener {
             gameModel.setTowerTargetingMode(TargetingMode.STRONGEST);
         } else if (interactCode == InteractCode.TARGET_CLOSE) {
             gameModel.setTowerTargetingMode(TargetingMode.CLOSEST);
+        } else if (interactCode == InteractCode.UPGRADE) {
+            gameModel.upgradeTower();
+        } else if (interactCode == InteractCode.SELL) {
+
         }
     }
 

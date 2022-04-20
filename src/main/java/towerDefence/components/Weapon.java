@@ -10,11 +10,23 @@ public class Weapon {
      * Time in ms between each shot
      */
     private int fireFrequency;
+
+    /**
+     * Type of projectile that the weapon fires
+     */
     private Projectile projectile;
+
+    /**
+     * Location where the projectile spawns upon the weapon firing
+     */
     private Point2D projectileSpawn = new Point2D.Double(270, 500);
     private int fireCountdown;
     private Point2D target = new Point2D.Double(0, 0);
     private GameEntities gameEntities;
+
+    /**
+     * Owner of the weapon
+     */
     private ITower tower;
 
 
@@ -35,7 +47,7 @@ public class Weapon {
     }
 
     public void update(double deltaSteps) {
-        fireCountdown -= 1000/60 * deltaSteps;
+        fireCountdown -= fireFrequency/60 * deltaSteps;
 
         if (fireCountdown < 0) {
             fireProjectile();
@@ -43,13 +55,9 @@ public class Weapon {
         }
     }
 
-    private void fireProjectile() {
-        Projectile firedProjectile = projectile.makeCopyWithTowerOwner();
-        firedProjectile.setTowerOwner(tower);
-        firedProjectile.setLinearMovement(projectileSpawn, target);
-        firedProjectile.setEnemies(gameEntities.getSortedEnemies());
-        gameEntities.addProjectile(firedProjectile);
-
+    protected void fireProjectile() {
+        Projectile firedProjectile = projectile.makeCopy();
+        firedProjectile.fireProjectile(projectileSpawn, target, tower, gameEntities);
     }
 
     public void setFireFrequency(int fireFrequency) {
@@ -74,5 +82,16 @@ public class Weapon {
 
     public void addDamageDone(int damage) {
         tower.addDamageDone(damage);
+    }
+
+    public void increaseDamage(double percentageDelta) {
+        projectile.increaseDamage(percentageDelta);
+    }
+
+    /**
+     * @param penetrationDelta increase in number of penetrations before projectile is destroyed
+     */
+    public void increasePenetration (int penetrationDelta) {
+        projectile.increasePenetration(penetrationDelta);
     }
 }

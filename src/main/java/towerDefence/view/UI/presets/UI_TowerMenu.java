@@ -87,9 +87,11 @@ public class UI_TowerMenu extends UIContainer {
 
         UIButton upgrade = new UIButton("UPGRADE", 50, 50);
         upgrade.setAlignment(UIAlignment.CENTER);
+        upgrade.setInteractCode(InteractCode.UPGRADE);
 
         UIButton sell = new UIButton("SELL", 25, 50);
         sell.setAlignment(UIAlignment.CENTER);
+        sell.setInteractCode(InteractCode.SELL);
 
 
 

@@ -78,4 +78,11 @@ public class Collision implements CollisionObject {
         return this;
     }
 
+    public boolean isSingleTarget() {
+        return isSingleTarget;
+    }
+
+    //    public void increaseRange(double sizeDelta) {
+//        radius *= (1.0 + sizeDelta);
+//    }
 }

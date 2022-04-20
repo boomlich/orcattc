@@ -49,9 +49,31 @@ public class Tower implements ITower, Interactable{
     }
 
     @Override
-    public void updateRank() {
+    public void upgradeRank() {
+        if (rank < 4) {
+            switch (rank ++) {
+                case 1 -> rank1();
+                case 2 -> rank2();
+                case 3 -> rank3();
+            }
+        }
+    }
+
+    protected void rank1() {
 
     }
+
+    protected void rank2() {
+
+    }
+
+    protected void rank3() {
+    }
+
+    protected void setSearchRadius (Collision newRadius) {
+        searchRadius = newRadius;
+    }
+
 
     @Override
     public void update(double deltaSteps) {
@@ -189,14 +211,6 @@ public class Tower implements ITower, Interactable{
     @Override
     public Collision getPlacementRadius() {
         return placementRadius;
-    }
-
-    private void rank1() {
-
-    }
-
-    private void rank2() {
-
     }
 
     @Override

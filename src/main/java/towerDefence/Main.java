@@ -5,6 +5,7 @@ import towerDefence.controller.GameController;
 import towerDefence.model.GameModel;
 import towerDefence.view.GameRender;
 import towerDefence.view.GameRenderable;
+import towerDefence.view.RenderingOptions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,9 @@ public class Main {
     public static void main(String[] args) {
         GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = graphics.getDefaultScreenDevice();
+
+        JFrame frame = new JFrame();
+
 //        GraphicsDevice device = graphics.getScreenDevices()[1];
 
 //        System.out.println(device.getDisplayMode());
@@ -30,9 +34,12 @@ public class Main {
         GameRender gameRender = new GameRender(device, gameModel);
         GameController gameController = new GameController(gameRender, (GameControllable) gameModel);
 
-        JFrame frame = new JFrame();
 
 //        frame.setSize(new Dimension(width, height));
+        System.out.println();
+
+
+
 
 //        frame.setPreferredSize(new Dimension(1280, 720));
         frame.setContentPane(gameRender);

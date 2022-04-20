@@ -15,7 +15,7 @@ public interface GameControllable {
 
     public void addTower(ITower target);
 
-    public void upgradeTower(ITower target);
+    public void upgradeTower();
 
     public void sellTower(ITower target);
 

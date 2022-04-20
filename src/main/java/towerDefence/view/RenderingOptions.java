@@ -15,4 +15,10 @@ public class RenderingOptions {
 
     // ENEMY
     public static boolean ENEMY_COLLISION = true;
+
+    //
+    public static boolean FULLSCREEN = true;
+
+
+
 }
