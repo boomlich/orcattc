@@ -1,8 +1,10 @@
 package towerDefence.view;
 
+import towerDefence.model.GameMode;
 import towerDefence.tower.ITower;
 import towerDefence.view.UI.components.*;
 import towerDefence.view.UI.presets.UI_HUD;
+import towerDefence.view.UI.presets.UI_PauseMenu;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -13,14 +15,19 @@ public class UICanvas implements ICanvas {
 
     private final GameRenderable gameModel;
     private final UIContainer UIContainer;
-    private final UI_HUD HUD;
+    private UI_HUD HUD;
+    private UI_PauseMenu pauseMenu;
+    private int width, height;
 
 
     public UICanvas(GameRenderable gameModel, int width, int height) {
         this.gameModel = gameModel;
+        this.width = width;
+        this.height = height;
         UIContainer = new UIContainer(width, height);
         HUD = new UI_HUD(width, height, gameModel);
         UIContainer.add(HUD);
+        pauseMenu = new UI_PauseMenu(width, height, gameModel);
     }
 
     @Override
@@ -68,5 +75,11 @@ public class UICanvas implements ICanvas {
             HUD.removeTowerMenu();
         }
     }
+
+    @Override
+    public void pauseGame() {
+
+    }
+
 
 }

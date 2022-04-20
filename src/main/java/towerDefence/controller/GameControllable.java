@@ -3,7 +3,6 @@ package towerDefence.controller;
 import towerDefence.components.TargetingMode;
 import towerDefence.level.levels.Level;
 import towerDefence.tower.ITower;
-import towerDefence.view.Interaction.InteractCode;
 
 import java.awt.geom.Point2D;
 
@@ -35,4 +34,6 @@ public interface GameControllable {
     public void selectTower(ITower tower);
 
     public void placeTower();
+
+    public void togglePauseGame();
 }

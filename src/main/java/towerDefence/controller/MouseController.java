@@ -142,8 +142,6 @@ public class MouseController implements MouseMotionListener, MouseListener {
         double mouseX = mousePosition.getX();
         double mouseY = mousePosition.getY();
 
-//        System.out.println(interactCode);
-
         if (interactCode == InteractCode.DEFAULT) {
         }
         else if (interactCode == InteractCode.SPAWN_B) {
@@ -171,6 +169,10 @@ public class MouseController implements MouseMotionListener, MouseListener {
         } else if (interactCode == InteractCode.UPGRADE) {
             gameModel.upgradeTower();
         } else if (interactCode == InteractCode.SELL) {
+
+        }
+        else if (interactCode == InteractCode.PAUSE) {
+            gameModel.togglePauseGame();
 
         }
     }

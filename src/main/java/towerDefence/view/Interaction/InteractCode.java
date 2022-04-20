@@ -13,7 +13,7 @@ public enum InteractCode {
     PLAY,
     UPGRADE,
     SELL,
-    OPTIONS,
+    PAUSE,
     MUTE,
     DEFAULT,
     TARGET_A,

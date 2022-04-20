@@ -69,8 +69,8 @@ public class GameRender extends JPanel {
         gameUI.paint(g2D);
 
 //        // Center lines
-        g2D.draw(new Rectangle2D.Double(gameWidth / 2.0 - 2, 0, 4, gameHeight));
-        g2D.draw(new Rectangle2D.Double(0, gameHeight / 2.0 -2, gameWidth, 4));
+//        g2D.draw(new Rectangle2D.Double(gameWidth / 2.0 - 2, 0, 4, gameHeight));
+//        g2D.draw(new Rectangle2D.Double(0, gameHeight / 2.0 -2, gameWidth, 4));
 
     }
 }

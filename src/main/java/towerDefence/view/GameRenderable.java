@@ -4,6 +4,7 @@ import towerDefence.components.Collision;
 import towerDefence.components.Projectile;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.path.PathPoint;
+import towerDefence.model.GameMode;
 import towerDefence.tower.ITower;
 
 import java.awt.geom.Point2D;
@@ -47,4 +48,6 @@ public interface GameRenderable {
     public boolean hasActiveTower();
 
     public boolean isActiveTowerInSpawnMode();
+
+    GameMode getGameMode();
 }

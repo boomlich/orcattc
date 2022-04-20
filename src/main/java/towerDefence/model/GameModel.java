@@ -28,6 +28,7 @@ public class GameModel implements GameRenderable, GameControllable {
     private LevelManager levelManager;
     private int waveNumber;
     private GameMode gameMode;
+    private GameMode modePriorToPause;
     private ITower activeTower;
 
     public GameModel() {
@@ -76,6 +77,11 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     @Override
+    public GameMode getGameMode() {
+        return gameMode;
+    }
+
+    @Override
     public void selectTower(ITower tower) {
         activeTower = tower;
     }
@@ -89,6 +95,17 @@ public class GameModel implements GameRenderable, GameControllable {
         } else {
             System.out.println("INVALID PLACEMENT");
         }
+    }
+
+    @Override
+    public void togglePauseGame() {
+        if (gameMode == GameMode.PAUSE) {
+            gameMode = modePriorToPause;
+        } else {
+            modePriorToPause = gameMode;
+            gameMode = GameMode.PAUSE;
+        }
+        System.out.println(gameMode);
     }
 
     @Override

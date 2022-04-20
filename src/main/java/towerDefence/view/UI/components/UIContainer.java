@@ -86,12 +86,14 @@ public class UIContainer extends UIComponentTemplate{
 
     @Override
     public void setAllSubComponentsInactive(UIComponent component) {
-        if (component instanceof Interactable) {
-            ((Interactable) component).setInactive();
-        }
-        if (component.getComponents() != null) {
-            for (UIComponent subcomponent: component.getComponents()) {
-                subcomponent.setAllSubComponentsInactive(subcomponent);
+        if (component != null) {
+            if (component instanceof Interactable) {
+                ((Interactable) component).setInactive();
+            }
+            if (component.getComponents() != null) {
+                for (UIComponent subcomponent: component.getComponents()) {
+                    subcomponent.setAllSubComponentsInactive(subcomponent);
+                }
             }
         }
     }

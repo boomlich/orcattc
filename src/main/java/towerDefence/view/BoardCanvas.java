@@ -132,4 +132,9 @@ public class BoardCanvas implements ICanvas{
     public void update(double deltaSteps) {
 
     }
+
+    @Override
+    public void pauseGame() {
+        
+    }
 }

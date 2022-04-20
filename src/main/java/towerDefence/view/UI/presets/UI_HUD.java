@@ -3,7 +3,10 @@ package towerDefence.view.UI.presets;
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
 import towerDefence.view.UI.components.*;
+import towerDefence.view.UI.presets.buttons.UI_Button_Options;
 import towerDefence.view.UI.presets.buttons.UI_Button_PlayRound;
+
+import java.awt.*;
 
 public class UI_HUD extends UIContainer {
 
@@ -23,6 +26,16 @@ public class UI_HUD extends UIContainer {
         UIButton playRound = new UI_Button_PlayRound();
         playRound.setAlignment(UIAlignment.SOUTH);
         this.add(playRound);
+
+        UI_ResourceBar resourceBar = new UI_ResourceBar(125, 18);
+        resourceBar.setBackground(Color.ORANGE);
+        resourceBar.setAlignment(UIAlignment.NORTH_WEST);
+        resourceBar.setPadding(new ContainerPadding(5, 0));
+        this.add(resourceBar);
+
+        UIButton options = new UI_Button_Options();
+        options.setAlignment(UIAlignment.NORTH_EAST);
+        this.add(options);
     }
 
     public void addTowerMenu(ITower tower) {
