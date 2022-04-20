@@ -23,7 +23,7 @@ public class Archer extends Tower {
 
                 new Weapon(1000, new Projectile(100, new Damage(100), 10, new Collision(5))),
 
-                new SpriteEngine("graphics/tower/Sprite_Tower_Archer.png", 1, 1, 10, 0));
+                new SpriteEngine("graphics/tower/Sprite_Tower_Archer.png", 2, 9, 10, 4));
 
         getWeapon().setTowerOwner(this);
     }

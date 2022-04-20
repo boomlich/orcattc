@@ -48,6 +48,9 @@ public class GameController implements ActionListener, KeyListener {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_ESCAPE){
+            gameModel.togglePauseGame();
+            gameRender.getGameUI().pauseGame();
+        } else if (key == KeyEvent.VK_Q) {
             System.exit(0);
         }
     }

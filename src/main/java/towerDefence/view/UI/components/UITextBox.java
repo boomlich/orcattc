@@ -76,6 +76,6 @@ public class UITextBox extends UIComponentTemplate {
 
     @Override
     public void setY(int y) {
-        super.setY(y + getHeight());
+        super.setY(y + getHeight() - getHeight() / 6);
     }
 }

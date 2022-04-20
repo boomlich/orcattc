@@ -27,7 +27,6 @@ public class UICanvas implements ICanvas {
         UIContainer = new UIContainer(width, height);
         HUD = new UI_HUD(width, height, gameModel);
         UIContainer.add(HUD);
-        pauseMenu = new UI_PauseMenu(width, height, gameModel);
     }
 
     @Override
@@ -67,18 +66,29 @@ public class UICanvas implements ICanvas {
 
     @Override
     public void update(double deltaSteps) {
-        if (gameModel.hasActiveTower()) {
-            if (!gameModel.getActiveTower().activeSpawnMode()) {
-                HUD.addTowerMenu(gameModel.getActiveTower());
+        if (HUD != null) {
+            if (gameModel.hasActiveTower()) {
+                if (!gameModel.getActiveTower().activeSpawnMode()) {
+                    HUD.addTowerMenu(gameModel.getActiveTower());
+                }
+            } else {
+                HUD.removeTowerMenu();
             }
-        } else {
-            HUD.removeTowerMenu();
         }
     }
 
     @Override
     public void pauseGame() {
-
+        if (pauseMenu == null) {
+            UIContainer.remove(HUD);
+            pauseMenu = new UI_PauseMenu(width, height, gameModel);
+            UIContainer.add(pauseMenu);
+        } else {
+            UIContainer.remove(pauseMenu);
+            pauseMenu = null;
+            HUD = new UI_HUD(width, height, gameModel);
+            UIContainer.add(HUD);
+        }
     }
 
 
