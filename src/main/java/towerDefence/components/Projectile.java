@@ -142,18 +142,6 @@ public class Projectile implements IDamageable, IProjectile {
         return null;
     }
 
-//    protected int getHealth() {
-//        return health;
-//    }
-//
-//    protected Damage getDamage() {
-//        return damage;
-//    }
-//
-//    protected double getSpeed() {
-//        return speed;
-//    }
-
     @Override
     public void applyDamage(Damage damage) {
         health = damage.applyDamage(health);

@@ -78,7 +78,7 @@ public class UICanvas implements ICanvas {
     }
 
     @Override
-    public void pauseGame() {
+    public void togglePauseGame() {
         if (pauseMenu == null) {
             UIContainer.remove(HUD);
             pauseMenu = new UI_PauseMenu(width, height, gameModel);
@@ -90,6 +90,4 @@ public class UICanvas implements ICanvas {
             UIContainer.add(HUD);
         }
     }
-
-
 }

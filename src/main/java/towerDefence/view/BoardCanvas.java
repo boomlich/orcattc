@@ -134,7 +134,7 @@ public class BoardCanvas implements ICanvas{
     }
 
     @Override
-    public void pauseGame() {
+    public void togglePauseGame() {
         
     }
 }
