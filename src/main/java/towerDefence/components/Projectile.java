@@ -11,7 +11,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Projectile implements IDamageable {
+public class Projectile implements IDamageable, IProjectile {
 
     private int health;
     private Damage damage;
@@ -36,10 +36,11 @@ public class Projectile implements IDamageable {
     }
 
     public void fireProjectile(Point2D spawn, Point2D target, ITower towerOwner, GameEntities gameEntities) {
-        this.setTowerOwner(towerOwner);
-        this.setLinearMovement(spawn, target);
-        this.setEnemies(gameEntities.getSortedEnemies());
-        gameEntities.addProjectile(this);
+        Projectile fired = this.makeCopy();
+        fired.setTowerOwner(towerOwner);
+        fired.setLinearMovement(spawn, target);
+        fired.setEnemies(gameEntities.getSortedEnemies());
+        gameEntities.addProjectile(fired);
     }
 
     public Projectile makeCopy() {
@@ -141,16 +142,28 @@ public class Projectile implements IDamageable {
         return null;
     }
 
+//    protected int getHealth() {
+//        return health;
+//    }
+//
+//    protected Damage getDamage() {
+//        return damage;
+//    }
+//
+//    protected double getSpeed() {
+//        return speed;
+//    }
+
     @Override
     public void applyDamage(Damage damage) {
         health = damage.applyDamage(health);
     }
 
-    protected void increasePenetration (int penetrationDelta) {
+    public void increasePenetration (int penetrationDelta) {
         health += penetrationDamage.getDamageValue() * penetrationDelta;
     }
 
-    protected void increaseDamage(double percentageDelta) {
+    public void increaseDamage(double percentageDelta) {
         damage = new Damage((int) (damage.getDamageValue() + (1.0 + percentageDelta)));
     }
 }

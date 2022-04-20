@@ -14,7 +14,7 @@ public class Weapon {
     /**
      * Type of projectile that the weapon fires
      */
-    private Projectile projectile;
+    private IProjectile projectile;
 
     /**
      * Location where the projectile spawns upon the weapon firing
@@ -34,12 +34,11 @@ public class Weapon {
 
     }
 
-    public Weapon(int fireFrequency, Projectile projectile) {
+    public Weapon(int fireFrequency, IProjectile projectile) {
         this.fireFrequency = fireFrequency;
         this.projectile = projectile;
 
         fireCountdown = fireFrequency;
-
     }
 
     public void setTowerOwner(ITower tower) {
@@ -56,8 +55,8 @@ public class Weapon {
     }
 
     protected void fireProjectile() {
-        Projectile firedProjectile = projectile.makeCopy();
-        firedProjectile.fireProjectile(projectileSpawn, target, tower, gameEntities);
+//        IProjectile firedProjectile = projectile.makeCopy();
+        projectile.fireProjectile(projectileSpawn, target, tower, gameEntities);
     }
 
     public void setFireFrequency(int fireFrequency) {
@@ -93,5 +92,11 @@ public class Weapon {
      */
     public void increasePenetration (int penetrationDelta) {
         projectile.increasePenetration(penetrationDelta);
+    }
+
+    public void increaseSpreadShots(int numberOfShots){
+        if (projectile instanceof ProjectileMultiShot) {
+            ((ProjectileMultiShot) projectile).setNumberOfShots(numberOfShots);
+        }
     }
 }

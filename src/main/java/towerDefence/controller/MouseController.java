@@ -2,6 +2,7 @@ package towerDefence.controller;
 
 import towerDefence.components.TargetingMode;
 import towerDefence.tower.ITower;
+import towerDefence.tower.towerTypes.Archer;
 import towerDefence.tower.towerTypes.Rifleman;
 import towerDefence.view.GameRender;
 import towerDefence.view.Interaction.InteractCode;
@@ -145,18 +146,21 @@ public class MouseController implements MouseMotionListener, MouseListener {
 
         if (interactCode == InteractCode.DEFAULT) {
         }
-        else if (interactCode == InteractCode.SPAWN_A) {
-            gameModel.addTower(new Rifleman(new Point2D.Double(mouseX, mouseY)));
-        }
         else if (interactCode == InteractCode.SPAWN_B) {
             gameModel.addTower(new Rifleman(new Point2D.Double(mouseX, mouseY)));
+        }
+        else if (interactCode == InteractCode.SPAWN_A) {
+            gameModel.addTower(new Archer(new Point2D.Double(mouseX, mouseY)));
         }
         else if (interactCode == InteractCode.PLAY) {
             gameModel.startRound();
         }
         else if (interactCode == InteractCode.TARGET_A) {
             gameModel.selectTower((ITower) currentInteractable);
-        } else if (interactCode == InteractCode.TARGET_FIRST) {
+        } else if (interactCode == InteractCode.TARGET_B) {
+            gameModel.selectTower((ITower) currentInteractable);
+        }
+        else if (interactCode == InteractCode.TARGET_FIRST) {
             gameModel.setTowerTargetingMode(TargetingMode.FIRST);
         } else if (interactCode == InteractCode.TARGET_LAST) {
             gameModel.setTowerTargetingMode(TargetingMode.LAST);
