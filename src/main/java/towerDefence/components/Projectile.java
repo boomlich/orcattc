@@ -2,6 +2,7 @@ package towerDefence.components;
 
 import towerDefence.components.damage.Damage;
 import towerDefence.components.damage.IDamageable;
+import towerDefence.components.debuff.IDebuff;
 import towerDefence.components.movement.LinearMovement;
 import towerDefence.enemies.IEnemy;
 import towerDefence.model.GameEntities;
@@ -23,6 +24,7 @@ public class Projectile implements IDamageable, IProjectile {
     private List<IEnemy> enemies;
     private final List<IEnemy> alreadyDamagedEnemies = new ArrayList<>();
     private ITower towerOwner;
+    private IDebuff debuff;
 
 
     public Projectile() {
@@ -40,6 +42,8 @@ public class Projectile implements IDamageable, IProjectile {
         fired.setTowerOwner(towerOwner);
         fired.setLinearMovement(spawn, target);
         fired.setEnemies(gameEntities.getSortedEnemies());
+        fired.setDebuff(debuff);
+        fired.setDamageRadius(damageRadius);
         gameEntities.addProjectile(fired);
     }
 
@@ -74,6 +78,7 @@ public class Projectile implements IDamageable, IProjectile {
 
     private void updateCollision(double deltaSteps) {
         hitDetection.setPosition(movement.getPosition());
+
         List<IEnemy> detectedEnemies = hitDetection.updateCollision(enemies);
 
         if (detectedEnemies.size() > 0) {
@@ -90,12 +95,10 @@ public class Projectile implements IDamageable, IProjectile {
                 }
             }
             else {
-                List<IEnemy> enemiesToDamage = damageRadius.updateCollision(detectedEnemies);
+                damageRadius.setPosition(movement.getPosition());
+                List<IEnemy> enemiesToDamage = damageRadius.updateCollision(enemies);
                 for (IEnemy enemy: enemiesToDamage) {
-                    // Only apply damage to new targets
-                    if (!alreadyDamagedEnemies.contains(enemy)) {
-                        targetHit(enemy);
-                    }
+                    targetHit(enemy);
                 }
             }
         }
@@ -105,16 +108,14 @@ public class Projectile implements IDamageable, IProjectile {
         int healthBefore = target.getHealth();
 
         target.applyDamage(damage);
+        if (debuff != null) {
+            target.applyDebuff(debuff.makeCopy());
+        }
+
         alreadyDamagedEnemies.add(target);
 
-        // Add stats: Kills and damage done
-        if (target.isDead()) {
-            if (towerOwner != null) {
-                towerOwner.addKills(1);
-                towerOwner.addDamageDone(healthBefore);
-            }
-        } else {
-            towerOwner.addDamageDone(damage.getDamageValue());
+        if (towerOwner != null) {
+            towerOwner.addStats(target, healthBefore, damage);
         }
     }
 
@@ -130,6 +131,7 @@ public class Projectile implements IDamageable, IProjectile {
         this.enemies = enemies;
     }
 
+    @Override
     public void setDamageRadius(Collision damageRadius) {
         this.damageRadius = damageRadius;
     }
@@ -153,5 +155,10 @@ public class Projectile implements IDamageable, IProjectile {
 
     public void increaseDamage(double percentageDelta) {
         damage = new Damage((int) (damage.getDamageValue() + (1.0 + percentageDelta)));
+    }
+
+    @Override
+    public void setDebuff(IDebuff debuff) {
+        this.debuff = debuff;
     }
 }

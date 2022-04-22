@@ -56,7 +56,6 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void addTower(ITower target) {
-
         if (!isActiveTowerInSpawnMode()) {
             activeTower = target;
             activeTower.setGameEntities(gameEntities);
@@ -83,7 +82,9 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void selectTower(ITower tower) {
-        activeTower = tower;
+        if (gameMode != GameMode.PAUSE) {
+            activeTower = tower;
+        }
     }
 
     @Override
@@ -104,8 +105,8 @@ public class GameModel implements GameRenderable, GameControllable {
         } else {
             modePriorToPause = gameMode;
             gameMode = GameMode.PAUSE;
+            activeTower = null;
         }
-        System.out.println(gameMode);
     }
 
     @Override

@@ -31,8 +31,6 @@ public class UICanvas implements ICanvas {
 
     @Override
     public void paint(Graphics2D g2D) {
-        UIContainer.paint(g2D);
-
 
         // Draw active/highlighted tower
         if (gameModel.hasActiveTower()) {
@@ -62,6 +60,8 @@ public class UICanvas implements ICanvas {
             // Center of Collision
             g2D.draw(new Rectangle2D.Double(tower.getSearchRadius().getPosition().getX(), tower.getSearchRadius().getPosition().getY(), 1, 1));
         }
+
+        UIContainer.paint(g2D);
     }
 
     @Override

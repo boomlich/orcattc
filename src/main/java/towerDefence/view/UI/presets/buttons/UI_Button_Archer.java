@@ -27,9 +27,4 @@ public class UI_Button_Archer extends UIButton {
 
         this.add(priceText);
     }
-
-
-
-
-
 }

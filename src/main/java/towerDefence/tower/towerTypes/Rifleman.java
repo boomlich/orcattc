@@ -19,10 +19,7 @@ public class Rifleman extends Tower {
                 position,
                 new Collision(100, false),
                 new Collision(20, true),
-
                 new Weapon(1000, new ProjectileMultiShot(100, new Damage(100), 10, new Collision(5))),
-
-//                new Weapon(1000, new Projectile(100, new Damage(100), 10, new Collision(5))),
                 new SpriteEngine("graphics/tower/Sprite_Tower_RifleMan.png", 2, 9, 10, 4));
 
         getWeapon().setTowerOwner(this);

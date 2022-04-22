@@ -16,7 +16,7 @@ public enum InteractCode {
     PAUSE,
     MUTE,
     DEFAULT,
-    TARGET_A,
+    TARGET_Tower,
     TARGET_B,
     TARGET_C,
     TARGET_D,

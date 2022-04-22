@@ -2,6 +2,7 @@ package towerDefence.tower;
 
 import towerDefence.Math.MathHelperMethods;
 import towerDefence.components.*;
+import towerDefence.components.damage.Damage;
 import towerDefence.enemies.IEnemy;
 import towerDefence.model.GameEntities;
 import towerDefence.view.Interaction.InteractCode;
@@ -12,7 +13,7 @@ import towerDefence.view.sprite.SpriteEngine;
 import java.awt.geom.Point2D;
 import java.util.List;
 
-public class Tower implements ITower, Interactable{
+public abstract class Tower implements ITower, Interactable{
 
     private Point2D position;
     private int rank = 1;
@@ -22,7 +23,7 @@ public class Tower implements ITower, Interactable{
     private SpriteEngine spriteBody;
     private SpriteEngine spriteBase;
     private boolean spawnMode = true;
-    private InteractCode interactCode = InteractCode.TARGET_A;
+    private InteractCode interactCode = InteractCode.TARGET_Tower;
     private final int interactionSize = 40;
     private GameEntities gameEntities;
     private Targeting targeting;
@@ -86,32 +87,36 @@ public class Tower implements ITower, Interactable{
             // Target and fire at enemy
             if (detectedEnemies.size() > 0) {
                 target = targeting.getTarget(detectedEnemies);
-                updateTargetDirection(target);
-                updateWeapon(deltaSteps, target);
+                updateTargetDirection(target.getCollision().getPosition());
+                updateWeapon(deltaSteps, target.getCollision().getPosition());
             } else if (target != null){
-                target = null;
+                noTarget();
             }
         } else {
             validPlacement = positionNotBlocked();
         }
     }
 
-    private void updateWeapon(double deltaSteps, IEnemy target) {
+    protected void noTarget() {
+        target = null;
+    }
+
+    protected void updateWeapon(double deltaSteps, Point2D target) {
         weapon.setProjectileSpawn(searchRadius.getPosition());
-        weapon.setTarget(target.getCollision().getPosition());
+        weapon.setTarget(target);
         weapon.update(deltaSteps);
     }
 
-    private void updateTargetDirection(IEnemy target) {
+    protected void updateTargetDirection(Point2D target) {
 
         int numberOfRotations = 16;
         double anglePerRotation = 2.0 * Math.PI / numberOfRotations;
         double firstFrameRange = -(Math.PI + anglePerRotation) / 2.0;
 
-        Point2D vectorToTarget = MathHelperMethods.pointsToVector(searchRadius.getPosition(), target.getCollision().getPosition());
+        Point2D vectorToTarget = MathHelperMethods.pointsToVector(searchRadius.getPosition(), target);
         double angleToTarget = MathHelperMethods.calculateVectorAngle(vectorToTarget);
 
-        if (angleToTarget < Math.PI && angleToTarget > Math.PI - anglePerRotation / 2.0) {
+        if (angleToTarget < Math.PI / 2.0 && angleToTarget > Math.PI / 2.0 - anglePerRotation / 2.0) {
             spriteBody.setFrame(8);
         } else if (angleToTarget < firstFrameRange) {
             spriteBody.setFrame(0);
@@ -134,6 +139,10 @@ public class Tower implements ITower, Interactable{
             return false;
         }
         return true;
+    }
+
+    protected void setBodyFrame(int frame) {
+        spriteBody.setFrame(frame);
     }
 
 
@@ -201,6 +210,17 @@ public class Tower implements ITower, Interactable{
     @Override
     public Weapon getWeapon() {
         return weapon;
+    }
+
+    @Override
+    public void addStats(IEnemy enemy, int healthBefore, Damage damage) {
+        if (enemy.isDead()) {
+            addKills(1);
+            addDamageDone(healthBefore);
+        }
+        else {
+            addDamageDone(damage.getDamageValue());
+        }
     }
 
     @Override

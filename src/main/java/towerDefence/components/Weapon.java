@@ -31,7 +31,6 @@ public class Weapon {
 
 
     public Weapon() {
-
     }
 
     public Weapon(int fireFrequency, IProjectile projectile) {
@@ -46,7 +45,7 @@ public class Weapon {
     }
 
     public void update(double deltaSteps) {
-        fireCountdown -= fireFrequency/60 * deltaSteps;
+        fireCountdown -= 1000/60 * deltaSteps;
 
         if (fireCountdown < 0) {
             fireProjectile();
@@ -55,7 +54,6 @@ public class Weapon {
     }
 
     protected void fireProjectile() {
-//        IProjectile firedProjectile = projectile.makeCopy();
         projectile.fireProjectile(projectileSpawn, target, tower, gameEntities);
     }
 
@@ -81,6 +79,10 @@ public class Weapon {
 
     public void addDamageDone(int damage) {
         tower.addDamageDone(damage);
+    }
+
+    public IProjectile getProjectile() {
+        return projectile;
     }
 
     public void increaseDamage(double percentageDelta) {

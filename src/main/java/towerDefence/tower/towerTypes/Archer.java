@@ -5,6 +5,7 @@ import towerDefence.components.Projectile;
 import towerDefence.components.ProjectileMultiShot;
 import towerDefence.components.Weapon;
 import towerDefence.components.damage.Damage;
+import towerDefence.components.debuff.DebuffDamageOverTime;
 import towerDefence.tower.Tower;
 import towerDefence.tower.TowerUpgrades;
 import towerDefence.view.sprite.SpriteEngine;
@@ -20,27 +21,25 @@ public class Archer extends Tower {
                 position,
                 new Collision(100, false),
                 new Collision(20, true),
-
-                new Weapon(1000, new Projectile(100, new Damage(100), 10, new Collision(5))),
-
+                new Weapon(1000, new Projectile(100, new Damage(25), 10, new Collision(5))),
                 new SpriteEngine("graphics/tower/Sprite_Tower_Archer.png", 2, 9, 10, 4));
 
         getWeapon().setTowerOwner(this);
+        getWeapon().getProjectile().setDebuff(new DebuffDamageOverTime(10000, 400, 30, null, this, "fireAR0"));
     }
 
     @Override
     protected void rank1() {
-        setSearchRadius(TowerUpgrades.upgradeDetectionRange(getSearchRadius(), 0.25));
+        setSearchRadius(TowerUpgrades.upgradeDetectionRange(getSearchRadius(), 0.30));
     }
 
     @Override
     protected void rank2() {
-        getWeapon().increasePenetration(5);
-        getWeapon().increaseDamage(2);
+        getWeapon().getProjectile().setDebuff(new DebuffDamageOverTime(10000, 550, 30, null, this, "fireAR0"));
     }
 
     @Override
     protected void rank3() {
-        getWeapon().increaseSpreadShots(3);
+        getWeapon().getProjectile().setDamageRadius(new Collision(50, false));
     }
 }

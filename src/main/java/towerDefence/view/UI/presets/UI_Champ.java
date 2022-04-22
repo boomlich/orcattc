@@ -3,7 +3,9 @@ package towerDefence.view.UI.presets;
 import towerDefence.view.Interaction.InteractCode;
 import towerDefence.view.UI.components.*;
 import towerDefence.view.UI.presets.buttons.UI_Button_Archer;
+import towerDefence.view.UI.presets.buttons.UI_Button_Cannon;
 import towerDefence.view.UI.presets.buttons.UI_Button_Gunner;
+import towerDefence.view.UI.presets.buttons.UI_Button_Wizard;
 
 import java.awt.*;
 
@@ -17,9 +19,8 @@ public class UI_Champ extends UIContainer {
         UIButton[] champions = {
                 new UI_Button_Archer(),
                 new UI_Button_Gunner(),
-                new UI_Button_Archer(),
-                new UI_Button_Archer(),
-                new UI_Button_Archer(),
+                new UI_Button_Cannon(),
+                new UI_Button_Wizard(),
         };
 
         UIContainer topContainer = new UIContainer(width, 10);

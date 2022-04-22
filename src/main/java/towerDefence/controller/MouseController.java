@@ -3,7 +3,9 @@ package towerDefence.controller;
 import towerDefence.components.TargetingMode;
 import towerDefence.tower.ITower;
 import towerDefence.tower.towerTypes.Archer;
+import towerDefence.tower.towerTypes.Cannon;
 import towerDefence.tower.towerTypes.Rifleman;
+import towerDefence.tower.towerTypes.Wizard;
 import towerDefence.view.GameRender;
 import towerDefence.view.Interaction.InteractCode;
 import towerDefence.view.Interaction.Interactable;
@@ -20,6 +22,7 @@ public class MouseController implements MouseMotionListener, MouseListener {
     private Interactable currentInteractable;
     private final GameRender gameRender;
     private final GameControllable gameModel;
+    private Point2D mouseCoordinate;
 
     public MouseController(GameRender gameRender, GameControllable gameModel) {
         this.gameRender = gameRender;
@@ -87,6 +90,10 @@ public class MouseController implements MouseMotionListener, MouseListener {
         }
     }
 
+    public Point2D getMouseCoordinate() {
+        return mouseCoordinate;
+    }
+
 
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -96,6 +103,7 @@ public class MouseController implements MouseMotionListener, MouseListener {
     @Override
     public void mouseMoved(MouseEvent e) {
         Point2D scaledMousePos = scaleMousePosition(e.getPoint());
+        mouseCoordinate = scaledMousePos;
 
         if (gameModel.isActiveTowerInSpawnMode()) {
             gameModel.updateMousePosition(scaledMousePos);
@@ -144,18 +152,22 @@ public class MouseController implements MouseMotionListener, MouseListener {
 
         if (interactCode == InteractCode.DEFAULT) {
         }
+        else if (interactCode == InteractCode.SPAWN_A) {
+            gameModel.addTower(new Archer(new Point2D.Double(mouseX, mouseY)));
+        }
         else if (interactCode == InteractCode.SPAWN_B) {
             gameModel.addTower(new Rifleman(new Point2D.Double(mouseX, mouseY)));
         }
-        else if (interactCode == InteractCode.SPAWN_A) {
-            gameModel.addTower(new Archer(new Point2D.Double(mouseX, mouseY)));
+        else if (interactCode == InteractCode.SPAWN_C) {
+            gameModel.addTower(new Cannon(new Point2D.Double(mouseX, mouseY), this));
+        }
+        else if (interactCode == InteractCode.SPAWN_D) {
+            gameModel.addTower(new Wizard(new Point2D.Double(mouseX, mouseY)));
         }
         else if (interactCode == InteractCode.PLAY) {
             gameModel.startRound();
         }
-        else if (interactCode == InteractCode.TARGET_A) {
-            gameModel.selectTower((ITower) currentInteractable);
-        } else if (interactCode == InteractCode.TARGET_B) {
+        else if (interactCode == InteractCode.TARGET_Tower) {
             gameModel.selectTower((ITower) currentInteractable);
         }
         else if (interactCode == InteractCode.TARGET_FIRST) {

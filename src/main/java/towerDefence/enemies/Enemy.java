@@ -3,13 +3,15 @@ package towerDefence.enemies;
 import towerDefence.components.Animation;
 import towerDefence.components.Collision;
 import towerDefence.components.damage.Damage;
-import towerDefence.components.damage.IDamageable;
+import towerDefence.components.debuff.DebuffManager;
+import towerDefence.components.debuff.IDebuff;
 import towerDefence.components.movement.SplineMovement;
 import towerDefence.view.sprite.Sprite;
 import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.geom.Point2D;
-import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Enemy implements IEnemy {
@@ -37,6 +39,8 @@ public class Enemy implements IEnemy {
 
     private EnemyState enemyState;
 
+    private DebuffManager debuffManager;
+
     // Animations
     private Animation animMoveRight;
     private Animation animMoveLeft;
@@ -54,6 +58,7 @@ public class Enemy implements IEnemy {
         this.animMoveLeft = animMoveLeft;
         this.animDeath = animDeath;
 
+        debuffManager = new DebuffManager(this);
         pathOffset = generateRandomOffset();
     }
 
@@ -72,6 +77,7 @@ public class Enemy implements IEnemy {
     @Override
     public void update(double deltaSteps) {
         splineMovement.update(deltaSteps);
+        debuffManager.update(deltaSteps);
 
         Point2D pos = getPosition();
         collision.setPosition(new Point2D.Double(
@@ -81,6 +87,7 @@ public class Enemy implements IEnemy {
         if (splineMovement.movementDone()) {
             death();
         }
+
 
         // Update movement direction
         if (enemyState != EnemyState.DYING) {
@@ -137,6 +144,16 @@ public class Enemy implements IEnemy {
     @Override
     public int getHealth() {
         return health;
+    }
+
+    @Override
+    public void applyDebuff(IDebuff debuff) {
+        debuffManager.addDebuff(debuff);
+    }
+
+    @Override
+    public SplineMovement getMovement() {
+        return splineMovement;
     }
 
     @Override

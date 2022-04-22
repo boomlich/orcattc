@@ -26,7 +26,7 @@ public class ProjectileMultiShot extends Projectile{
             for (int i = 0; i < numberOfShots; i++) {
                 Projectile copy = this.makeCopy();
                 double shotAngle = ((-fireAngleSpread) / 2.0) + anglePerShot * i;
-                Point2D newTarget = calculateOffsetTarget(spawn, target, shotAngle);
+                Point2D newTarget = calculateTargetOffset(spawn, target, shotAngle);
                 copy.fireProjectile(spawn, newTarget, towerOwner, gameEntities);
             }
         }
@@ -36,7 +36,7 @@ public class ProjectileMultiShot extends Projectile{
         return new Point2D.Double(b.getX() - a.getX(), b.getY() - a.getY());
     }
 
-    private Point2D calculateOffsetTarget(Point2D spawn, Point2D target, double angle) {
+    private Point2D calculateTargetOffset(Point2D spawn, Point2D target, double angle) {
         Point2D velocity = newVelocity(spawn, target);
 
         double offsetX = velocity.getX() * Math.cos(angle) + velocity.getY() * Math.sin(angle);

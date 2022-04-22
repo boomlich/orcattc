@@ -3,6 +3,7 @@ package towerDefence.tower;
 import towerDefence.components.Collision;
 import towerDefence.components.TargetingMode;
 import towerDefence.components.Weapon;
+import towerDefence.components.damage.Damage;
 import towerDefence.enemies.IEnemy;
 import towerDefence.model.GameEntities;
 import towerDefence.view.IRenderableObject;
@@ -58,5 +59,7 @@ public interface ITower extends IRenderableObject {
     public void addDamageDone(int deltaDamage);
 
     public Weapon getWeapon();
+
+    public void addStats(IEnemy enemy, int healthBefore, Damage damage);
 
 }

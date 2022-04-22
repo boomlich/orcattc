@@ -82,6 +82,9 @@ public class BoardCanvas implements ICanvas{
                             g2D.setColor(Color.BLUE);
                             g2D.draw(new Ellipse2D.Double(collisionX, collisionY, 2 * radius,  2 * radius));
                         }
+                        if (RenderingOptions.ENEMY_HEALTH) {
+                            g2D.drawString(String.valueOf(enemy.getHealth()), (int) enemy.getPosition().getX(), (int) (enemy.getPosition().getY() - 10));
+                        }
                     }
                 }
             }

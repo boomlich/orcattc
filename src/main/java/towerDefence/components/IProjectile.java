@@ -1,5 +1,6 @@
 package towerDefence.components;
 
+import towerDefence.components.debuff.IDebuff;
 import towerDefence.model.GameEntities;
 import towerDefence.tower.ITower;
 
@@ -14,5 +15,9 @@ public interface IProjectile {
     public void increasePenetration(int penetrationDelta);
 
     public void increaseDamage(double percentageDelta);
+
+    public void setDebuff(IDebuff debuff);
+
+    public void setDamageRadius(Collision damageRadius);
 
 }

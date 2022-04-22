@@ -10,7 +10,7 @@ import java.util.List;
 public class SplineMovement implements IMovement{
 
     private final SplinePathData path;
-    private final double speed;
+    private double speed;
     private int currentIndex;
     private double currentLength;
 
@@ -28,6 +28,10 @@ public class SplineMovement implements IMovement{
         }
     }
 
+    public void setSpeedMultiplier(double speedMultiplier) {
+        speed *= speedMultiplier;
+    }
+
     @Override
     public Point2D getPosition() {
         return calculateNormalizedPosition(currentLength);
@@ -36,6 +40,14 @@ public class SplineMovement implements IMovement{
     @Override
     public double getPathProgression() {
         return currentLength / path.getTotalLength();
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 
     private double getNormalisedOffset(double currentLength) {
