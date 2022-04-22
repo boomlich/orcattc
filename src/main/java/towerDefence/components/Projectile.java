@@ -6,7 +6,10 @@ import towerDefence.components.debuff.IDebuff;
 import towerDefence.components.movement.LinearMovement;
 import towerDefence.enemies.IEnemy;
 import towerDefence.model.GameEntities;
+import towerDefence.particles.Particle;
+import towerDefence.particles.ParticleEmitter;
 import towerDefence.tower.ITower;
+import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -25,6 +28,9 @@ public class Projectile implements IDamageable, IProjectile {
     private final List<IEnemy> alreadyDamagedEnemies = new ArrayList<>();
     private ITower towerOwner;
     private IDebuff debuff;
+    private ParticleEmitter particleEmitter;
+    private GameEntities gameEntities;
+    private Particle impactEffect;
 
 
     public Projectile() {
@@ -41,10 +47,24 @@ public class Projectile implements IDamageable, IProjectile {
         Projectile fired = this.makeCopy();
         fired.setTowerOwner(towerOwner);
         fired.setLinearMovement(spawn, target);
+        fired.setGameEntities(gameEntities);
         fired.setEnemies(gameEntities.getSortedEnemies());
+        fired.setImpactEffect(impactEffect.makeCopyWithPosition(null));
         fired.setDebuff(debuff);
         fired.setDamageRadius(damageRadius);
         gameEntities.addProjectile(fired);
+    }
+
+    protected void setGameEntities(GameEntities gameEntities) {
+        this.gameEntities = gameEntities;
+    }
+
+    public void setImpactEffect(Particle particle) {
+        impactEffect = particle;
+    }
+
+    @Override
+    public void setParticleEmitter(ParticleEmitter particleEmitter) {
     }
 
     public Projectile makeCopy() {
@@ -62,18 +82,13 @@ public class Projectile implements IDamageable, IProjectile {
     public void update(double deltaSteps) {
         movement.update(deltaSteps);
         updateCollision(deltaSteps);
-    }
 
-    protected ITower getTowerOwner() {
-        return towerOwner;
-    }
-
-    protected List<IEnemy> getEnemies() {
-        return enemies;
-    }
-
-    protected LinearMovement getMovement() {
-        return movement;
+        if (impactEffect != null) {
+            impactEffect.update(deltaSteps);
+            if (impactEffect.isDead()) {
+                impactEffect = null;
+            }
+        }
     }
 
     private void updateCollision(double deltaSteps) {
@@ -92,6 +107,7 @@ public class Projectile implements IDamageable, IProjectile {
                 // Only apply damage to new targets
                 if (!alreadyDamagedEnemies.contains(target)) {
                     targetHit(target);
+
                 }
             }
             else {
@@ -107,6 +123,12 @@ public class Projectile implements IDamageable, IProjectile {
     private void targetHit(IEnemy target) {
         int healthBefore = target.getHealth();
 
+        // Only display impact effect once
+        if (impactEffect != null) {
+            gameEntities.addParticle(impactEffect.makeCopyWithPosition(getPosition()));
+            impactEffect = null;
+        }
+
         target.applyDamage(damage);
         if (debuff != null) {
             target.applyDebuff(debuff.makeCopy());
@@ -116,6 +138,10 @@ public class Projectile implements IDamageable, IProjectile {
 
         if (towerOwner != null) {
             towerOwner.addStats(target, healthBefore, damage);
+        }
+
+        if (particleEmitter != null) {
+            particleEmitter.disableEmitter();
         }
     }
 

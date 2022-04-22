@@ -5,6 +5,7 @@ import towerDefence.components.Projectile;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.path.PathPoint;
 import towerDefence.model.GameMode;
+import towerDefence.particles.Particle;
 import towerDefence.tower.ITower;
 
 import java.awt.geom.Point2D;
@@ -33,7 +34,7 @@ public interface GameRenderable {
 
     public List<Projectile> getProjectiles();
 
-    public void getParticles();
+    public List<Particle> getParticles();
 
     public void getMoney();
 

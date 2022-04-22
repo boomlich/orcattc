@@ -3,7 +3,7 @@ package towerDefence.view;
 public class RenderingOptions {
 
     // Debug
-    public static boolean DEBUG = false;
+    public static boolean DEBUG = true;
 
     // TOWER
     public static boolean TOWER_SEARCH_RADIUS = true;

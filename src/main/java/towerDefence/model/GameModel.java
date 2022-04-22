@@ -9,6 +9,7 @@ import towerDefence.level.IGameLevel;
 import towerDefence.level.LevelManager;
 import towerDefence.level.levels.Level;
 import towerDefence.level.path.PathPoint;
+import towerDefence.particles.Particle;
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
 import towerDefence.view.Interaction.Interactable;
@@ -186,8 +187,8 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     @Override
-    public void getParticles() {
-
+    public List<Particle> getParticles() {
+        return gameEntities.getParticles();
     }
 
     @Override

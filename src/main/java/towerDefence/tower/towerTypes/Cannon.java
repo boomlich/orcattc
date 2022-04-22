@@ -1,10 +1,12 @@
 package towerDefence.tower.towerTypes;
 
+import towerDefence.components.Animation;
 import towerDefence.components.Collision;
 import towerDefence.components.Projectile;
 import towerDefence.components.Weapon;
 import towerDefence.components.damage.Damage;
 import towerDefence.controller.MouseController;
+import towerDefence.particles.Particle;
 import towerDefence.tower.Tower;
 import towerDefence.tower.TowerUpgrades;
 import towerDefence.view.sprite.SpriteEngine;
@@ -29,6 +31,12 @@ public class Cannon extends Tower {
 
         getWeapon().setTowerOwner(this);
         getWeapon().getProjectile().setDamageRadius(new Collision(25, false));
+        getWeapon().getProjectile().setImpactEffect(
+                new Particle(
+                        new SpriteEngine("graphics/FX/Sprite_FX_Explosion_Big_01.png", 1, 6, 10, 0),
+                        new Animation(0, 6, false),
+                        null,
+                        1000));
         this.mouseController = mouseController;
     }
 

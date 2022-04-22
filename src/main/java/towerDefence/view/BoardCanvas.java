@@ -4,6 +4,7 @@ import towerDefence.components.Collision;
 import towerDefence.components.Projectile;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.path.PathPoint;
+import towerDefence.particles.Particle;
 import towerDefence.tower.ITower;
 import towerDefence.view.sprite.Sprite;
 import towerDefence.view.sprite.SpriteEngine;
@@ -128,6 +129,9 @@ public class BoardCanvas implements ICanvas{
         for (Projectile projectile: gameModel.getProjectiles()) {
             g2D.setColor(Color.RED);
             g2D.fill(new Ellipse2D.Double(projectile.getPosition().getX()-5, projectile.getPosition().getY() - 5, 10, 10));
+        }
+        for (Particle particle: gameModel.getParticles()) {
+            DrawGraphics.drawSprite(g2D, particle.getSprite(), particle.getPosition());
         }
     }
 

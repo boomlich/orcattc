@@ -19,7 +19,7 @@ public abstract class Tower implements ITower, Interactable{
     private int rank = 1;
     private Collision searchRadius;
     private final Collision placementRadius;
-    private final Weapon weapon;
+    private Weapon weapon;
     private SpriteEngine spriteBody;
     private SpriteEngine spriteBase;
     private boolean spawnMode = true;
@@ -83,18 +83,34 @@ public abstract class Tower implements ITower, Interactable{
 
         if (!spawnMode) {
             // Detect enemies
-            List<IEnemy> detectedEnemies = searchRadius.updateCollision(gameEntities.getSortedEnemies());
+            List<IEnemy> detectedEnemies = searchRadius.updateCollision(getEnemies());
             // Target and fire at enemy
             if (detectedEnemies.size() > 0) {
-                target = targeting.getTarget(detectedEnemies);
-                updateTargetDirection(target.getCollision().getPosition());
-                updateWeapon(deltaSteps, target.getCollision().getPosition());
+                target = targetEnemy(detectedEnemies, targeting);
+                aimAndFireWeaponAtTarget(target, deltaSteps);
             } else if (target != null){
                 noTarget();
             }
         } else {
             validPlacement = positionNotBlocked();
         }
+    }
+
+    protected void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
+    protected IEnemy targetEnemy(List<IEnemy> potentialTargets, Targeting targeting) {
+        return targeting.getTarget(potentialTargets);
+    }
+
+    protected void aimAndFireWeaponAtTarget(IEnemy target, double deltaSteps) {
+        updateTargetDirection(target.getCollision().getPosition());
+        updateWeapon(deltaSteps, target.getCollision().getPosition());
+    }
+
+    protected List<IEnemy> getEnemies() {
+        return gameEntities.getSortedEnemies();
     }
 
     protected void noTarget() {
@@ -160,6 +176,10 @@ public abstract class Tower implements ITower, Interactable{
     public void setGameEntities(GameEntities gameEntities) {
         this.gameEntities = gameEntities;
         weapon.setGameEntities(gameEntities);
+    }
+
+    protected GameEntities getGameEntities() {
+        return gameEntities;
     }
 
     @Override

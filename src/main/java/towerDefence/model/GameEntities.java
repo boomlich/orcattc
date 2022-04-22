@@ -103,15 +103,24 @@ public class GameEntities {
 
 
         List<IEnemy> deadEnemies = new ArrayList<>();
-
         for (IEnemy enemy: enemies) {
             enemy.update(deltaSteps);
             if (enemy.isDead()) {
                 deadEnemies.add(enemy);
             }
         }
-
         removeDead(deadEnemies, enemies);
+
+        List<Particle> deadParticles = new ArrayList<>();
+        for (Particle particle: particles) {
+            particle.update(deltaSteps);
+            if (particle.isDead()) {
+                deadParticles.add(particle);
+            }
+        }
+        particles.removeAll(deadParticles);
+
+
 
         // Sort enemies by z-depth
         renderEnemies = sortByZDepth(enemies);
@@ -160,6 +169,11 @@ public class GameEntities {
 
     public List<Particle> getParticles() {
         return particles;
+    }
+
+    public void addParticle(Particle particle) {
+        System.out.println("Projectile added");
+        particles.add(particle);
     }
 
     protected void setParticleEmitters(List<ParticleEmitter> particleEmitters) {

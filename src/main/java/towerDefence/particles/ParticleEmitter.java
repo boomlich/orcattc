@@ -1,58 +1,49 @@
 package towerDefence.particles;
 
-import javax.swing.*;
-import java.util.Random;
+import towerDefence.model.GameEntities;
+
+import java.awt.geom.Point2D;
 
 public class ParticleEmitter {
 
-    // Total amount of time to emit particles. If set to zero
-    private double emitterLifespan;
 
-    // Minimum and maximum time the particle will exist after spawning.
-    private double timeToLiveMin, timeToLiveMax;
+    private Particle particle;
+    private int emitterTimer;
+    private int currentTime;
+    private GameEntities gameEntities;
+    private boolean isDead = false;
+    private Point2D particleSpawnPosition = new Point2D.Double(0, 0);
 
-    // Maximum and minimum forces in x and y direction.
-    private double minForcePosX, maxForcePosX, minForceNegX, maxForceNegX;
-    private double minForcePosY, maxForcePosY, minForceNegY, maxForceNegY;
+    public ParticleEmitter(Particle particle, int emitterTimer) {
+        this.particle = particle;
+        this.emitterTimer = emitterTimer;
+    }
 
-    // Minimum and maximum size of the particle upon spawning.
-    private double initSizeMin, initSizeMax;
+    public void update(double deltaSteps, Point2D position) {
+        if (!isDead) {
+            currentTime -= 1000/60 * deltaSteps;
 
-    // Minimum and maximum size of the particle upon death
-    private double endSizeMin, getEndSizeMax;
+            if (currentTime <= 0) {
+                spawnParticle();
+                currentTime = emitterTimer;
+            }
+            particleSpawnPosition = position;
+        }
+    }
 
-    // The total amount of particles spawned in the emitters' lifespan.
-    // If lifespan of emitter set to 0, this regulates how many particles
-    // is emitted per second.
-    private int emitterCount;
+    public void setGameEntities(GameEntities gameEntities) {
+        this.gameEntities = gameEntities;
+    }
 
-    ImageIcon sprite;
-
-    public ParticleEmitter(ImageIcon sprite, double emitterLifespan, double timeToLiveMin, double timeToLiveMax,
-                           double minForcePosX, double maxForcePosX, double minForceNegX, double maxForceNegX,
-                           double minForcePosY, double maxForcePosY, double minForceNegY, double maxForceNegY,
-                           double initSizeMin, double initSizeMax, double endSizeMin, double getEndSizeMax,
-                           int emitterCount) {
-        this.sprite = sprite;
-        this.emitterLifespan = emitterLifespan;
-        this.timeToLiveMin = timeToLiveMin;
-        this.timeToLiveMax = timeToLiveMax;
-        this.minForcePosX = minForcePosX;
-        this.maxForcePosX = maxForcePosX;
-        this.minForceNegX = minForceNegX;
-        this.maxForceNegX = maxForceNegX;
-        this.minForcePosY = minForcePosY;
-        this.maxForcePosY = maxForcePosY;
-        this.minForceNegY = minForceNegY;
-        this.maxForceNegY = maxForceNegY;
-        this.initSizeMin = initSizeMin;
-        this.initSizeMax = initSizeMax;
-        this.endSizeMin = endSizeMin;
-        this.getEndSizeMax = getEndSizeMax;
-        this.emitterCount = emitterCount;
+    public void disableEmitter() {
+        isDead = true;
     }
 
     private void spawnParticle() {
-        Random rand = new Random();
+        gameEntities.addParticle(particle.makeCopyWithPosition(particleSpawnPosition));
+    }
+
+    public ParticleEmitter makeCopy() {
+        return new ParticleEmitter(particle.makeCopyWithPosition(particle.getPosition()), emitterTimer);
     }
 }
