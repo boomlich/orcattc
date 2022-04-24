@@ -1,5 +1,6 @@
 package towerDefence.components.debuff;
 
+import towerDefence.components.Animation;
 import towerDefence.enemies.IEnemy;
 import towerDefence.view.sprite.SpriteEngine;
 
@@ -28,6 +29,7 @@ abstract class Debuff implements IDebuff {
      * be applied to a damage over time fire effect.
      */
     private SpriteEngine spriteEngine;
+    private Animation spriteAnimation;
 
     public Debuff(int duration, String identifier) {
         this.duration = duration;
@@ -35,11 +37,17 @@ abstract class Debuff implements IDebuff {
         restartTimer();
     }
 
-    protected void setSpriteEngine(SpriteEngine spriteEngine) {
+    protected void setSpriteEngine(SpriteEngine spriteEngine, Animation spriteAnimation) {
         this.spriteEngine = spriteEngine;
+        this.spriteAnimation = spriteAnimation;
+        this.spriteEngine.start(this.spriteAnimation);
     }
 
-    protected SpriteEngine getSpriteEngine() {
+    protected Animation getSpriteAnimation() {
+        return spriteAnimation;
+    }
+
+    public SpriteEngine getSpriteEngine() {
         return spriteEngine;
     }
 

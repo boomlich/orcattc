@@ -157,6 +157,11 @@ public class Enemy implements IEnemy {
     }
 
     @Override
+    public DebuffManager getDebuffManager() {
+        return debuffManager;
+    }
+
+    @Override
     public double getPathProgression() {
         return splineMovement.getPathProgression();
     }

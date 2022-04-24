@@ -9,6 +9,7 @@ import towerDefence.view.UI.components.UITextBox;
 import java.awt.*;
 
 public class UI_Button_PlayRound extends UIButton {
+
     public UI_Button_PlayRound() {
         super(40, 40);
 
@@ -17,5 +18,4 @@ public class UI_Button_PlayRound extends UIButton {
         setButtonNormal("graphics/UI/PlayRound/UI_PlayRound_Normal.png");
         setButtonHover("graphics/UI/PlayRound/UI_PlayRound_Hover.png");
     }
-
 }

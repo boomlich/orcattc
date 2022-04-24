@@ -49,7 +49,9 @@ public class Projectile implements IDamageable, IProjectile {
         fired.setLinearMovement(spawn, target);
         fired.setGameEntities(gameEntities);
         fired.setEnemies(gameEntities.getSortedEnemies());
-        fired.setImpactEffect(impactEffect.makeCopyWithPosition(null));
+        if (impactEffect != null) {
+            fired.setImpactEffect(impactEffect.makeCopyWithPosition(null));
+        }
         fired.setDebuff(debuff);
         fired.setDamageRadius(damageRadius);
         gameEntities.addProjectile(fired);

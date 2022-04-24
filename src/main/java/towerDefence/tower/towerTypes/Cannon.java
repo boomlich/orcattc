@@ -42,7 +42,7 @@ public class Cannon extends Tower {
 
     @Override
     protected void rank1() {
-        setSearchRadius(TowerUpgrades.upgradeDetectionRange(getSearchRadius(), 0.5));
+        setSearchRadius(TowerUpgrades.upgradeDetectionRange(getSearchRadius(), 2));
     }
 
     @Override

@@ -5,29 +5,23 @@ import towerDefence.components.Projectile;
 import towerDefence.components.TargetingMode;
 import towerDefence.controller.GameControllable;
 import towerDefence.enemies.IEnemy;
-import towerDefence.level.IGameLevel;
 import towerDefence.level.LevelManager;
 import towerDefence.level.levels.Level;
 import towerDefence.level.path.PathPoint;
 import towerDefence.particles.Particle;
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
-import towerDefence.view.Interaction.Interactable;
-import towerDefence.view.Interaction.InteractionManager;
 
 import java.awt.geom.Point2D;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
 
 public class GameModel implements GameRenderable, GameControllable {
 
-    // The current step. Incremented every frame
     private GameEntities gameEntities;
     private WaveSpawner waveSpawner;
     private LevelManager levelManager;
-    private int waveNumber;
     private GameMode gameMode;
     private GameMode modePriorToPause;
     private ITower activeTower;
@@ -43,15 +37,13 @@ public class GameModel implements GameRenderable, GameControllable {
         gameEntities = new GameEntities();
         gameEntities.addBoardCollisions(levelManager.getPath().getPathCollision());
         waveSpawner = new WaveSpawner(gameEntities);
-        waveNumber = 0;
         gameMode = GameMode.BUILD_PHASE;
     }
 
     @Override
     public void startRound() {
         System.out.println("ROUND STARTED");
-        waveSpawner.setCurrentWave(levelManager.getCurrentWave(waveNumber));
-        waveNumber ++;
+        waveSpawner.setCurrentWave(levelManager.loadNextWave());
         gameMode = GameMode.INVASION_PHASE;
     }
 
@@ -82,6 +74,16 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     @Override
+    public int getMaxWaves() {
+        return levelManager.getMaxWaves();
+    }
+
+    @Override
+    public int getCurrentWave() {
+        return levelManager.getCurrentWaveNumber();
+    }
+
+    @Override
     public void selectTower(ITower tower) {
         if (gameMode != GameMode.PAUSE) {
             activeTower = tower;
@@ -94,8 +96,6 @@ public class GameModel implements GameRenderable, GameControllable {
             gameEntities.addTower(activeTower);
             activeTower.disableSpawnMode();
             activeTower = null;
-        } else {
-            System.out.println("INVALID PLACEMENT");
         }
     }
 
@@ -144,7 +144,25 @@ public class GameModel implements GameRenderable, GameControllable {
         if (gameMode == GameMode.INVASION_PHASE) {
             gameEntities.update(deltaSteps);
             waveSpawner.update(deltaSteps);
+
+            endInvasionPhase();
         }
+    }
+
+    private void endInvasionPhase() {
+        if (isWaveDepleated()) {
+            if (levelManager.getCurrentWaveNumber() == levelManager.getMaxWaves()) {
+                gameMode = GameMode.WIN;
+                System.out.println(gameMode);
+            } else {
+                gameMode = GameMode.BUILD_PHASE;
+                System.out.println(gameMode);
+            }
+        }
+    }
+
+    private boolean isWaveDepleated() {
+        return gameEntities.getSortedEnemies().isEmpty() && waveSpawner.waveSpawnCompleted();
     }
 
     @Override

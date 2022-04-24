@@ -4,6 +4,7 @@ import towerDefence.components.Collision;
 import towerDefence.components.CollisionObject;
 import towerDefence.components.damage.Damage;
 import towerDefence.components.damage.IDamageable;
+import towerDefence.components.debuff.DebuffManager;
 import towerDefence.components.debuff.IDebuff;
 import towerDefence.components.movement.SplineMovement;
 import towerDefence.model.GameEntities;
@@ -32,4 +33,6 @@ public interface IEnemy extends IRenderableObject, CollisionObject, IDamageable 
     public void applyDebuff(IDebuff debuff);
 
     public SplineMovement getMovement();
+
+    DebuffManager getDebuffManager();
 }

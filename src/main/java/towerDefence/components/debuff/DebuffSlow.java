@@ -1,5 +1,6 @@
 package towerDefence.components.debuff;
 
+import towerDefence.components.Animation;
 import towerDefence.enemies.IEnemy;
 import towerDefence.view.sprite.SpriteEngine;
 
@@ -25,10 +26,10 @@ public class DebuffSlow extends Debuff{
 
     private double originalSpeed;
 
-    public DebuffSlow(int duration, double speedReduction, double randomChance, SpriteEngine spriteEngine, String identifier) {
+    public DebuffSlow(int duration, double speedReduction, double randomChance, SpriteEngine spriteEngine, Animation animation, String identifier) {
         super(duration, identifier);
         this.totalDuration = duration;
-        setSpriteEngine(spriteEngine);
+        setSpriteEngine(spriteEngine, animation);
 
         this.speedReduction = limitScope(speedReduction);
         this.randomChance = limitScope(randomChance);
@@ -84,7 +85,7 @@ public class DebuffSlow extends Debuff{
 
     @Override
     public IDebuff makeCopy() {
-        return new DebuffSlow(totalDuration, speedReduction, randomChance, getSpriteEngine(), getIdentifier());
+        return new DebuffSlow(totalDuration, speedReduction, randomChance, getSpriteEngine(), getSpriteAnimation(), getIdentifier());
     }
 
     public double getSlowMultiplier() {

@@ -7,6 +7,7 @@ public class WaveSpawner {
 
     private EnemyWave currentWave;
     private final GameEntities gameEntities;
+    private boolean spawningComplete;
     long delayTimer;
 
     public WaveSpawner(GameEntities gameEntities) {
@@ -16,12 +17,13 @@ public class WaveSpawner {
     protected void setCurrentWave(EnemyWave enemyWave) {
         this.currentWave = enemyWave;
         delayTimer = enemyWave.getStartSpawnTimer();
+        spawningComplete = false;
     }
 
     protected void update(double deltaSteps) {
-
-
-        spawnEnemies(deltaSteps);
+        if (!spawningComplete) {
+            spawnEnemies(deltaSteps);
+        }
     }
 
     private void spawnEnemies(double deltaSteps) {
@@ -35,6 +37,12 @@ public class WaveSpawner {
                 gameEntities.addEnemy(currentEnemy.enemy);
                 delayTimer = currentEnemy.timer;
             }
+        } else {
+            spawningComplete = true;
         }
+    }
+
+    public boolean waveSpawnCompleted() {
+        return spawningComplete;
     }
 }

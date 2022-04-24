@@ -33,7 +33,7 @@ public class Rifleman extends Tower {
     @Override
     protected void rank2() {
         getWeapon().increasePenetration(5);
-        getWeapon().increaseDamage(2);
+        getWeapon().increaseDamage(1.5);
     }
 
     @Override

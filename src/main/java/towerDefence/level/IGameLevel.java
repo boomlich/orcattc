@@ -17,4 +17,9 @@ public interface IGameLevel {
 
     public EnemyWave getCurrentWave(int waveNumber);
 
+    public EnemyWave loadNextWave();
+
+    int getMaxWaves();
+
+    int getCurrentWaveNumber();
 }

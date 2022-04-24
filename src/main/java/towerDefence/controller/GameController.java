@@ -1,22 +1,24 @@
 package towerDefence.controller;
 
 import towerDefence.view.GameRender;
+import towerDefence.view.RenderingOptions;
 
 import javax.swing.*;
 import java.awt.event.*;
 
 public class GameController implements ActionListener, KeyListener {
-    Timer timer;
-    GameControllable gameModel;
-    GameRender gameRender;
-    MouseController mouseController;
+    private Timer timer;
+    private GameControllable gameModel;
+    private GameRender gameRender;
+    private MouseController mouseController;
+
+    private double timeMultiplier = 1.0;
 
     public GameController(GameRender gameRender, GameControllable gameModel) {
         this.gameModel = gameModel;
         this.gameRender = gameRender;
 
-        mouseController = new MouseController(gameRender, gameModel);
-
+        mouseController = new MouseController(gameRender, gameModel, this);
 
         gameRender.addKeyListener(this);
         gameRender.addMouseMotionListener(mouseController);
@@ -30,11 +32,11 @@ public class GameController implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        double detaSteps = 1;
+        double deltaSteps = 1 * timeMultiplier;
 
-        gameModel.update(detaSteps);
+        gameModel.update(deltaSteps);
         gameRender.repaint();
-        gameRender.getGameUI().update(detaSteps);
+        gameRender.getGameUI().update(deltaSteps);
     }
 
     @Override
@@ -52,6 +54,10 @@ public class GameController implements ActionListener, KeyListener {
             gameRender.getGameUI().togglePauseGame();
         } else if (key == KeyEvent.VK_Q) {
             System.exit(0);
+        } else if (key == KeyEvent.VK_1) {
+            RenderingOptions.DEBUG = !RenderingOptions.DEBUG;
+        } else if (key == KeyEvent.VK_2) {
+            RenderingOptions.ENEMY_HEALTH = !RenderingOptions.ENEMY_HEALTH;
         }
     }
 
@@ -61,5 +67,11 @@ public class GameController implements ActionListener, KeyListener {
     }
 
 
-
+    public void toggleFastForward() {
+        if (timeMultiplier != 1.0) {
+            timeMultiplier = 1.0;
+        } else {
+            timeMultiplier = 2.0;
+        }
+    }
 }

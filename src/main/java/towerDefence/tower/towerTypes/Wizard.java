@@ -28,7 +28,7 @@ public class Wizard extends Tower {
                 position,
                 new Collision(100, false),
                 new Collision(20, true),
-                new Weapon(100, new Projectile(100, new Damage(25), 10, new Collision(5))),
+                new Weapon(100, new Projectile(100, new Damage(12), 10, new Collision(5))),
                 new SpriteEngine("graphics/tower/Sprite_Tower_Wizard.png", 1, 2, 10, 0));
 
         originalWeapon = getWeapon();
@@ -42,7 +42,7 @@ public class Wizard extends Tower {
 
     @Override
     protected void rank2() {
-        getWeapon().getProjectile().setDebuff(new DebuffSlow(5000, 0.5, 0.25, null, "freezeWR2"));
+        getWeapon().getProjectile().setDebuff(new DebuffSlow(5000, 0.5, 0.25, null, null, "freezeWR2"));
     }
 
     @Override

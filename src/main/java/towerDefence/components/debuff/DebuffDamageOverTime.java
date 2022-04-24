@@ -1,5 +1,6 @@
 package towerDefence.components.debuff;
 
+import towerDefence.components.Animation;
 import towerDefence.components.damage.Damage;
 import towerDefence.tower.ITower;
 import towerDefence.view.sprite.SpriteEngine;
@@ -35,7 +36,7 @@ public class DebuffDamageOverTime extends Debuff{
      */
     private final ITower debuffSource;
 
-    public DebuffDamageOverTime(int duration, int totalDamage, int totalTicks, SpriteEngine spriteEngine, ITower debuffSource, String identifier) {
+    public DebuffDamageOverTime(int duration, int totalDamage, int totalTicks, SpriteEngine spriteEngine, Animation spriteAnimation, ITower debuffSource, String identifier) {
 
         super(duration / totalTicks, identifier);
         this.totalDuration = duration;
@@ -43,7 +44,7 @@ public class DebuffDamageOverTime extends Debuff{
         this.totalTicks = totalTicks;
         this.debuffSource = debuffSource;
         damagePerTick = new Damage(totalDamage / totalTicks);
-        setSpriteEngine(spriteEngine);
+        setSpriteEngine(spriteEngine, spriteAnimation);
     }
 
     @Override
@@ -67,7 +68,7 @@ public class DebuffDamageOverTime extends Debuff{
 
     @Override
     public IDebuff makeCopy() {
-        return new DebuffDamageOverTime(totalDuration, totalDamage, totalTicks, getSpriteEngine(), debuffSource, getIdentifier());
+        return new DebuffDamageOverTime(totalDuration, totalDamage, totalTicks, getSpriteEngine(), getSpriteAnimation(), debuffSource, getIdentifier());
     }
 
     @Override

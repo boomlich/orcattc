@@ -5,6 +5,7 @@ import towerDefence.tower.ITower;
 import towerDefence.view.UI.components.*;
 import towerDefence.view.UI.presets.UI_HUD;
 import towerDefence.view.UI.presets.UI_PauseMenu;
+import towerDefence.view.UI.presets.UI_Win;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -17,6 +18,7 @@ public class UICanvas implements ICanvas {
     private final UIContainer UIContainer;
     private UI_HUD HUD;
     private UI_PauseMenu pauseMenu;
+    private UI_Win winScreen;
     private int width, height;
 
 
@@ -53,26 +55,33 @@ public class UICanvas implements ICanvas {
                 g2D.setColor(new Color(255, 0, 0, 150));
                 g2D.draw(new Ellipse2D.Double(collisionX, collisionY, 2 * radius, 2 * radius));
             }
-
-
             DrawGraphics.drawSprite(g2D, tower.getBodySprite(), tower.getBodyPosition());
 
             // Center of Collision
             g2D.draw(new Rectangle2D.Double(tower.getSearchRadius().getPosition().getX(), tower.getSearchRadius().getPosition().getY(), 1, 1));
         }
-
         UIContainer.paint(g2D);
     }
 
     @Override
     public void update(double deltaSteps) {
-        if (HUD != null) {
-            if (gameModel.hasActiveTower()) {
-                if (!gameModel.getActiveTower().activeSpawnMode()) {
-                    HUD.addTowerMenu(gameModel.getActiveTower());
+
+        if (gameModel.getGameMode() == GameMode.WIN) {
+            if (winScreen == null) {
+                UIContainer.remove(HUD);
+                HUD = null;
+                winScreen = new UI_Win(width, height);
+                UIContainer.add(winScreen);
+            }
+        } else {
+            if (HUD != null) {
+                if (gameModel.hasActiveTower()) {
+                    if (!gameModel.getActiveTower().activeSpawnMode()) {
+                        HUD.addTowerMenu(gameModel.getActiveTower());
+                    }
+                } else {
+                    HUD.removeTowerMenu();
                 }
-            } else {
-                HUD.removeTowerMenu();
             }
         }
     }
@@ -89,5 +98,27 @@ public class UICanvas implements ICanvas {
             HUD = new UI_HUD(width, height, gameModel);
             UIContainer.add(HUD);
         }
+    }
+
+    @Override
+    public void startRound() {
+        if (HUD != null) {
+            HUD.startRound();
+        }
+    }
+
+    @Override
+    public void addTowerMenu() {
+
+    }
+
+    @Override
+    public void displayWin() {
+
+    }
+
+    @Override
+    public void displayGameOver() {
+
     }
 }

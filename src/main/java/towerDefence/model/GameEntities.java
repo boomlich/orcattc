@@ -120,8 +120,6 @@ public class GameEntities {
         }
         particles.removeAll(deadParticles);
 
-
-
         // Sort enemies by z-depth
         renderEnemies = sortByZDepth(enemies);
     }
@@ -172,7 +170,6 @@ public class GameEntities {
     }
 
     public void addParticle(Particle particle) {
-        System.out.println("Projectile added");
         particles.add(particle);
     }
 

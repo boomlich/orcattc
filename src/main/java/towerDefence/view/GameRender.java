@@ -40,7 +40,10 @@ public class GameRender extends JPanel {
             scaleX = ((float) device.getDisplayMode().getWidth() / (float) gameWidth) / dpiScale;
             scaleY = ((float) device.getDisplayMode().getHeight() / (float) gameHeight) / dpiScale;
         }
+        System.out.println(scaleX + " : " + scaleY);
 
+//        scaleX = 2.6666665;
+//        scaleY = scaleX;
     }
 
     public void changeResolution(GraphicsDevice device, int width, int height) {

@@ -2,6 +2,7 @@ package towerDefence.view;
 
 import towerDefence.components.Collision;
 import towerDefence.components.Projectile;
+import towerDefence.components.debuff.DebuffDamageOverTime;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.path.PathPoint;
 import towerDefence.particles.Particle;
@@ -73,6 +74,11 @@ public class BoardCanvas implements ICanvas{
                 for (IEnemy enemy: enemies.get(i)) {
                     DrawGraphics.drawSprite(g2D, enemy.getSprite(), enemy.getPosition());
 
+                    for (DebuffDamageOverTime DOT: enemy.getDebuffManager().getDamageOverTimeList()) {
+                        if (DOT.getSpriteEngine() != null) {
+                            DrawGraphics.drawSprite(g2D, DOT.getSpriteEngine().getSprite(), enemy.getPosition());
+                        }
+                    }
 
                     if (RenderingOptions.DEBUG) {
                         if (RenderingOptions.ENEMY_COLLISION) {
@@ -143,5 +149,25 @@ public class BoardCanvas implements ICanvas{
     @Override
     public void togglePauseGame() {
         
+    }
+
+    @Override
+    public void startRound() {
+
+    }
+
+    @Override
+    public void addTowerMenu() {
+
+    }
+
+    @Override
+    public void displayWin() {
+
+    }
+
+    @Override
+    public void displayGameOver() {
+
     }
 }

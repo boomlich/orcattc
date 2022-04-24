@@ -1,9 +1,6 @@
 package towerDefence.tower.towerTypes;
 
-import towerDefence.components.Collision;
-import towerDefence.components.Projectile;
-import towerDefence.components.ProjectileMultiShot;
-import towerDefence.components.Weapon;
+import towerDefence.components.*;
 import towerDefence.components.damage.Damage;
 import towerDefence.components.debuff.DebuffDamageOverTime;
 import towerDefence.particles.Particle;
@@ -16,6 +13,9 @@ import java.awt.geom.Point2D;
 
 public class Archer extends Tower {
 
+    SpriteEngine fireSprite = new SpriteEngine("graphics/FX/Sprite_FX_Fire_Small_01.png", 1, 4, 10, 0);
+    Animation fireAnim = new Animation(0, 4, true);
+
     public Archer(Point2D position) {
         super(
                 "Archer",
@@ -27,12 +27,15 @@ public class Archer extends Tower {
                 new SpriteEngine("graphics/tower/Sprite_Tower_Archer.png", 2, 9, 10, 4));
 
         getWeapon().setTowerOwner(this);
-        getWeapon().getProjectile().setDebuff(new DebuffDamageOverTime(10000, 400, 30, null, this, "fireAR0"));
-//        getWeapon().getProjectile().setParticleEmitter(
-//                new ParticleEmitter(
-//                        new Particle(
-//                                new SpriteEngine("graphics/FX/Sprite_FX_Fire_Small_01.png", 1, 4, 10, 0),
-//                                new Point2D.Double(0, 0), 1000), 1000));
+        getWeapon().getProjectile().setDebuff(
+                new DebuffDamageOverTime(
+                        10000,
+                        200,
+                        30,
+                        fireSprite,
+                        fireAnim,
+                        this,
+                        "fireAR0"));
     }
 
     @Override
@@ -42,7 +45,7 @@ public class Archer extends Tower {
 
     @Override
     protected void rank2() {
-        getWeapon().getProjectile().setDebuff(new DebuffDamageOverTime(10000, 550, 30, null, this, "fireAR0"));
+        getWeapon().getProjectile().setDebuff(new DebuffDamageOverTime(10000, 400, 30, fireSprite, fireAnim,this, "fireAR0"));
     }
 
     @Override

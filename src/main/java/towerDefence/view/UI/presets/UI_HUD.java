@@ -3,6 +3,7 @@ package towerDefence.view.UI.presets;
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
 import towerDefence.view.UI.components.*;
+import towerDefence.view.UI.presets.buttons.UI_Button_HUD;
 import towerDefence.view.UI.presets.buttons.UI_Button_Options;
 import towerDefence.view.UI.presets.buttons.UI_Button_PlayRound;
 
@@ -12,6 +13,8 @@ public class UI_HUD extends UIContainer {
 
     GameRenderable gameModel;
     UI_TowerMenu towerMenu;
+    UI_Button_HUD playButton;
+    UITextBox waveNumber;
 
     public UI_HUD(int width, int height, GameRenderable gameModel) {
         super(width, height);
@@ -23,9 +26,9 @@ public class UI_HUD extends UIContainer {
         ui_champ.setAlignment(UIAlignment.SOUTH_WEST);
         this.add(ui_champ);
 
-        UIButton playRound = new UI_Button_PlayRound();
-        playRound.setAlignment(UIAlignment.SOUTH);
-        this.add(playRound);
+        playButton = UI_Button_HUD.HUD_Play;
+        playButton.setAlignment(UIAlignment.SOUTH);
+        this.add(playButton);
 
         UI_ResourceBar resourceBar = new UI_ResourceBar(125, 18);
         resourceBar.setBackground(Color.ORANGE);
@@ -36,6 +39,19 @@ public class UI_HUD extends UIContainer {
         UIButton options = new UI_Button_Options();
         options.setAlignment(UIAlignment.NORTH_EAST);
         this.add(options);
+
+        UIContainer waveCounter = new UIContainer(100, 100);
+        waveCounter.setLayoutManager(UILayout.VERTICAL);
+        waveCounter.setAlignment(UIAlignment.NORTH);
+
+        UITextBox waveTitle = new UITextBox("Wave");
+        waveTitle.setAlignment(UIAlignment.NORTH);
+        waveNumber = new UITextBox(gameModel.getCurrentWave() + " / " + gameModel.getMaxWaves());
+        waveNumber.setAlignment(UIAlignment.NORTH);
+
+        waveCounter.add(waveTitle);
+        waveCounter.add(waveNumber);
+        this.add(waveCounter);
     }
 
     public void addTowerMenu(ITower tower) {
@@ -63,6 +79,14 @@ public class UI_HUD extends UIContainer {
             remove(towerMenu);
             towerMenu = null;
         }
+    }
+
+    public void updateWaveCounter() {
+        waveNumber.setText(gameModel.getCurrentWave() + " / " + gameModel.getMaxWaves());
+    }
+
+    public void startRound() {
+        updateWaveCounter();
     }
 }
 

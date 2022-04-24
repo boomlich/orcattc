@@ -9,4 +9,12 @@ public interface ICanvas {
     void update(double deltaSteps);
 
     void togglePauseGame();
+
+    void startRound();
+
+    void addTowerMenu();
+
+    void displayWin();
+
+    void displayGameOver();
 }

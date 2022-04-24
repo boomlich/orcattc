@@ -7,9 +7,9 @@ import java.util.List;
 
 public class DebuffManager {
 
-    List<DebuffDamageOverTime> damageOverTimeList = new ArrayList<>();
-    DebuffSlow slow;
-    IEnemy ownerEnemy;
+    private final List<DebuffDamageOverTime> damageOverTimeList = new ArrayList<>();
+    private DebuffSlow slow;
+    private final IEnemy ownerEnemy;
 
     public DebuffManager(IEnemy ownerEnemy) {
         this.ownerEnemy = ownerEnemy;
@@ -21,6 +21,14 @@ public class DebuffManager {
         } else if (debuff.getClass() == DebuffDamageOverTime.class) {
             addDamageOverTime((DebuffDamageOverTime) debuff);
         }
+    }
+
+    public DebuffSlow getSlow() {
+        return slow;
+    }
+
+    public List<DebuffDamageOverTime> getDamageOverTimeList() {
+        return damageOverTimeList;
     }
 
     public void update(double deltaSteps) {

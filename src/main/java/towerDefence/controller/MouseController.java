@@ -21,12 +21,14 @@ public class MouseController implements MouseMotionListener, MouseListener {
 
     private Interactable currentInteractable;
     private final GameRender gameRender;
+    private GameController gameController;
     private final GameControllable gameModel;
     private Point2D mouseCoordinate;
 
-    public MouseController(GameRender gameRender, GameControllable gameModel) {
+    public MouseController(GameRender gameRender, GameControllable gameModel, GameController gameController) {
         this.gameRender = gameRender;
         this.gameModel = gameModel;
+        this.gameController = gameController;
     }
 
     private void checkInteraction(Point2D mousePosition) {
@@ -166,9 +168,11 @@ public class MouseController implements MouseMotionListener, MouseListener {
         }
         else if (interactCode == InteractCode.PLAY) {
             gameModel.startRound();
+            gameRender.getGameUI().startRound();
         }
         else if (interactCode == InteractCode.TARGET_Tower) {
             gameModel.selectTower((ITower) currentInteractable);
+            gameRender.getGameUI().addTowerMenu();
         }
         else if (interactCode == InteractCode.TARGET_FIRST) {
             gameModel.setTowerTargetingMode(TargetingMode.FIRST);
@@ -186,6 +190,8 @@ public class MouseController implements MouseMotionListener, MouseListener {
         else if (interactCode == InteractCode.PAUSE) {
             gameModel.togglePauseGame();
             gameRender.getGameUI().togglePauseGame();
+        } else if (interactCode == InteractCode.FAST_FORWARD) {
+            gameController.toggleFastForward();
         }
     }
 

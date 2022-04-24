@@ -20,5 +20,5 @@ public enum InteractCode {
     TARGET_B,
     TARGET_C,
     TARGET_D,
-    INACTIVE
+    FAST_FORWARD, INACTIVE
 }

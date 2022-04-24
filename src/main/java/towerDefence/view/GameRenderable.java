@@ -51,4 +51,8 @@ public interface GameRenderable {
     public boolean isActiveTowerInSpawnMode();
 
     GameMode getGameMode();
+
+    int getMaxWaves();
+
+    int getCurrentWave();
 }
