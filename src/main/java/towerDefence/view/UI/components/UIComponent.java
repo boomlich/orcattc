@@ -35,4 +35,6 @@ public interface UIComponent {
 
     public void setAllSubComponentsInactive(UIComponent component);
 
+    public void offsetPosition(int offsetX, int offsetY);
+
 }

@@ -3,7 +3,7 @@ package towerDefence.view.UI.components;
 import java.awt.*;
 import java.util.List;
 
-public class UIComponentTemplate implements UIComponent{
+public abstract class UIComponentTemplate implements UIComponent{
 
     private int x = 0;
     private int y = 0;
@@ -88,6 +88,19 @@ public class UIComponentTemplate implements UIComponent{
         return width;
     }
 
+    @Override
+    public void offsetPosition(int offsetX, int offsetY) {
+        setX(getX() + offsetX);
+        setY(getY() + offsetY);
+        offsetAllSubComponents(offsetX, offsetY);
+    }
 
 
+    private void offsetAllSubComponents(int offsetX, int offsetY) {
+        if (getComponents() != null) {
+            for (UIComponent component: getComponents()) {
+                component.offsetPosition(offsetX, offsetY);
+            }
+        }
+    }
 }

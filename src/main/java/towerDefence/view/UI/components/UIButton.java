@@ -136,6 +136,10 @@ public class UIButton extends UIContainer implements Interactable {
         buttonState = UIButtonState.DISABLED;
     }
 
+    public UIButtonState getButtonState() {
+        return buttonState;
+    }
+
     @Override
     public void enableInteraction() {
         if (buttonState == UIButtonState.DISABLED) {

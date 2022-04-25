@@ -163,4 +163,17 @@ public class UIContainer extends UIComponentTemplate{
             component.paint(g2D);
         }
     }
+
+//    @Override
+//    public void offsetPosition(int offsetX, int offsetY){
+//        setX(getX() + offsetX);
+//        setY(getY() + offsetY);
+//        offsetAllSubComponents(offsetX, offsetY);
+//    }
+
+//    private void offsetAllSubComponents(int offsetX, int offsetY) {
+//        for (UIComponent component: getComponents()) {
+//            component.offsetPosition(offsetX, offsetY);
+//        }
+//    }
 }

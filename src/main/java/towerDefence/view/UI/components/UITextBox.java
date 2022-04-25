@@ -78,4 +78,10 @@ public class UITextBox extends UIComponentTemplate {
     public void setY(int y) {
         super.setY(y + getHeight() - getHeight() / 6);
     }
+
+    @Override
+    public void offsetPosition(int offsetX, int offsetY) {
+        offsetY -= getHeight() + getHeight() / 2;
+        super.offsetPosition(offsetX, offsetY);
+    }
 }

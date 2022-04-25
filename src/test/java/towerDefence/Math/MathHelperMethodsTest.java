@@ -81,4 +81,9 @@ public class MathHelperMethodsTest {
 
         System.out.println(Math.toDegrees(angle));
     }
+
+
+    @Test
+    void testtest() {
+    }
 }

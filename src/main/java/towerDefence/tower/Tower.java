@@ -29,7 +29,7 @@ public abstract class Tower implements ITower, Interactable{
     private Targeting targeting;
     private IEnemy target;
     private boolean validPlacement;
-    private Cost cost;
+    private final Cost cost;
 
 
     // Tower menu options
