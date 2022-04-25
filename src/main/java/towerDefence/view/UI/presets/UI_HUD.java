@@ -5,7 +5,6 @@ import towerDefence.view.GameRenderable;
 import towerDefence.view.UI.components.*;
 import towerDefence.view.UI.presets.buttons.UI_Button_HUD;
 import towerDefence.view.UI.presets.buttons.UI_Button_Options;
-import towerDefence.view.UI.presets.buttons.UI_Button_PlayRound;
 
 import java.awt.*;
 
@@ -26,7 +25,8 @@ public class UI_HUD extends UIContainer {
         ui_champ.setAlignment(UIAlignment.SOUTH_WEST);
         this.add(ui_champ);
 
-        playButton = UI_Button_HUD.HUD_Play;
+        playButton = new UI_Button_HUD();
+        playButton.setPlay();
         playButton.setAlignment(UIAlignment.SOUTH);
         this.add(playButton);
 
@@ -87,6 +87,15 @@ public class UI_HUD extends UIContainer {
 
     public void startRound() {
         updateWaveCounter();
+        playButton.toggleFastForward(gameModel.isFastForwarding());
+    }
+
+    public void toggleFastForward() {
+        playButton.toggleFastForward(gameModel.isFastForwarding());
+    }
+
+    public void buildPhase() {
+        playButton.setPlay();
     }
 }
 

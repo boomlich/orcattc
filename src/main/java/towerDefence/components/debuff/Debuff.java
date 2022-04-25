@@ -38,9 +38,13 @@ abstract class Debuff implements IDebuff {
     }
 
     protected void setSpriteEngine(SpriteEngine spriteEngine, Animation spriteAnimation) {
-        this.spriteEngine = spriteEngine;
-        this.spriteAnimation = spriteAnimation;
-        this.spriteEngine.start(this.spriteAnimation);
+        if (spriteEngine != null) {
+            this.spriteEngine = spriteEngine;
+            if (spriteAnimation != null) {
+                this.spriteAnimation = spriteAnimation;
+                this.spriteEngine.start(this.spriteAnimation);
+            }
+        }
     }
 
     protected Animation getSpriteAnimation() {

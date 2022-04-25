@@ -13,7 +13,7 @@ import java.awt.geom.Point2D;
 
 public class Archer extends Tower {
 
-    SpriteEngine fireSprite = new SpriteEngine("graphics/FX/Sprite_FX_Fire_Small_01.png", 1, 4, 10, 0);
+    SpriteEngine fireSprite = new SpriteEngine("graphics/FX/Sprite_FX_Fire_Small_01.png", 1, 4, 5, 0);
     Animation fireAnim = new Animation(0, 4, true);
 
     public Archer(Point2D position) {

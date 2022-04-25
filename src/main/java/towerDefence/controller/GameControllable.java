@@ -2,6 +2,7 @@ package towerDefence.controller;
 
 import towerDefence.components.TargetingMode;
 import towerDefence.level.levels.Level;
+import towerDefence.model.GameMode;
 import towerDefence.tower.ITower;
 
 import java.awt.geom.Point2D;
@@ -36,4 +37,10 @@ public interface GameControllable {
     public void placeTower();
 
     public void togglePauseGame();
+
+    GameMode getGameMode();
+
+    void toggleFastForward();
+
+    boolean isFastForwarding();
 }

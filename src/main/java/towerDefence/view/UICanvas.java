@@ -23,6 +23,7 @@ public class UICanvas implements ICanvas {
 
 
     public UICanvas(GameRenderable gameModel, int width, int height) {
+        gameModel.setGameUI(this);
         this.gameModel = gameModel;
         this.width = width;
         this.height = height;
@@ -120,5 +121,20 @@ public class UICanvas implements ICanvas {
     @Override
     public void displayGameOver() {
 
+    }
+
+    public void startBuildPhase() {
+        if (HUD != null) {
+            HUD.buildPhase();
+        }
+    }
+
+    public void displayMainMenu() {
+    }
+
+    public void toggleFastForward() {
+        if (HUD != null) {
+            HUD.toggleFastForward();
+        }
     }
 }

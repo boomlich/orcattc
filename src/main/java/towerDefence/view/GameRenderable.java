@@ -52,7 +52,11 @@ public interface GameRenderable {
 
     GameMode getGameMode();
 
+    void setGameUI(UICanvas uiCanvas);
+
     int getMaxWaves();
 
     int getCurrentWave();
+
+    boolean isFastForwarding();
 }

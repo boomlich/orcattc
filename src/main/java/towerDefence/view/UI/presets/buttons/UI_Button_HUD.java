@@ -5,24 +5,33 @@ import towerDefence.view.UI.components.UIButton;
 
 public class UI_Button_HUD extends UIButton {
 
-    public static UI_Button_HUD HUD_Play = new UI_Button_HUD(
-            "graphics/UI/PlayRound/UI_PlayRound_Normal.png",
-            "graphics/UI/PlayRound/UI_PlayRound_Hover.png",
-            InteractCode.PLAY
-    );
-
-    public static UI_Button_HUD HUD_FastForward = new UI_Button_HUD(
-            "graphics/buttons/archer/Portrait_Bow_Normal.png",
-            "graphics/buttons/archer/Portrait_Bow_Normal.png",
-            InteractCode.FAST_FORWARD
-    );
-
-    private UI_Button_HUD(String normal, String hover, InteractCode interactCode) {
+    public UI_Button_HUD() {
         super(40, 40);
+    }
 
-        setInteractCode(interactCode);
+    public void setPlay() {
+        setInteractCode(InteractCode.PLAY);
+        setButtonNormal("graphics/UI/PlayRound/UI_PlayRound_Normal.png");
+        setButtonHover("graphics/UI/PlayRound/UI_PlayRound_Hover.png");
+    }
 
-        setButtonNormal(normal);
-        setButtonHover(hover);
+    public void setFastForwardDisabled() {
+        setInteractCode(InteractCode.FAST_FORWARD);
+        setButtonNormal("graphics/buttons/archer/Portrait_Bow_Normal.png");
+        setButtonHover("graphics/buttons/archer/Portrait_Bow_Hover.png");
+    }
+
+    public void setFastForwardEnabled() {
+        setInteractCode(InteractCode.FAST_FORWARD);
+        setButtonNormal("graphics/buttons/gun/Portrait_Gun_Normal.png");
+        setButtonHover("graphics/buttons/gun/Portrait_Gun_Hover.png");
+    }
+
+    public void toggleFastForward(boolean isFastForwarding) {
+        if (isFastForwarding) {
+            setFastForwardEnabled();
+        } else {
+            setFastForwardDisabled();
+        }
     }
 }

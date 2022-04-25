@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 public class GameRender extends JPanel {
 
     private final ICanvas boardCanvas;
-    private final ICanvas gameUI;
+    private final UICanvas gameUI;
     private final GraphicsDevice device;
     private final int gameWidth = 960;
     private final int gameHeight = 540;

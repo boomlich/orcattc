@@ -11,6 +11,7 @@ import towerDefence.level.path.PathPoint;
 import towerDefence.particles.Particle;
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
+import towerDefence.view.UICanvas;
 
 import java.awt.geom.Point2D;
 import java.util.HashMap;
@@ -25,6 +26,8 @@ public class GameModel implements GameRenderable, GameControllable {
     private GameMode gameMode;
     private GameMode modePriorToPause;
     private ITower activeTower;
+    private UICanvas uiCanvas;
+    private boolean fastForward;
 
     public GameModel() {
         loadLevel(Level.A);
@@ -38,13 +41,14 @@ public class GameModel implements GameRenderable, GameControllable {
         gameEntities.addBoardCollisions(levelManager.getPath().getPathCollision());
         waveSpawner = new WaveSpawner(gameEntities);
         gameMode = GameMode.BUILD_PHASE;
+        fastForward = false;
     }
 
     @Override
     public void startRound() {
         System.out.println("ROUND STARTED");
         waveSpawner.setCurrentWave(levelManager.loadNextWave());
-        gameMode = GameMode.INVASION_PHASE;
+        changeGameMode(GameMode.INVASION_PHASE);
     }
 
     @Override
@@ -71,6 +75,22 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public GameMode getGameMode() {
         return gameMode;
+    }
+
+    @Override
+    public void toggleFastForward() {
+        fastForward = !fastForward;
+        uiCanvas.toggleFastForward();
+    }
+
+    @Override
+    public boolean isFastForwarding() {
+        return fastForward;
+    }
+
+    @Override
+    public void setGameUI(UICanvas uiCanvas) {
+        this.uiCanvas = uiCanvas;
     }
 
     @Override
@@ -102,10 +122,10 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public void togglePauseGame() {
         if (gameMode == GameMode.PAUSE) {
-            gameMode = modePriorToPause;
+            changeGameMode(modePriorToPause);
         } else {
             modePriorToPause = gameMode;
-            gameMode = GameMode.PAUSE;
+            changeGameMode(GameMode.PAUSE);
             activeTower = null;
         }
     }
@@ -152,13 +172,28 @@ public class GameModel implements GameRenderable, GameControllable {
     private void endInvasionPhase() {
         if (isWaveDepleated()) {
             if (levelManager.getCurrentWaveNumber() == levelManager.getMaxWaves()) {
-                gameMode = GameMode.WIN;
-                System.out.println(gameMode);
+                changeGameMode(GameMode.WIN);
             } else {
-                gameMode = GameMode.BUILD_PHASE;
-                System.out.println(gameMode);
+                changeGameMode(GameMode.BUILD_PHASE);
             }
         }
+    }
+
+    private void changeGameMode(GameMode gameMode) {
+        if (gameMode == GameMode.BUILD_PHASE) {
+            uiCanvas.startBuildPhase();
+        } else if (gameMode == GameMode.INVASION_PHASE) {
+            uiCanvas.startRound();
+        } else if (gameMode == GameMode.WIN) {
+            uiCanvas.displayWin();
+        } else if (gameMode == GameMode.PAUSE) {
+            uiCanvas.togglePauseGame();
+        } else if (gameMode == GameMode.GAME_OVER) {
+            uiCanvas.displayGameOver();
+        } else if (gameMode == GameMode.MAIN_MENU) {
+            uiCanvas.displayMainMenu();
+        }
+        this.gameMode = gameMode;
     }
 
     private boolean isWaveDepleated() {

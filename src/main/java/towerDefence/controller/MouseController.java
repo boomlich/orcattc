@@ -168,7 +168,6 @@ public class MouseController implements MouseMotionListener, MouseListener {
         }
         else if (interactCode == InteractCode.PLAY) {
             gameModel.startRound();
-            gameRender.getGameUI().startRound();
         }
         else if (interactCode == InteractCode.TARGET_Tower) {
             gameModel.selectTower((ITower) currentInteractable);
@@ -189,9 +188,8 @@ public class MouseController implements MouseMotionListener, MouseListener {
         }
         else if (interactCode == InteractCode.PAUSE) {
             gameModel.togglePauseGame();
-            gameRender.getGameUI().togglePauseGame();
         } else if (interactCode == InteractCode.FAST_FORWARD) {
-            gameController.toggleFastForward();
+            gameModel.toggleFastForward();
         }
     }
 

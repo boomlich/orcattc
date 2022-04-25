@@ -1,5 +1,6 @@
 package towerDefence.controller;
 
+import towerDefence.model.GameMode;
 import towerDefence.view.GameRender;
 import towerDefence.view.RenderingOptions;
 
@@ -31,8 +32,13 @@ public class GameController implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        double deltaSteps;
+        if (gameModel.getGameMode() == GameMode.INVASION_PHASE) {
+            deltaSteps = 1 * getTimeMultiplier();
+        } else {
+            deltaSteps = 1;
+        }
 
-        double deltaSteps = 1 * timeMultiplier;
 
         gameModel.update(deltaSteps);
         gameRender.repaint();
@@ -67,11 +73,11 @@ public class GameController implements ActionListener, KeyListener {
     }
 
 
-    public void toggleFastForward() {
-        if (timeMultiplier != 1.0) {
-            timeMultiplier = 1.0;
+    public double getTimeMultiplier() {
+        if (gameModel.isFastForwarding()) {
+            return 2.0;
         } else {
-            timeMultiplier = 2.0;
+            return 1.0;
         }
     }
 }
