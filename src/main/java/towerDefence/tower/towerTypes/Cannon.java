@@ -26,7 +26,8 @@ public class Cannon extends Tower {
                 new Collision(60, false),
                 new Collision(20, true),
                 new Weapon(1000, new Projectile(100, new Damage(100), 10, new Collision(5))),
-                new SpriteEngine("graphics/tower/Sprite_Tower_Cannon.png", 2, 9, 10, 4));
+                new SpriteEngine("graphics/tower/Sprite_Tower_Cannon.png", 2, 9, 10, 4),
+                500);
 
 
         getWeapon().setTowerOwner(this);

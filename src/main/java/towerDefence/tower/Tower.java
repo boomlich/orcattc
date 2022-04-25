@@ -29,6 +29,7 @@ public abstract class Tower implements ITower, Interactable{
     private Targeting targeting;
     private IEnemy target;
     private boolean validPlacement;
+    private int cost;
 
     // Tower menu options
     private final String portraitPath;
@@ -37,7 +38,7 @@ public abstract class Tower implements ITower, Interactable{
     private int totalDamageDone = 0;
 
     public Tower(String towerName, String portraitPath, Point2D position, Collision searchRadius, Collision placementRadius,
-                 Weapon weapon, SpriteEngine spriteBody){
+                 Weapon weapon, SpriteEngine spriteBody, int cost){
         this.towerName = towerName;
         this.portraitPath = portraitPath;
         this.position = position;
@@ -47,6 +48,7 @@ public abstract class Tower implements ITower, Interactable{
         this.spriteBody = spriteBody;
         spriteBase = new SpriteEngine("TestSpriteSheet.png", 4, 5, 10, 10);
         targeting = new Targeting(TargetingMode.FIRST, this);
+        this.cost = cost;
     }
 
     @Override
@@ -342,5 +344,10 @@ public abstract class Tower implements ITower, Interactable{
     @Override
     public void setInactive() {
         interactCode = InteractCode.INACTIVE;
+    }
+
+    @Override
+    public int getCost() {
+        return cost;
     }
 }

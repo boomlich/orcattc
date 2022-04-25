@@ -28,6 +28,7 @@ public class GameModel implements GameRenderable, GameControllable {
     private ITower activeTower;
     private UICanvas uiCanvas;
     private boolean fastForward;
+    private EconomyManager economyManager;
 
     public GameModel() {
         loadLevel(Level.A);
@@ -37,6 +38,7 @@ public class GameModel implements GameRenderable, GameControllable {
     public void loadLevel(Level level) {
         levelManager = new LevelManager();
         levelManager.loadLevel(level);
+        economyManager = new EconomyManager(level.getStartMoney());
         gameEntities = new GameEntities();
         gameEntities.addBoardCollisions(levelManager.getPath().getPathCollision());
         waveSpawner = new WaveSpawner(gameEntities);
@@ -53,9 +55,11 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void addTower(ITower target) {
-        if (!isActiveTowerInSpawnMode()) {
-            activeTower = target;
-            activeTower.setGameEntities(gameEntities);
+        if (economyManager.hasSufficiantFunds(target.getCost())) {
+            if (!isActiveTowerInSpawnMode()) {
+                activeTower = target;
+                activeTower.setGameEntities(gameEntities);
+            }
         }
     }
 
@@ -113,6 +117,7 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public void placeTower() {
         if (activeTower.hasValidPlacement()) {
+            economyManager.purchaseItem(activeTower.getCost());
             gameEntities.addTower(activeTower);
             activeTower.disableSpawnMode();
             activeTower = null;

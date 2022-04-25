@@ -29,7 +29,8 @@ public class Wizard extends Tower {
                 new Collision(100, false),
                 new Collision(20, true),
                 new Weapon(100, new Projectile(100, new Damage(12), 10, new Collision(5))),
-                new SpriteEngine("graphics/tower/Sprite_Tower_Wizard.png", 1, 2, 10, 0));
+                new SpriteEngine("graphics/tower/Sprite_Tower_Wizard.png", 1, 2, 10, 0),
+                1000);
 
         originalWeapon = getWeapon();
         originalWeapon.setTowerOwner(this);

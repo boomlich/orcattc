@@ -62,4 +62,5 @@ public interface ITower extends IRenderableObject {
 
     public void addStats(IEnemy enemy, int healthBefore, Damage damage);
 
+    int getCost();
 }
