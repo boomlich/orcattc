@@ -1,26 +1,26 @@
 package towerDefence.view.UI.presets;
 
+import towerDefence.view.GameRenderable;
 import towerDefence.view.Interaction.InteractCode;
 import towerDefence.view.UI.components.*;
-import towerDefence.view.UI.presets.buttons.UI_Button_Archer;
-import towerDefence.view.UI.presets.buttons.UI_Button_Cannon;
-import towerDefence.view.UI.presets.buttons.UI_Button_Gunner;
-import towerDefence.view.UI.presets.buttons.UI_Button_Wizard;
+import towerDefence.view.UI.presets.buttons.*;
 
 import java.awt.*;
 
 public class UI_Champ extends UIContainer {
+
+    private final UI_Button_Champions[] champions;
 
     public UI_Champ(int width, int height) {
         super(width, height);
 
         this.setLayoutManager(UILayout.VERTICAL);
 
-        UIButton[] champions = {
-                new UI_Button_Archer(),
-                new UI_Button_Gunner(),
-                new UI_Button_Cannon(),
-                new UI_Button_Wizard(),
+        champions = new UI_Button_Champions[]{
+                UI_Button_Champions.ARCHER,
+                UI_Button_Champions.RIFLEMAN,
+                UI_Button_Champions.CANNON,
+                UI_Button_Champions.WIZARD,
         };
 
         UIContainer topContainer = new UIContainer(width, 10);
@@ -62,5 +62,11 @@ public class UI_Champ extends UIContainer {
 
         this.add(bottomContainer);
         this.add(topContainer);
+    }
+
+    public void update(GameRenderable gameModel) {
+        for (UI_Button_Champions button: champions) {
+            button.update(gameModel);
+        }
     }
 }

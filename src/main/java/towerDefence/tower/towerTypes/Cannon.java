@@ -7,6 +7,7 @@ import towerDefence.components.Weapon;
 import towerDefence.components.damage.Damage;
 import towerDefence.controller.MouseController;
 import towerDefence.particles.Particle;
+import towerDefence.tower.Cost;
 import towerDefence.tower.Tower;
 import towerDefence.tower.TowerUpgrades;
 import towerDefence.view.sprite.SpriteEngine;
@@ -27,7 +28,7 @@ public class Cannon extends Tower {
                 new Collision(20, true),
                 new Weapon(1000, new Projectile(100, new Damage(100), 10, new Collision(5))),
                 new SpriteEngine("graphics/tower/Sprite_Tower_Cannon.png", 2, 9, 10, 4),
-                500);
+                Cost.CANNON);
 
 
         getWeapon().setTowerOwner(this);

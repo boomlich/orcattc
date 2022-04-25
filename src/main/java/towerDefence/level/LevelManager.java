@@ -57,4 +57,9 @@ public class LevelManager implements IGameLevel {
     public int getCurrentWaveNumber() {
         return currentWaveNumber;
     }
+
+    @Override
+    public int getWaveEndMoney() {
+        return currentLevel.getWaveEndMoney();
+    }
 }

@@ -4,6 +4,7 @@ import towerDefence.components.Collision;
 import towerDefence.components.ProjectileMultiShot;
 import towerDefence.components.Weapon;
 import towerDefence.components.damage.Damage;
+import towerDefence.tower.Cost;
 import towerDefence.tower.Tower;
 import towerDefence.tower.TowerUpgrades;
 import towerDefence.view.sprite.SpriteEngine;
@@ -21,7 +22,7 @@ public class Rifleman extends Tower {
                 new Collision(20, true),
                 new Weapon(1000, new ProjectileMultiShot(100, new Damage(100), 10, new Collision(5))),
                 new SpriteEngine("graphics/tower/Sprite_Tower_RifleMan.png", 2, 9, 10, 4),
-                200);
+                Cost.RIFLEMAN);
 
         getWeapon().setTowerOwner(this);
     }

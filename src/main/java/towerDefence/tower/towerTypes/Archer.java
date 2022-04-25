@@ -5,6 +5,7 @@ import towerDefence.components.damage.Damage;
 import towerDefence.components.debuff.DebuffDamageOverTime;
 import towerDefence.particles.Particle;
 import towerDefence.particles.ParticleEmitter;
+import towerDefence.tower.Cost;
 import towerDefence.tower.Tower;
 import towerDefence.tower.TowerUpgrades;
 import towerDefence.view.sprite.SpriteEngine;
@@ -25,7 +26,7 @@ public class Archer extends Tower {
                 new Collision(20, true),
                 new Weapon(1000, new Projectile(100, new Damage(25), 10, new Collision(5))),
                 new SpriteEngine("graphics/tower/Sprite_Tower_Archer.png", 2, 9, 10, 4),
-                100);
+                Cost.ARCHER);
 
         getWeapon().setTowerOwner(this);
         getWeapon().getProjectile().setDebuff(

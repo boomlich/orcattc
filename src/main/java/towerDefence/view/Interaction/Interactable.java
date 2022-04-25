@@ -18,5 +18,9 @@ public interface Interactable {
 
     public InteractCode getInteractCode();
 
+    void disableInteraction();
+
+    void enableInteraction();
+
     public void setInactive();
 }

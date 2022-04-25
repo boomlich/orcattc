@@ -36,7 +36,9 @@ public interface GameRenderable {
 
     public List<Particle> getParticles();
 
-    public void getMoney();
+    public int getMoney();
+
+    public boolean hasSufficiantFunds(int cost);
 
     public List<PathPoint> getTrackPath();
 

@@ -9,6 +9,7 @@ import towerDefence.level.LevelManager;
 import towerDefence.level.levels.Level;
 import towerDefence.level.path.PathPoint;
 import towerDefence.particles.Particle;
+import towerDefence.tower.Cost;
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
 import towerDefence.view.UICanvas;
@@ -143,13 +144,19 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public void upgradeTower() {
         if (activeTower != null) {
-            activeTower.upgradeRank();
+            if (economyManager.hasSufficiantFunds(activeTower.getCost())) {
+                economyManager.purchaseItem(activeTower.upgradeRank());
+            }
         }
     }
 
     @Override
-    public void sellTower(ITower target) {
-
+    public void sellTower() {
+        if (activeTower != null) {
+            economyManager.addMoney(activeTower.getSellValue());
+            gameEntities.removeTower(activeTower);
+            activeTower = null;
+        }
     }
 
     @Override
@@ -167,11 +174,13 @@ public class GameModel implements GameRenderable, GameControllable {
         }
 
         if (gameMode == GameMode.INVASION_PHASE) {
-            gameEntities.update(deltaSteps);
+//            gameEntities.update(deltaSteps);
             waveSpawner.update(deltaSteps);
-
+            economyManager.addMoney(gameEntities.retrieveMoneyLoot());
             endInvasionPhase();
         }
+
+        gameEntities.update(deltaSteps);
     }
 
     private void endInvasionPhase() {
@@ -180,6 +189,7 @@ public class GameModel implements GameRenderable, GameControllable {
                 changeGameMode(GameMode.WIN);
             } else {
                 changeGameMode(GameMode.BUILD_PHASE);
+                economyManager.addMoney((int) (levelManager.getWaveEndMoney() * Math.pow(1.05, getCurrentWave())));
             }
         }
     }
@@ -250,8 +260,13 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     @Override
-    public void getMoney() {
+    public int getMoney() {
+        return economyManager.getMoney();
+    }
 
+    @Override
+    public boolean hasSufficiantFunds(int cost) {
+        return economyManager.hasSufficiantFunds(cost);
     }
 
     @Override

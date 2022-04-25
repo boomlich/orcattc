@@ -184,6 +184,7 @@ public class MouseController implements MouseMotionListener, MouseListener {
         } else if (interactCode == InteractCode.UPGRADE) {
             gameModel.upgradeTower();
         } else if (interactCode == InteractCode.SELL) {
+            gameModel.sellTower();
 
         }
         else if (interactCode == InteractCode.PAUSE) {

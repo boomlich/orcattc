@@ -109,7 +109,6 @@ public class Projectile implements IDamageable, IProjectile {
                 // Only apply damage to new targets
                 if (!alreadyDamagedEnemies.contains(target)) {
                     targetHit(target);
-
                 }
             }
             else {

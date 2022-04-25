@@ -20,6 +20,7 @@ public class OrcBrute extends Enemy {
                 new Collision(20),
                 new Animation(0, 12, true),
                 new Animation(12, 24, true),
-                new Animation(0, 0, true));
+                new Animation(0, 0, true),
+                10);
     }
 }

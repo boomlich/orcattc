@@ -15,8 +15,9 @@ public interface ITower extends IRenderableObject {
 
     /**
      * Upgrade the current rank of the tower.
+     * @return
      */
-    public void upgradeRank();
+    public int upgradeRank();
 
     public void update(double deltaSteps);
 
@@ -63,4 +64,8 @@ public interface ITower extends IRenderableObject {
     public void addStats(IEnemy enemy, int healthBefore, Damage damage);
 
     int getCost();
+
+    int getRank();
+
+    int getSellValue();
 }

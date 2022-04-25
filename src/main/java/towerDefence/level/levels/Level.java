@@ -7,6 +7,7 @@ public class Level {
     private final String[] enemyWaves;
     private final Point2D[] pathSplineControls;
     private final int startMoney;
+    private final int waveEndMoney;
 
     public static final Level A = new Level(
             // Spline control points
@@ -34,13 +35,15 @@ public class Level {
                     "P_120, D_30, aab_1",
                     "P_120, D_30, ab_6, c_1, P_500, ab_10",
             },
-            1000
+            1000,
+            250
     );
 
-    private Level(Point2D[] pathSplineControls, String[] enemyWaves, int startMoney){
+    private Level(Point2D[] pathSplineControls, String[] enemyWaves, int startMoney, int waveEndMoney){
         this.pathSplineControls = pathSplineControls;
         this.enemyWaves = enemyWaves;
         this.startMoney = startMoney;
+        this.waveEndMoney = waveEndMoney;
     }
 
     public String getEnemyWave(int selectedWave) {
@@ -57,5 +60,9 @@ public class Level {
 
     public int getStartMoney() {
         return startMoney;
+    }
+
+    public int getWaveEndMoney() {
+        return waveEndMoney;
     }
 }

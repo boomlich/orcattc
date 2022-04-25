@@ -6,6 +6,7 @@ import towerDefence.enemies.IEnemy;
 import towerDefence.particles.Particle;
 import towerDefence.particles.ParticleEmitter;
 import towerDefence.tower.ITower;
+import towerDefence.tower.Tower;
 import towerDefence.view.IRenderableObject;
 import towerDefence.view.Interaction.Interactable;
 import towerDefence.view.Interaction.InteractionManager;
@@ -25,6 +26,8 @@ public class GameEntities {
     private HashMap<Integer, List<IEnemy>> renderEnemies = new HashMap<>();
     private HashMap<Integer, List<ITower>> renderTowers = new HashMap<>();
     private TreeSet<Integer> zDepthRange = new TreeSet<>();
+
+    private int moneyEarned;
 
     public GameEntities() {
     }
@@ -106,6 +109,7 @@ public class GameEntities {
         for (IEnemy enemy: enemies) {
             enemy.update(deltaSteps);
             if (enemy.isDead()) {
+                moneyEarned += enemy.getMoneyLoot();
                 deadEnemies.add(enemy);
             }
         }
@@ -128,6 +132,12 @@ public class GameEntities {
         for (T object: deadList) {
             originalList.remove(object);
         }
+    }
+
+    public int retrieveMoneyLoot() {
+        int loot = moneyEarned;
+        moneyEarned = 0;
+        return loot;
     }
 
     public TreeSet<Integer> getzDepthRange() {
@@ -202,6 +212,15 @@ public class GameEntities {
 
     public void addProjectile(Projectile projectile) {
         projectiles.add(projectile);
+    }
+
+    public void removeTower(ITower tower) {
+        towers.remove(tower);
+
+        Interactable interactable = (Interactable) tower;
+        interactable.setInactive();
+        InteractionManager.removeInactive();
+        renderTowers = sortByZDepth(towers);
     }
 }
 

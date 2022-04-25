@@ -35,4 +35,6 @@ public interface IEnemy extends IRenderableObject, CollisionObject, IDamageable 
     public SplineMovement getMovement();
 
     DebuffManager getDebuffManager();
+
+    int getMoneyLoot();
 }

@@ -1,6 +1,7 @@
 package towerDefence.view.UI.presets;
 
 import towerDefence.tower.ITower;
+import towerDefence.view.GameRenderable;
 import towerDefence.view.Interaction.InteractCode;
 import towerDefence.view.UI.components.*;
 
@@ -11,6 +12,11 @@ public class UI_TowerMenu extends UIContainer {
     public final ITower tower;
     private final UITextBox statKills;
     private final UITextBox statDamage;
+    private final UIButton upgradeButton;
+    private final UIContainer[] rankDisplay = new UIContainer[3];
+
+
+
 
 
     public UI_TowerMenu(ITower tower) {
@@ -85,24 +91,64 @@ public class UI_TowerMenu extends UIContainer {
         towerStatsAndOptions.add(statsContainer);
         towerStatsAndOptions.add(targetingOptions);
 
-        UIButton upgrade = new UIButton("UPGRADE", 50, 50);
-        upgrade.setAlignment(UIAlignment.CENTER);
-        upgrade.setInteractCode(InteractCode.UPGRADE);
+
+
+
+        UIContainer upgradeContainer = new UIContainer(50, 50);
+        upgradeContainer.setLayoutManager(UILayout.VERTICAL);
+        upgradeContainer.setBackground(Color.BLACK);
+
+        upgradeButton = new UIButton("UPGRADE",50, 35);
+        upgradeButton.setInteractCode(InteractCode.UPGRADE);
+
+        UIContainer rankContainer = new UIContainer(50, 15);
+        rankContainer.setBackground(Color.RED);
+        rankContainer.setPadding(new ContainerPadding(2));
+
+        // Add rank display
+        for (int i = 0; i < 3; i++) {
+            UIContainer rank = new UIContainer(15, 11);
+            rank.setBackground(Color.BLACK);
+            rankContainer.add(rank);
+            rankDisplay[i] = rank;
+        }
+
+        upgradeContainer.add(upgradeButton);
+        upgradeContainer.add(rankContainer);
 
         UIButton sell = new UIButton("SELL", 25, 50);
         sell.setAlignment(UIAlignment.CENTER);
         sell.setInteractCode(InteractCode.SELL);
 
-
-
+        // Add all elements to main container
         this.add(portraitContainer);
         this.add(towerStatsAndOptions);
-        this.add(upgrade);
+        this.add(upgradeContainer);
         this.add(sell);
     }
 
-    public void update() {
+    private void updateRankDisplay(ITower tower) {
+        if (tower.getRank() != 0) {
+            for (int i = 0; i < tower.getRank(); i++) {
+                rankDisplay[i].setBackground(Color.GREEN);
+            }
+        }
+    }
+
+    private void updateMoney(GameRenderable gameModel) {
+        if (gameModel.hasSufficiantFunds(tower.getCost())) {
+//            upgradeButton.setColor(Color.WHITE);
+            upgradeButton.enableInteraction();
+        } else {
+//            upgradeButton.setColor(Color.RED);
+            upgradeButton.disableInteraction();
+        }
+    }
+
+    public void update(GameRenderable gameModel) {
         statKills.setText("Kills: " + tower.getTotalKills());
         statDamage.setText("Damage: " + tower.getDamageDone());
+        updateRankDisplay(tower);
+        updateMoney(gameModel);
     }
 }

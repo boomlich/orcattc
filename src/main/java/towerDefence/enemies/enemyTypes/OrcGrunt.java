@@ -19,6 +19,7 @@ public class OrcGrunt extends Enemy {
                 new Collision(12),
                 new Animation(0, 8, true),
                 new Animation(8, 16, true),
-                new Animation(0, 0, false));
+                new Animation(0, 0, false),
+                5);
     }
 }

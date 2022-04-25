@@ -11,9 +11,11 @@ import java.awt.*;
 public class UI_HUD extends UIContainer {
 
     GameRenderable gameModel;
+    UI_Champ ui_champ;
     UI_TowerMenu towerMenu;
     UI_Button_HUD playButton;
     UITextBox waveNumber;
+    UI_ResourceBar resourceBar;
 
     public UI_HUD(int width, int height, GameRenderable gameModel) {
         super(width, height);
@@ -21,7 +23,7 @@ public class UI_HUD extends UIContainer {
 
         setBorder(new ContainerBorder(20, 50, 20, 50));
 
-        UI_Champ ui_champ = new UI_Champ(200, 200);
+        ui_champ = new UI_Champ(200, 200);
         ui_champ.setAlignment(UIAlignment.SOUTH_WEST);
         this.add(ui_champ);
 
@@ -30,7 +32,7 @@ public class UI_HUD extends UIContainer {
         playButton.setAlignment(UIAlignment.SOUTH);
         this.add(playButton);
 
-        UI_ResourceBar resourceBar = new UI_ResourceBar(125, 18);
+        resourceBar = new UI_ResourceBar(125, 18);
         resourceBar.setBackground(Color.ORANGE);
         resourceBar.setAlignment(UIAlignment.NORTH_WEST);
         resourceBar.setPadding(new ContainerPadding(5, 0));
@@ -63,7 +65,7 @@ public class UI_HUD extends UIContainer {
                 removeTowerMenu();
                 createNewTowerMenu(tower);
             } else {
-                towerMenu.update();
+                towerMenu.update(gameModel);
             }
         }
     }
@@ -96,6 +98,14 @@ public class UI_HUD extends UIContainer {
 
     public void buildPhase() {
         playButton.setPlay();
+    }
+
+    public void updateMoney() {
+        resourceBar.update(gameModel);
+        ui_champ.update(gameModel);
+        if (towerMenu != null) {
+            towerMenu.update(gameModel);
+        }
     }
 }
 

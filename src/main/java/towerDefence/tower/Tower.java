@@ -16,7 +16,7 @@ import java.util.List;
 public abstract class Tower implements ITower, Interactable{
 
     private Point2D position;
-    private int rank = 1;
+    private int rank = 0;
     private Collision searchRadius;
     private final Collision placementRadius;
     private Weapon weapon;
@@ -29,7 +29,8 @@ public abstract class Tower implements ITower, Interactable{
     private Targeting targeting;
     private IEnemy target;
     private boolean validPlacement;
-    private int cost;
+    private Cost cost;
+
 
     // Tower menu options
     private final String portraitPath;
@@ -38,7 +39,7 @@ public abstract class Tower implements ITower, Interactable{
     private int totalDamageDone = 0;
 
     public Tower(String towerName, String portraitPath, Point2D position, Collision searchRadius, Collision placementRadius,
-                 Weapon weapon, SpriteEngine spriteBody, int cost){
+                 Weapon weapon, SpriteEngine spriteBody, Cost cost){
         this.towerName = towerName;
         this.portraitPath = portraitPath;
         this.position = position;
@@ -52,14 +53,17 @@ public abstract class Tower implements ITower, Interactable{
     }
 
     @Override
-    public void upgradeRank() {
-        if (rank < 4) {
-            switch (rank ++) {
+    public int upgradeRank() {
+        if (rank < 3) {
+            rank ++;
+            switch (rank) {
                 case 1 -> rank1();
                 case 2 -> rank2();
                 case 3 -> rank3();
             }
+            return getCost();
         }
+        return 0;
     }
 
     protected void rank1() {
@@ -291,6 +295,10 @@ public abstract class Tower implements ITower, Interactable{
         return new Point2D.Double(position.getX(), position.getY() + offsetY);
     }
 
+    public int getSellValue() {
+        return cost.getSellValue(rank);
+    }
+
 
     @Override
     public int getZDepth() {
@@ -348,6 +356,20 @@ public abstract class Tower implements ITower, Interactable{
 
     @Override
     public int getCost() {
-        return cost;
+        return cost.getCost(rank);
+    }
+
+    @Override
+    public void disableInteraction() {
+    }
+
+    @Override
+    public void enableInteraction() {
+
+    }
+
+    @Override
+    public int getRank() {
+        return rank;
     }
 }

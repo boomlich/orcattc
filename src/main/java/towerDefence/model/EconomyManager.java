@@ -9,7 +9,6 @@ public class EconomyManager {
     }
 
     public boolean hasSufficiantFunds(int requirement) {
-        System.out.println(money);
         return money >= requirement;
     }
 
@@ -23,6 +22,7 @@ public class EconomyManager {
 
     protected void addMoney(int newMoney) {
         this.money += newMoney;
+        System.out.println(newMoney);
     }
 
     public int getMoney(){

@@ -17,7 +17,7 @@ public interface GameControllable {
 
     public void upgradeTower();
 
-    public void sellTower(ITower target);
+    public void sellTower();
 
     public void setTowerTargetingMode(TargetingMode targetingMode);
 

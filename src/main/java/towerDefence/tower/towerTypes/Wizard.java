@@ -4,6 +4,7 @@ import towerDefence.components.*;
 import towerDefence.components.damage.Damage;
 import towerDefence.components.debuff.DebuffSlow;
 import towerDefence.enemies.IEnemy;
+import towerDefence.tower.Cost;
 import towerDefence.tower.Tower;
 import towerDefence.tower.TowerUpgrades;
 import towerDefence.view.sprite.SpriteEngine;
@@ -29,8 +30,7 @@ public class Wizard extends Tower {
                 new Collision(100, false),
                 new Collision(20, true),
                 new Weapon(100, new Projectile(100, new Damage(12), 10, new Collision(5))),
-                new SpriteEngine("graphics/tower/Sprite_Tower_Wizard.png", 1, 2, 10, 0),
-                1000);
+                new SpriteEngine("graphics/tower/Sprite_Tower_Wizard.png", 1, 2, 10, 0), Cost.WIZARD);
 
         originalWeapon = getWeapon();
         originalWeapon.setTowerOwner(this);

@@ -41,6 +41,8 @@ public class Enemy implements IEnemy {
 
     private DebuffManager debuffManager;
 
+    private int moneyLoot;
+
     // Animations
     private Animation animMoveRight;
     private Animation animMoveLeft;
@@ -48,7 +50,7 @@ public class Enemy implements IEnemy {
 
     public Enemy(int health, SplineMovement splineMovement,
                  SpriteEngine spriteEngine, Collision collision,
-                 Animation animMoveRight, Animation animMoveLeft, Animation animDeath) {
+                 Animation animMoveRight, Animation animMoveLeft, Animation animDeath, int moneyLoot) {
         this.health = health;
         this.splineMovement = splineMovement;
         this.spriteEngine = spriteEngine;
@@ -57,6 +59,8 @@ public class Enemy implements IEnemy {
         this.animMoveRight = animMoveRight;
         this.animMoveLeft = animMoveLeft;
         this.animDeath = animDeath;
+
+        this.moneyLoot = moneyLoot;
 
         debuffManager = new DebuffManager(this);
         pathOffset = generateRandomOffset();
@@ -159,6 +163,11 @@ public class Enemy implements IEnemy {
     @Override
     public DebuffManager getDebuffManager() {
         return debuffManager;
+    }
+
+    @Override
+    public int getMoneyLoot() {
+        return moneyLoot;
     }
 
     @Override

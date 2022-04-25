@@ -67,23 +67,15 @@ public class UICanvas implements ICanvas {
     @Override
     public void update(double deltaSteps) {
 
-        if (gameModel.getGameMode() == GameMode.WIN) {
-            if (winScreen == null) {
-                UIContainer.remove(HUD);
-                HUD = null;
-                winScreen = new UI_Win(width, height);
-                UIContainer.add(winScreen);
-            }
-        } else {
-            if (HUD != null) {
-                if (gameModel.hasActiveTower()) {
-                    if (!gameModel.getActiveTower().activeSpawnMode()) {
-                        HUD.addTowerMenu(gameModel.getActiveTower());
-                    }
-                } else {
-                    HUD.removeTowerMenu();
+        if (HUD != null) {
+            if (gameModel.hasActiveTower()) {
+                if (!gameModel.getActiveTower().activeSpawnMode()) {
+                    HUD.addTowerMenu(gameModel.getActiveTower());
                 }
+            } else {
+                HUD.removeTowerMenu();
             }
+            HUD.updateMoney();
         }
     }
 
@@ -115,7 +107,10 @@ public class UICanvas implements ICanvas {
 
     @Override
     public void displayWin() {
-
+        UIContainer.remove(HUD);
+        HUD = null;
+        winScreen = new UI_Win(width, height);
+        UIContainer.add(winScreen);
     }
 
     @Override

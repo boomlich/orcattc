@@ -20,6 +20,7 @@ public class Ogre extends Enemy {
                 new Collision(25),
                 new Animation(0, 8, true),
                 new Animation(9, 17, true),
-                new Animation(0, 0, true));
+                new Animation(0, 0, true),
+                500);
     }
 }
