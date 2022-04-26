@@ -127,13 +127,17 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void togglePauseGame() {
+        System.out.println("Toggle Pause Before: " + gameMode);
         if (gameMode == GameMode.PAUSE) {
             changeGameMode(modePriorToPause);
+            uiCanvas.togglePauseGame();
         } else {
             modePriorToPause = gameMode;
             changeGameMode(GameMode.PAUSE);
             activeTower = null;
         }
+        System.out.println("Toggle Pause After: " + gameMode);
+        System.out.println();
     }
 
     @Override

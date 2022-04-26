@@ -7,6 +7,7 @@ import towerDefence.view.UI.components.*;
 import towerDefence.view.UI.presets.UI_ToolTip;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 public class UI_Button_Champions extends UIButton {
 
@@ -63,6 +64,8 @@ public class UI_Button_Champions extends UIButton {
         this.cost = cost;
         this.toolTipText = toolTiptext;
 
+        setToolTip(toolTipText, new Point2D.Double(0, -70));
+
         setButtonNormal(normal);
         setButtonHover(hover);
         setButtonClicked(clicked);
@@ -87,25 +90,25 @@ public class UI_Button_Champions extends UIButton {
             this.disableInteraction();
         }
 
-        if (getButtonState() == UIButtonState.HOVER) {
-            addToolTip();
-        } else {
-            removeToolTip();
-        }
+//        if (getButtonState() == UIButtonState.HOVER) {
+//            addToolTip();
+//        } else {
+//            removeToolTip();
+//        }
     }
 
-    private void removeToolTip() {
-        if (toolTip != null) {
-            remove(toolTip);
-            toolTip = null;
-        }
-    }
-
-    private void addToolTip() {
-        if (toolTip == null) {
-            toolTip = new UI_ToolTip(toolTipText);
-            this.add(toolTip);
-            toolTip.offsetPosition(0, -70);
-        }
-    }
+//    private void removeToolTip() {
+//        if (toolTip != null) {
+//            remove(toolTip);
+//            toolTip = null;
+//        }
+//    }
+//
+//    private void addToolTip() {
+//        if (toolTip == null) {
+//            toolTip = new UI_ToolTip(toolTipText);
+//            this.add(toolTip);
+//            toolTip.offsetPosition(0, -70);
+//        }
+//    }
 }

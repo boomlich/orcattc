@@ -5,8 +5,10 @@ import towerDefence.view.ImageLoader;
 import towerDefence.view.Interaction.InteractCode;
 import towerDefence.view.Interaction.Interactable;
 import towerDefence.view.Interaction.InteractionManager;
+import towerDefence.view.UI.presets.UI_ToolTip;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -25,6 +27,10 @@ public class UIButton extends UIContainer implements Interactable {
 
     UIButtonState buttonState = UIButtonState.NORMAL;
     InteractCode interactCode = InteractCode.DEFAULT;
+
+    UI_ToolTip toolTip;
+    String toolTipString;
+    Point2D toolTipOffset;
 
     public UIButton(int width, int height) {
         super(width, height);
@@ -112,8 +118,14 @@ public class UIButton extends UIContainer implements Interactable {
     public void toggleHover() {
         if (buttonState == UIButtonState.NORMAL) {
             buttonState = UIButtonState.HOVER;
+            if (toolTipString != null) {
+                addToolTip();
+            }
         } else if (buttonState == UIButtonState.HOVER) {
             buttonState = UIButtonState.NORMAL;
+            if (toolTipString != null) {
+                removeToolTip();
+            }
         }
     }
 
@@ -121,6 +133,9 @@ public class UIButton extends UIContainer implements Interactable {
     public void toggleClick() {
         if (buttonState != UIButtonState.CLICKED) {
             buttonState = UIButtonState.CLICKED;
+            if (toolTipString != null) {
+                removeToolTip();
+            }
         } else {
             buttonState = UIButtonState.NORMAL;
         }
@@ -136,10 +151,6 @@ public class UIButton extends UIContainer implements Interactable {
         buttonState = UIButtonState.DISABLED;
     }
 
-    public UIButtonState getButtonState() {
-        return buttonState;
-    }
-
     @Override
     public void enableInteraction() {
         if (buttonState == UIButtonState.DISABLED) {
@@ -150,5 +161,24 @@ public class UIButton extends UIContainer implements Interactable {
     @Override
     public void setInactive() {
         interactCode = InteractCode.INACTIVE;
+    }
+
+    private void addToolTip() {
+        if (toolTip == null) {
+            toolTip = new UI_ToolTip(toolTipString);
+            toolTip.setAlignment(UIAlignment.NORTH);
+            this.add(toolTip);
+            toolTip.offsetPosition((int) toolTipOffset.getX(), (int) toolTipOffset.getY());
+        }
+    }
+
+    private void removeToolTip() {
+        remove(toolTip);
+        toolTip = null;
+    }
+
+    public void setToolTip(String toolTipText, Point2D positionOffset) {
+        this.toolTipString = toolTipText;
+        this.toolTipOffset = positionOffset;
     }
 }

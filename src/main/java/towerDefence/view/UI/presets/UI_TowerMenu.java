@@ -6,6 +6,7 @@ import towerDefence.view.Interaction.InteractCode;
 import towerDefence.view.UI.components.*;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 public class UI_TowerMenu extends UIContainer {
 
@@ -66,21 +67,27 @@ public class UI_TowerMenu extends UIContainer {
         UIContainer targetingOptions = new UIContainer(80, 16);
         targetingOptions.setAlignment(UIAlignment.NORTH);
 
+        int tooltipTargetOffset = -80;
+
         UIButton targetFirst = new UIButton(20, 16);
         targetFirst.setAlignment(UIAlignment.CENTER);
         targetFirst.setInteractCode(InteractCode.TARGET_FIRST);
+        targetFirst.setToolTip("Prioritize the target furthest on the path", new Point2D.Double(0, tooltipTargetOffset));
 
         UIButton targetLast = new UIButton(20, 16);
         targetLast.setAlignment(UIAlignment.CENTER);
         targetLast.setInteractCode(InteractCode.TARGET_LAST);
+        targetLast.setToolTip("Prioritize the target last on the path", new Point2D.Double(0, tooltipTargetOffset));
 
         UIButton targetStrong = new UIButton(20, 16);
         targetStrong.setAlignment(UIAlignment.CENTER);
         targetStrong.setInteractCode(InteractCode.TARGET_STRONG);
+        targetStrong.setToolTip("Prioritize the enemy with the most health", new Point2D.Double(0, tooltipTargetOffset));
 
         UIButton targetClose = new UIButton(20, 16);
         targetClose.setAlignment(UIAlignment.CENTER);
         targetClose.setInteractCode(InteractCode.TARGET_CLOSE);
+        targetClose.setToolTip("Prioritize the enemy closest in distance", new Point2D.Double(0, tooltipTargetOffset));
 
         targetingOptions.add(targetFirst);
         targetingOptions.add(targetLast);
@@ -92,14 +99,13 @@ public class UI_TowerMenu extends UIContainer {
         towerStatsAndOptions.add(targetingOptions);
 
 
-
-
         UIContainer upgradeContainer = new UIContainer(50, 50);
         upgradeContainer.setLayoutManager(UILayout.VERTICAL);
         upgradeContainer.setBackground(Color.BLACK);
 
         upgradeButton = new UIButton("UPGRADE",50, 35);
         upgradeButton.setInteractCode(InteractCode.UPGRADE);
+        upgradeButton.setToolTip("Test", new Point2D.Double(0, -50));
 
         UIContainer rankContainer = new UIContainer(50, 15);
         rankContainer.setBackground(Color.RED);
