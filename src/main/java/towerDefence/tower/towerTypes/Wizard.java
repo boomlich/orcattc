@@ -25,7 +25,7 @@ public class Wizard extends Tower {
     public Wizard(Point2D position) {
         super(
                 "Wizard",
-                "graphics/buttons/gun/Portrait_Gun_Hover.png",
+                "graphics/buttons/wizard/Portrait_Wizard_Hover.png",
                 position,
                 new Collision(100, false),
                 new Collision(20, true),

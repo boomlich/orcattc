@@ -10,25 +10,25 @@ import towerDefence.view.sprite.Sprite;
 import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
-public class Enemy implements IEnemy {
+public abstract class Enemy implements IEnemy {
 
     private int health;
-    private Damage damageOverTime;
 
     private SplineMovement splineMovement;
+
+    /**
+     * Offset position from path center
+     */
     private double pathOffset;
-
-    private int zDepth;
-
 
     /** Sprite engine driving the sprite graphics and animations
      * of the enemy.
      */
     private SpriteEngine spriteEngine;
+
+    private boolean reachedEnd = false;
     private boolean isDead = false;
 
     /**
@@ -37,11 +37,23 @@ public class Enemy implements IEnemy {
      */
     private Collision collision;
 
-    private EnemyState enemyState;
 
+    private EnemyState enemyAnimationState;
+
+    /**
+     * Manages all debuffs on enemy. Includes damage over time and slow effects
+     */
     private DebuffManager debuffManager;
 
+    /**
+     * Money earned by killing this enemy
+     */
     private int moneyLoot;
+
+    /**
+     * Damage done to player if enemy reaches the end of the path
+     */
+    private int reachedEndDamage;
 
     // Animations
     private Animation animMoveRight;
@@ -50,7 +62,7 @@ public class Enemy implements IEnemy {
 
     public Enemy(int health, SplineMovement splineMovement,
                  SpriteEngine spriteEngine, Collision collision,
-                 Animation animMoveRight, Animation animMoveLeft, Animation animDeath, int moneyLoot) {
+                 Animation animMoveRight, Animation animMoveLeft, Animation animDeath, int moneyLoot, int reachedEndDamage) {
         this.health = health;
         this.splineMovement = splineMovement;
         this.spriteEngine = spriteEngine;
@@ -61,6 +73,7 @@ public class Enemy implements IEnemy {
         this.animDeath = animDeath;
 
         this.moneyLoot = moneyLoot;
+        this.reachedEndDamage = reachedEndDamage;
 
         debuffManager = new DebuffManager(this);
         pathOffset = generateRandomOffset();
@@ -76,8 +89,6 @@ public class Enemy implements IEnemy {
         return maxOffset * (rand.nextDouble() * 2 - 1);
     }
 
-
-
     @Override
     public void update(double deltaSteps) {
         splineMovement.update(deltaSteps);
@@ -89,13 +100,13 @@ public class Enemy implements IEnemy {
                 pos.getY() + collision.getRadius() / 2.0));
 
         if (splineMovement.movementDone()) {
-            death();
+            reachedEnd();
         }
 
 
         // Update movement direction
-        if (enemyState != EnemyState.DYING) {
-            enemyState = updateMovementDirection();
+        if (enemyAnimationState != EnemyState.DYING) {
+            enemyAnimationState = updateMovementDirection();
         }
 
         updateAnimation(deltaSteps);
@@ -110,7 +121,7 @@ public class Enemy implements IEnemy {
     }
 
     private void updateAnimation(double deltaSteps){
-        switch (enemyState) {
+        switch (enemyAnimationState) {
             case MOVING_RIGHT -> playAnimation(animMoveRight);
             case MOVING_LEFT -> playAnimation(animMoveLeft);
             case DYING -> playAnimation(animDeath);
@@ -177,6 +188,21 @@ public class Enemy implements IEnemy {
 
     private void death() {
         isDead = true;
+    }
+
+    private void reachedEnd() {
+        reachedEnd = true;
+        death();
+    }
+
+    @Override
+    public boolean hasReachedEnd() {
+        return reachedEnd;
+    }
+
+    @Override
+    public int getReachedEndDamage() {
+        return reachedEndDamage;
     }
 
     @Override

@@ -30,6 +30,7 @@ public class GameModel implements GameRenderable, GameControllable {
     private UICanvas uiCanvas;
     private boolean fastForward;
     private EconomyManager economyManager;
+    private HealthManager healthManager;
 
     public GameModel() {
         loadLevel(Level.A);
@@ -39,6 +40,7 @@ public class GameModel implements GameRenderable, GameControllable {
     public void loadLevel(Level level) {
         levelManager = new LevelManager();
         levelManager.loadLevel(level);
+        healthManager = new HealthManager(level.getStartHealth());
         economyManager = new EconomyManager(level.getStartMoney());
         gameEntities = new GameEntities();
         gameEntities.addBoardCollisions(levelManager.getPath().getPathCollision());
@@ -183,6 +185,9 @@ public class GameModel implements GameRenderable, GameControllable {
             if (gameMode == GameMode.INVASION_PHASE) {
                 waveSpawner.update(deltaSteps);
                 economyManager.addMoney(gameEntities.retrieveMoneyLoot());
+                if (!healthManager.reduceHealth(gameEntities.getDamageDone())) {
+                    changeGameMode(GameMode.GAME_OVER);
+                }
                 endInvasionPhase();
             }
             gameEntities.update(deltaSteps);
@@ -234,6 +239,10 @@ public class GameModel implements GameRenderable, GameControllable {
         }
     }
 
+    @Override
+    public int getHealth() {
+        return healthManager.getHealth();
+    }
 
     @Override
     public void getBackground() {

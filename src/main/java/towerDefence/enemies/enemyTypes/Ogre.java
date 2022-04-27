@@ -21,6 +21,7 @@ public class Ogre extends Enemy {
                 new Animation(0, 8, true),
                 new Animation(9, 17, true),
                 new Animation(0, 0, true),
-                500);
+                500,
+                50);
     }
 }

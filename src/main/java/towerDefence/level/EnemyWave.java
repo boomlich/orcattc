@@ -76,10 +76,14 @@ public class EnemyWave {
 
         switch (enemyCode) {
             case 'a' -> selectedEnemy = new OrcGrunt(path);
-            case 'b' -> selectedEnemy = new OrcBrute(path);
-            case 'c' -> selectedEnemy = new Ogre(path);
-            case 'd' -> selectedEnemy = new BattleShip();
-            case 'e' -> selectedEnemy = new WarShip();
+            case 'b' -> selectedEnemy = new OrcGruntShielded(path);
+            case 'c' -> selectedEnemy = new OrcBrute(path);
+            case 'd' -> selectedEnemy = new OrcBruteShielded(path);
+            case 'e' -> selectedEnemy = new OrcGruntBerserker(path);
+            case 'f' -> selectedEnemy = new OrcGruntBerserkerShielded(path);
+            case 'g' -> selectedEnemy = new OrcBruteBerserker(path);
+            case 'h' -> selectedEnemy = new OrcBruteBerserkerShielded(path);
+            case 'i' -> selectedEnemy = new Ogre(path);
         }
         return selectedEnemy;
     }

@@ -17,6 +17,8 @@ import java.util.TreeSet;
 
 public interface GameRenderable {
 
+    int getHealth();
+
     public void getBackground();
 
     /**

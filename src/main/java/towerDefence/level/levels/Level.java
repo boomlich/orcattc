@@ -13,6 +13,7 @@ public class Level {
     private final int startMoney;
     private final int waveEndMoney;
     private BufferedImage mapGraphics;
+    private int startHealth;
 
     public static final Level A = new Level(
             // Spline control points
@@ -66,20 +67,22 @@ public class Level {
 
             // Enemy wave
             new String[] {
-                    "P_60, D_45, ab_5",
-                    "P_120, D_30, aab_1",
+                    "P_60, D_45, ab_10",
+                    "P_120, D_400, abcdefgh_2",
                     "P_120, D_30, ab_6, c_1, P_500, ab_10",
             },
             10000,
+            100,
             250,
             "graphics/Map/Map_01.png"
     );
 
-    private Level(Point2D[] pathSplineControls, String[] enemyWaves, int startMoney, int waveEndMoney, String mapGraphicsPath){
+    private Level(Point2D[] pathSplineControls, String[] enemyWaves, int startMoney, int startHealth, int waveEndMoney, String mapGraphicsPath){
         this.pathSplineControls = pathSplineControls;
         this.enemyWaves = enemyWaves;
         this.startMoney = startMoney;
         this.waveEndMoney = waveEndMoney;
+        this.startHealth = startHealth;
         setMapGraphics(mapGraphicsPath);
     }
 
@@ -114,5 +117,9 @@ public class Level {
 
     public BufferedImage getMapBackground() {
         return mapGraphics;
+    }
+
+    public int getStartHealth() {
+        return startHealth;
     }
 }

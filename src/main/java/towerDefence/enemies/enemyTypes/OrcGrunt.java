@@ -15,11 +15,12 @@ public class OrcGrunt extends Enemy {
     public OrcGrunt(SplinePathData path) {
         super(100,
                 new SplineMovement(path, 1),
-                new SpriteEngine("Sheet_OrcAxer.png", 2, 8, 10, 0),
+                new SpriteEngine("graphics/enemies/Sprite_Enemy_OrcGrunt.png", 2, 8, 10, 0),
                 new Collision(12),
                 new Animation(0, 8, true),
                 new Animation(8, 16, true),
                 new Animation(0, 0, false),
-                5);
+                5,
+                2);
     }
 }

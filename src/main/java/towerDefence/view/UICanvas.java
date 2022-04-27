@@ -3,6 +3,7 @@ package towerDefence.view;
 import towerDefence.model.GameMode;
 import towerDefence.tower.ITower;
 import towerDefence.view.UI.components.*;
+import towerDefence.view.UI.presets.UI_GameOver;
 import towerDefence.view.UI.presets.UI_HUD;
 import towerDefence.view.UI.presets.UI_PauseMenu;
 import towerDefence.view.UI.presets.UI_Win;
@@ -116,7 +117,9 @@ public class UICanvas implements ICanvas {
 
     @Override
     public void displayGameOver() {
-
+        UIContainer.remove(HUD);
+        HUD = null;
+        UIContainer.add(new UI_GameOver(width, height));
     }
 
     public void startBuildPhase() {

@@ -46,7 +46,7 @@ public class SplinePathData {
      */
     private List<Collision> calculatePathCollision(List<PathPoint> pathPoints, int intervalLength) {
 
-        double radius = 32;
+        double radius = 20;
 
         List<Collision> collisions = new ArrayList<>();
         for (int i = 0; i < pathPoints.size(); i++) {

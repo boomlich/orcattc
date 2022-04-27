@@ -27,7 +27,8 @@ public class GameEntities {
     private HashMap<Integer, List<ITower>> renderTowers = new HashMap<>();
     private TreeSet<Integer> zDepthRange = new TreeSet<>();
 
-    private int moneyEarned;
+    private int moneyEarned = 0;
+    private int damageDone = 0;
 
     public GameEntities() {
     }
@@ -109,7 +110,11 @@ public class GameEntities {
         for (IEnemy enemy: enemies) {
             enemy.update(deltaSteps);
             if (enemy.isDead()) {
-                moneyEarned += enemy.getMoneyLoot();
+                if (enemy.hasReachedEnd()) {
+                    damageDone += enemy.getReachedEndDamage();
+                } else {
+                    moneyEarned += enemy.getMoneyLoot();
+                }
                 deadEnemies.add(enemy);
             }
         }
@@ -221,6 +226,12 @@ public class GameEntities {
         interactable.setInactive();
         InteractionManager.removeInactive();
         renderTowers = sortByZDepth(towers);
+    }
+
+    public int getDamageDone() {
+        int returnDamage = damageDone;
+        damageDone = 0;
+        return returnDamage;
     }
 }
 

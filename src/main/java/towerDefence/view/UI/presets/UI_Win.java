@@ -14,7 +14,7 @@ public class UI_Win extends UIContainer {
         UIContainer container = new UIContainer(125, 300);
         container.setBackground(Color.orange);
 
-        UITextBox title = new UITextBox("Winner!", 25);
+        UITextBox title = new UITextBox("Victory!", 25);
         container.add(title);
 
         this.add(container);

@@ -24,6 +24,8 @@ public interface IEnemy extends IRenderableObject, CollisionObject, IDamageable 
 
     public boolean isDead();
 
+    boolean hasReachedEnd();
+
     public Collision getCollision();
 
     public double getPathProgression();
@@ -37,4 +39,6 @@ public interface IEnemy extends IRenderableObject, CollisionObject, IDamageable 
     DebuffManager getDebuffManager();
 
     int getMoneyLoot();
+
+    int getReachedEndDamage();
 }

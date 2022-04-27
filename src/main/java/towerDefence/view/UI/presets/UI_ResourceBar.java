@@ -52,7 +52,7 @@ public class UI_ResourceBar extends UIContainer {
     }
 
     public void update(GameRenderable gameRenderable) {
-        health.setText(String.valueOf(100));
+        health.setText(String.valueOf(gameRenderable.getHealth()));
         money.setText(String.valueOf(gameRenderable.getMoney()));
     }
 }
