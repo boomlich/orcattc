@@ -40,10 +40,6 @@ public class GameRender extends JPanel {
             scaleX = ((float) device.getDisplayMode().getWidth() / (float) gameWidth) / dpiScale;
             scaleY = ((float) device.getDisplayMode().getHeight() / (float) gameHeight) / dpiScale;
         }
-        System.out.println(scaleX + " : " + scaleY);
-
-//        scaleX = 2.6666665;
-//        scaleY = scaleX;
     }
 
     public void changeResolution(GraphicsDevice device, int width, int height) {
@@ -64,16 +60,9 @@ public class GameRender extends JPanel {
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
 
-
         g2D.scale(getScaleX(), getScaleY());
-
 
         boardCanvas.paint(g2D);
         gameUI.paint(g2D);
-
-//        // Center lines
-//        g2D.draw(new Rectangle2D.Double(gameWidth / 2.0 - 2, 0, 4, gameHeight));
-//        g2D.draw(new Rectangle2D.Double(0, gameHeight / 2.0 -2, gameWidth, 4));
-
     }
 }

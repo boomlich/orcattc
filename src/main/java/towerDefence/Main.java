@@ -15,14 +15,14 @@ public class Main {
     public static void main(String[] args) {
         GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = graphics.getDefaultScreenDevice();
-        GraphicsConfiguration config = device.getDefaultConfiguration();
-        BufferedImage buffy = config.createCompatibleImage(device.getDisplayMode().getWidth(), device.getDisplayMode().getHeight(), Transparency.TRANSLUCENT);
-        Graphics g = buffy.getGraphics();
+//        GraphicsConfiguration config = device.getDefaultConfiguration();
+//        BufferedImage buffy = config.createCompatibleImage(device.getDisplayMode().getWidth(), device.getDisplayMode().getHeight(), Transparency.TRANSLUCENT);
+//        Graphics g = buffy.getGraphics();
 
         // activate opengl
-        System.setProperty("sun.java2d.opengl", "true");
+//        System.setProperty("sun.java2d.opengl", "true");
 
-        System.out.println(config);
+//        System.out.println(config);
 
         JFrame frame = new JFrame();
 

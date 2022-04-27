@@ -63,6 +63,8 @@ public class GameController implements ActionListener, KeyListener {
             RenderingOptions.DEBUG = !RenderingOptions.DEBUG;
         } else if (key == KeyEvent.VK_2) {
             RenderingOptions.ENEMY_HEALTH = !RenderingOptions.ENEMY_HEALTH;
+        } else if (key == KeyEvent.VK_SPACE) {
+            gameModel.startRound();
         }
     }
 

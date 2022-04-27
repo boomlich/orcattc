@@ -13,7 +13,7 @@ public class SplinePath {
 
     public SplinePath(Point2D[] splineControls){
         this.splineControls = splineControls;
-        splinePathData = calculateSpline(splineControls, 20);
+        splinePathData = calculateSpline(splineControls, 10);
     }
 
     protected SplinePathData calculateSpline(Point2D[] splineControls, int splineResolution) {

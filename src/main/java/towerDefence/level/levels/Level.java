@@ -83,7 +83,7 @@ public class Level {
         setMapGraphics(mapGraphicsPath);
     }
 
-    public void setMapGraphics(String path) {
+    private void setMapGraphics(String path) {
         try {
             mapGraphics = ImageLoader.loadBufferedImage(path);
         } catch (IOException e) {

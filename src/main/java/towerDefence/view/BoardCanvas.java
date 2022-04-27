@@ -36,9 +36,10 @@ public class BoardCanvas implements ICanvas{
         g2D.setColor(new Color(38, 92, 66));
         g2D.fill(new Rectangle(0, 0, width, height));
 
+        g2D.drawImage(gameModel.getMapGraphics(), 0, 0, width, height, null);
+
         g2D.setColor(Color.black);
 
-        g2D.drawImage(gameModel.getMapGraphics(), 0, 0, width, height, null);
 
 //        // TrackPath
 //        int p = 0;
