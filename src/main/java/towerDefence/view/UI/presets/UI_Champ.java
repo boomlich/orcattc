@@ -1,5 +1,6 @@
 package towerDefence.view.UI.presets;
 
+import towerDefence.tower.Cost;
 import towerDefence.view.GameRenderable;
 import towerDefence.view.Interaction.InteractCode;
 import towerDefence.view.UI.components.*;
@@ -16,11 +17,54 @@ public class UI_Champ extends UIContainer {
 
         this.setLayoutManager(UILayout.VERTICAL);
 
+        UI_Button_Champions archer = new UI_Button_Champions(
+                Cost.ARCHER.getBuyCost(),
+                InteractCode.SPAWN_A,
+                "graphics/buttons/archer/Portrait_Bow_Normal.png",
+                "graphics/buttons/archer/Portrait_Bow_Hover.png",
+                "graphics/buttons/archer/Portrait_Bow_Clicked.png",
+                "graphics/buttons/archer/Portrait_Bow_Disabled.png",
+                "Fires burning arrows that set enemies on fire"
+        );
+
+        UI_Button_Champions rifleMan = new UI_Button_Champions(
+                Cost.RIFLEMAN.getBuyCost(),
+                InteractCode.SPAWN_B,
+                "graphics/buttons/gun/Portrait_Gun_Normal.png",
+                "graphics/buttons/gun/Portrait_Gun_Hover.png",
+                "graphics/buttons/gun/Portrait_Gun_Clicked.png",
+                "graphics/buttons/gun/Portrait_Gun_Disabled.png",
+                "Fires blunderbuss that fires up to three penetrating bullets"
+        );
+
+        UI_Button_Champions cannon = new UI_Button_Champions(
+                Cost.CANNON.getBuyCost(),
+                InteractCode.SPAWN_C,
+                "graphics/buttons/cannon/Portrait_Cannon_Normal.png",
+                "graphics/buttons/cannon/Portrait_Cannon_Hover.png",
+                "graphics/buttons/cannon/Portrait_Cannon_Clicked.png",
+                "graphics/buttons/cannon/Portrait_Cannon_Disabled.png",
+                "Fires high-explosive cannon-balls"
+        );
+
+        UI_Button_Champions wizard = new UI_Button_Champions(
+                Cost.WIZARD.getBuyCost(),
+                InteractCode.SPAWN_D,
+                "graphics/buttons/wizard/Portrait_Wizard_Normal.png",
+                "graphics/buttons/wizard/Portrait_Wizard_Hover.png",
+                "graphics/buttons/wizard/Portrait_Wizard_Clicked.png",
+                "graphics/buttons/wizard/Portrait_Wizard_Disabled.png",
+                "Attacks with a flurry of icicles that freezes enemies"
+        );
+
+
+
+
         champions = new UI_Button_Champions[]{
-                UI_Button_Champions.ARCHER,
-                UI_Button_Champions.RIFLEMAN,
-                UI_Button_Champions.CANNON,
-                UI_Button_Champions.WIZARD,
+                archer,
+                rifleMan,
+                cannon,
+                wizard,
         };
 
         UIContainer topContainer = new UIContainer(width, 10);

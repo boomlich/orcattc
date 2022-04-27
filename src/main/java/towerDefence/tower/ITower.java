@@ -68,4 +68,6 @@ public interface ITower extends IRenderableObject {
     int getRank();
 
     int getSellValue();
+
+    TargetingMode getTargetingMode();
 }

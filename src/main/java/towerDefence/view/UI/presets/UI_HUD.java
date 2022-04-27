@@ -2,11 +2,9 @@ package towerDefence.view.UI.presets;
 
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
+import towerDefence.view.Interaction.InteractCode;
 import towerDefence.view.UI.components.*;
 import towerDefence.view.UI.presets.buttons.UI_Button_HUD;
-import towerDefence.view.UI.presets.buttons.UI_Button_Options;
-
-import java.awt.*;
 
 public class UI_HUD extends UIContainer {
 
@@ -32,13 +30,15 @@ public class UI_HUD extends UIContainer {
         playButton.setAlignment(UIAlignment.SOUTH);
         this.add(playButton);
 
-        resourceBar = new UI_ResourceBar(125, 18);
-        resourceBar.setBackground(Color.ORANGE);
+        resourceBar = new UI_ResourceBar(125, 20);
         resourceBar.setAlignment(UIAlignment.NORTH_WEST);
-        resourceBar.setPadding(new ContainerPadding(5, 0));
         this.add(resourceBar);
 
-        UIButton options = new UI_Button_Options();
+        UIButton options = new UIButton(32, 32);
+        options.setButtonNormal("graphics/UI/Pause/UI_Pause_Normal.png");
+        options.setButtonHover("graphics/UI/Pause/UI_Pause_Hover.png");
+        options.setButtonClicked("graphics/UI/Pause/UI_Pause_Normal.png");
+        options.setInteractCode(InteractCode.PAUSE);
         options.setAlignment(UIAlignment.NORTH_EAST);
         this.add(options);
 

@@ -83,6 +83,7 @@ public class UICanvas implements ICanvas {
     public void togglePauseGame() {
         if (pauseMenu == null) {
             UIContainer.remove(HUD);
+            HUD = null;
             pauseMenu = new UI_PauseMenu(width, height, gameModel);
             UIContainer.add(pauseMenu);
         } else {

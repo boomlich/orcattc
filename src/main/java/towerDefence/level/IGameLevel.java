@@ -1,15 +1,13 @@
 package towerDefence.level;
 
-import towerDefence.level.path.PathPoint;
 import towerDefence.level.path.SplinePathData;
 
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 public interface IGameLevel {
 
-    public BufferedImage getBackground();
+    public BufferedImage getMapBackground();
 
     public Point2D[] getSplineControls();
 

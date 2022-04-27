@@ -13,18 +13,21 @@ public class UI_Button_HUD extends UIButton {
         setInteractCode(InteractCode.PLAY);
         setButtonNormal("graphics/UI/PlayRound/UI_PlayRound_Normal.png");
         setButtonHover("graphics/UI/PlayRound/UI_PlayRound_Hover.png");
+        setButtonClicked("graphics/UI/PlayRound/UI_PlayRound_Normal.png");
     }
 
     public void setFastForwardDisabled() {
         setInteractCode(InteractCode.FAST_FORWARD);
-        setButtonNormal("graphics/buttons/archer/Portrait_Bow_Normal.png");
-        setButtonHover("graphics/buttons/archer/Portrait_Bow_Hover.png");
+        setButtonNormal("graphics/UI/PlayRound/UI_FastForward_Disabled_Normal.png");
+        setButtonHover("graphics/UI/PlayRound/UI_FastForward_Disabled_Hover.png");
+        setButtonClicked("graphics/UI/PlayRound/UI_FastForward_Disabled_Normal.png");
     }
 
     public void setFastForwardEnabled() {
         setInteractCode(InteractCode.FAST_FORWARD);
-        setButtonNormal("graphics/buttons/gun/Portrait_Gun_Normal.png");
-        setButtonHover("graphics/buttons/gun/Portrait_Gun_Hover.png");
+        setButtonNormal("graphics/UI/PlayRound/UI_FastForward_Enabled_Normal.png");
+        setButtonHover("graphics/UI/PlayRound/UI_FastForward_Enabled_Hover.png");
+        setButtonClicked("graphics/UI/PlayRound/UI_FastForward_Enabled_Normal.png");
     }
 
     public void toggleFastForward(boolean isFastForwarding) {

@@ -38,17 +38,19 @@ public class BoardCanvas implements ICanvas{
 
         g2D.setColor(Color.black);
 
-        // TrackPath
-        int p = 0;
-        for (PathPoint point: gameModel.getTrackPath()) {
-            g2D.draw(new Rectangle2D.Double(point.coordinate.getX(), point.coordinate.getY(), 1, 1));
+        g2D.drawImage(gameModel.getMapGraphics(), 0, 0, width, height, null);
 
-        }
-
-        // Spline control points
-        for (Point2D point: gameModel.getSplineControls()) {
-            g2D.draw(new Rectangle2D.Double(point.getX()-5, point.getY()-5, 10, 10));
-        }
+//        // TrackPath
+//        int p = 0;
+//        for (PathPoint point: gameModel.getTrackPath()) {
+//            g2D.draw(new Rectangle2D.Double(point.coordinate.getX(), point.coordinate.getY(), 1, 1));
+//
+//        }
+//
+//        // Spline control points
+//        for (Point2D point: gameModel.getSplineControls()) {
+//            g2D.draw(new Rectangle2D.Double(point.getX()-5, point.getY()-5, 10, 10));
+//        }
 
         // Draw path collision
         if (RenderingOptions.DEBUG){

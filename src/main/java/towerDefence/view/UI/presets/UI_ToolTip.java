@@ -16,7 +16,17 @@ public class UI_ToolTip extends UIContainer {
 
     public UI_ToolTip(String text) {
         super(125, 35);
-        this.setBackground(Color.BLACK);
+
+        int frameEndWidth = 4;
+
+        UIContainer frameLeft = new UIContainer(frameEndWidth, 35);
+        frameLeft.setBackgroundImage("graphics/UI/ToolTip/UI_ToolTip_Frame_Left.png");
+
+        UIContainer frameRight = new UIContainer(frameEndWidth, 35);
+        frameRight.setBackgroundImage("graphics/UI/ToolTip/UI_ToolTip_Frame_Right.png");
+
+        UIContainer frameMain = new UIContainer(125 - 2 * frameEndWidth, 35);
+        frameMain.setBackgroundImage("graphics/UI/ToolTip/UI_ToolTip_Frame_Main.png");
 
         String[] splitString = text.split(" ");
         int totalLength = 0;
@@ -39,11 +49,14 @@ public class UI_ToolTip extends UIContainer {
                 lines.add(lineText);
             }
         }
-        this.setLayoutManager(UILayout.VERTICAL);
+        frameMain.setLayoutManager(UILayout.VERTICAL);
 
         for (String stringLine: lines) {
-            this.add(new UITextBox(stringLine, 8));
+            frameMain.add(new UITextBox(stringLine, 8));
         }
 
+        this.add(frameLeft);
+        this.add(frameMain);
+        this.add(frameRight);
     }
 }

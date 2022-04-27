@@ -9,12 +9,12 @@ import towerDefence.level.LevelManager;
 import towerDefence.level.levels.Level;
 import towerDefence.level.path.PathPoint;
 import towerDefence.particles.Particle;
-import towerDefence.tower.Cost;
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
 import towerDefence.view.UICanvas;
 
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
@@ -94,6 +94,11 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     @Override
+    public BufferedImage getMapGraphics() {
+        return levelManager.getMapBackground();
+    }
+
+    @Override
     public void setGameUI(UICanvas uiCanvas) {
         this.uiCanvas = uiCanvas;
     }
@@ -127,7 +132,6 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void togglePauseGame() {
-        System.out.println("Toggle Pause Before: " + gameMode);
         if (gameMode == GameMode.PAUSE) {
             changeGameMode(modePriorToPause);
             uiCanvas.togglePauseGame();
@@ -136,8 +140,6 @@ public class GameModel implements GameRenderable, GameControllable {
             changeGameMode(GameMode.PAUSE);
             activeTower = null;
         }
-        System.out.println("Toggle Pause After: " + gameMode);
-        System.out.println();
     }
 
     @Override
@@ -177,14 +179,14 @@ public class GameModel implements GameRenderable, GameControllable {
             activeTower.update(deltaSteps);
         }
 
-        if (gameMode == GameMode.INVASION_PHASE) {
-//            gameEntities.update(deltaSteps);
-            waveSpawner.update(deltaSteps);
-            economyManager.addMoney(gameEntities.retrieveMoneyLoot());
-            endInvasionPhase();
+        if (gameMode != GameMode.PAUSE) {
+            if (gameMode == GameMode.INVASION_PHASE) {
+                waveSpawner.update(deltaSteps);
+                economyManager.addMoney(gameEntities.retrieveMoneyLoot());
+                endInvasionPhase();
+            }
+            gameEntities.update(deltaSteps);
         }
-
-        gameEntities.update(deltaSteps);
     }
 
     private void endInvasionPhase() {

@@ -92,7 +92,7 @@ public class UIContainer extends UIComponentTemplate{
             }
             if (component.getComponents() != null) {
                 for (UIComponent subcomponent: component.getComponents()) {
-                    subcomponent.setAllSubComponentsInactive(subcomponent);
+                    setAllSubComponentsInactive(subcomponent);
                 }
             }
         }

@@ -9,6 +9,7 @@ import towerDefence.particles.Particle;
 import towerDefence.tower.ITower;
 
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -61,4 +62,6 @@ public interface GameRenderable {
     int getCurrentWave();
 
     boolean isFastForwarding();
+
+    BufferedImage getMapGraphics();
 }

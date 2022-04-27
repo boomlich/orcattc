@@ -22,7 +22,7 @@ public class Cannon extends Tower {
     public Cannon(Point2D position, MouseController mouseController) {
         super(
                 "Cannon",
-                "graphics/buttons/archer/Portrait_Bow_Hover.png",
+                "graphics/buttons/cannon/Portrait_Cannon_Hover.png",
                 position,
                 new Collision(60, false),
                 new Collision(20, true),

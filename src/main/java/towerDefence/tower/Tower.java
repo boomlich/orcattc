@@ -372,4 +372,9 @@ public abstract class Tower implements ITower, Interactable{
     public int getRank() {
         return rank;
     }
+
+    @Override
+    public TargetingMode getTargetingMode() {
+        return targeting.targetingMode;
+    }
 }

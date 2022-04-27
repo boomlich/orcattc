@@ -25,8 +25,8 @@ public class LevelManager implements IGameLevel {
     }
 
     @Override
-    public BufferedImage getBackground() {
-        return null;
+    public BufferedImage getMapBackground() {
+        return currentLevel.getMapBackground();
     }
 
     @Override
