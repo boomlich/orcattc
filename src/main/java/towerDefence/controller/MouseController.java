@@ -22,14 +22,12 @@ public class MouseController implements MouseMotionListener, MouseListener {
 
     private Interactable currentInteractable;
     private final GameRender gameRender;
-    private GameController gameController;
     private final GameControllable gameModel;
     private Point2D mouseCoordinate;
 
-    public MouseController(GameRender gameRender, GameControllable gameModel, GameController gameController) {
+    public MouseController(GameRender gameRender, GameControllable gameModel) {
         this.gameRender = gameRender;
         this.gameModel = gameModel;
-        this.gameController = gameController;
     }
 
     private void checkInteraction(Point2D mousePosition) {
@@ -203,6 +201,8 @@ public class MouseController implements MouseMotionListener, MouseListener {
             gameModel.loadLevel(Level.B);
         } else if (interactCode == InteractCode.MAIN_MENU) {
             gameModel.loadMainMenu();
+        } else if (interactCode == InteractCode.QUIT) {
+            System.exit(0);
         }
     }
 

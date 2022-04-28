@@ -41,6 +41,9 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     public void loadMainMenu() {
+        if (gameEntities != null) {
+            InteractionManager.clearInteractables();
+        }
         changeGameMode(GameMode.MAIN_MENU);
     }
 
@@ -105,9 +108,9 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void restartLevel() {
-        gameEntities.removeAllTowers();
+        InteractionManager.clearInteractables();
         loadLevel(levelManager.getcurrentLevel());
-        uiCanvas.startBuildPhase();
+        uiCanvas.startNewLevel();
     }
 
     @Override
@@ -151,6 +154,7 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public void togglePauseGame() {
         if (gameMode == GameMode.PAUSE) {
+            uiCanvas.togglePauseGame();
             changeGameMode(modePriorToPause);
         } else {
             modePriorToPause = gameMode;
@@ -192,12 +196,11 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public void update(double deltaSteps) {
 
-
         if (gameMode != GameMode.MAIN_MENU) {
+
             if (hasActiveTower() && activeTower.activeSpawnMode()) {
                 activeTower.update(deltaSteps);
             }
-
             if (gameMode != GameMode.PAUSE) {
                 if (gameMode == GameMode.INVASION_PHASE) {
                     waveSpawner.update(deltaSteps);
@@ -213,7 +216,7 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     private void endInvasionPhase() {
-        if (isWaveDepleated()) {
+        if (isWaveDepleted()) {
             if (levelManager.getCurrentWaveNumber() == levelManager.getMaxWaves()) {
                 changeGameMode(GameMode.WIN);
             } else {
@@ -224,9 +227,6 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     private void changeGameMode(GameMode gameMode) {
-
-        System.out.println(gameMode);
-
         if (gameMode == GameMode.BUILD_PHASE) {
             uiCanvas.startBuildPhase();
         } else if (gameMode == GameMode.INVASION_PHASE) {
@@ -243,7 +243,7 @@ public class GameModel implements GameRenderable, GameControllable {
         this.gameMode = gameMode;
     }
 
-    private boolean isWaveDepleated() {
+    private boolean isWaveDepleted() {
         return gameEntities.getSortedEnemies().isEmpty() && waveSpawner.waveSpawnCompleted();
     }
 

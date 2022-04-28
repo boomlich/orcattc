@@ -18,4 +18,8 @@ public class InteractionManager {
     public static void removeInactive() {
         intractable.removeIf(object -> object.getInteractCode() == InteractCode.INACTIVE);
     }
+
+    public static void clearInteractables() {
+        intractable.clear();
+    }
 }

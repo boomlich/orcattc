@@ -19,7 +19,7 @@ public class GameController implements ActionListener, KeyListener {
         this.gameModel = gameModel;
         this.gameRender = gameRender;
 
-        mouseController = new MouseController(gameRender, gameModel, this);
+        mouseController = new MouseController(gameRender, gameModel);
 
         gameRender.addKeyListener(this);
         gameRender.addMouseMotionListener(mouseController);
@@ -56,7 +56,9 @@ public class GameController implements ActionListener, KeyListener {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_ESCAPE){
-            gameModel.togglePauseGame();
+            if (gameModel.getGameMode() != GameMode.MAIN_MENU) {
+                gameModel.togglePauseGame();
+            }
         } else if (key == KeyEvent.VK_Q) {
             System.exit(0);
         } else if (key == KeyEvent.VK_1) {
@@ -64,7 +66,13 @@ public class GameController implements ActionListener, KeyListener {
         } else if (key == KeyEvent.VK_2) {
             RenderingOptions.ENEMY_HEALTH = !RenderingOptions.ENEMY_HEALTH;
         } else if (key == KeyEvent.VK_SPACE) {
-            gameModel.startRound();
+            if (gameModel.getGameMode() != GameMode.MAIN_MENU) {
+                if (gameModel.getGameMode() == GameMode.BUILD_PHASE) {
+                    gameModel.startRound();
+                } else {
+                    gameModel.toggleFastForward();
+                }
+            }
         }
     }
 

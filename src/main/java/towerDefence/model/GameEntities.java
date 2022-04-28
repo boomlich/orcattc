@@ -233,13 +233,5 @@ public class GameEntities {
         damageDone = 0;
         return returnDamage;
     }
-
-    public void removeAllTowers() {
-        List<ITower> copyOfTowers = List.copyOf(towers);
-
-        for (ITower tower: copyOfTowers) {
-            removeTower(tower);
-        }
-    }
 }
 

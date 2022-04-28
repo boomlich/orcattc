@@ -33,6 +33,11 @@ public class UICanvas implements ICanvas {
     @Override
     public void paint(Graphics2D g2D) {
 
+        if (gameModel.getGameMode() == GameMode.MAIN_MENU) {
+            g2D.setColor(new Color(38, 92, 66));
+            g2D.fill(new Rectangle(0, 0, width, height));
+        }
+
         // Draw active/highlighted tower
         if (gameModel.hasActiveTower()) {
             ITower tower = gameModel.getActiveTower();
@@ -62,11 +67,17 @@ public class UICanvas implements ICanvas {
         UIContainer.paint(g2D);
     }
 
-    public void startNewLevel() {
-        if (levelSelect != null) {
-            UIContainer.remove(levelSelect);
-            levelSelect = null;
+    private <T extends UIContainer> T removeUIComponent(T component){
+        if (component != null) {
+            UIContainer.remove(component);
         }
+        return null;
+    }
+
+    public void startNewLevel() {
+        levelSelect = removeUIComponent(levelSelect);
+        pauseMenu = removeUIComponent(pauseMenu);
+        HUD = removeUIComponent(HUD);
 
         HUD = new UI_HUD(width, height, gameModel);
         UIContainer.add(HUD);
@@ -91,14 +102,12 @@ public class UICanvas implements ICanvas {
     public void togglePauseGame() {
 
         if (pauseMenu == null) {
-            UIContainer.remove(HUD);
-            HUD = null;
+            HUD = removeUIComponent(HUD);
             pauseMenu = new UI_PauseMenu(width, height, gameModel);
             UIContainer.add(pauseMenu);
         } else {
-            UIContainer.remove(pauseMenu);
-            pauseMenu = null;
-            UIContainer.remove(HUD);
+            pauseMenu = removeUIComponent(pauseMenu);
+//            UIContainer.remove(HUD);
             HUD = new UI_HUD(width, height, gameModel);
             UIContainer.add(HUD);
         }
@@ -118,24 +127,18 @@ public class UICanvas implements ICanvas {
 
     @Override
     public void displayWin() {
-        UIContainer.remove(HUD);
-        HUD = null;
+        HUD = removeUIComponent(HUD);
         winScreen = new UI_Win(width, height);
         UIContainer.add(winScreen);
     }
 
     @Override
     public void displayGameOver() {
-        UIContainer.remove(HUD);
-        HUD = null;
+        HUD = removeUIComponent(HUD);
         UIContainer.add(new UI_GameOver(width, height));
     }
 
     public void startBuildPhase() {
-        if (pauseMenu != null) {
-            togglePauseGame();
-        }
-
         if (HUD != null) {
             HUD.buildPhase();
         }
@@ -143,18 +146,13 @@ public class UICanvas implements ICanvas {
 
     @Override
     public void displayLevelSelect() {
-        UIContainer.remove(mainMenu);
-        mainMenu = null;
+        mainMenu = removeUIComponent(mainMenu);
         levelSelect = new UI_LevelSelect(width, height);
         UIContainer.add(levelSelect);
     }
 
     public void displayMainMenu() {
-        if (pauseMenu != null) {
-            UIContainer.remove(pauseMenu);
-            pauseMenu = null;
-        }
-
+        pauseMenu = removeUIComponent(pauseMenu);
         mainMenu = new UI_MainMenu(width, height);
         UIContainer.add(mainMenu);
     }

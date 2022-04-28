@@ -41,7 +41,7 @@ public class BoardCanvas implements ICanvas{
 
         g2D.setColor(Color.black);
 
-
+//
 //        // TrackPath
 //        int p = 0;
 //        for (PathPoint point: gameModel.getTrackPath()) {
