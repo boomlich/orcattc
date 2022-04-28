@@ -34,14 +34,17 @@ public class WaveSpawner {
         if (currentWave.notEmpty()) {
             if (delayTimer <= 0) {
                 currentEnemy = currentWave.getAndRemoveFirstEnemy();
-                gameEntities.addEnemy(currentEnemy.enemy);
-                delayTimer = currentEnemy.timer;
+                gameEntities.addEnemy(currentEnemy.getEnemy());
+                delayTimer = currentEnemy.getTimer();
             }
         } else {
             spawningComplete = true;
         }
     }
 
+    /**
+     * @return true if all enemies in the current wave has been spawned
+     */
     public boolean waveSpawnCompleted() {
         return spawningComplete;
     }

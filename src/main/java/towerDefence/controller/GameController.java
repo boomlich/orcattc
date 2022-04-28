@@ -68,7 +68,7 @@ public class GameController implements ActionListener, KeyListener {
         } else if (key == KeyEvent.VK_SPACE) {
             if (gameModel.getGameMode() != GameMode.MAIN_MENU) {
                 if (gameModel.getGameMode() == GameMode.BUILD_PHASE) {
-                    gameModel.startRound();
+                    gameModel.startInvasionRound();
                 } else {
                     gameModel.toggleFastForward();
                 }

@@ -1,6 +1,6 @@
 package towerDefence.components.debuff;
 
-import towerDefence.components.Animation;
+import towerDefence.view.sprite.Animation;
 import towerDefence.components.damage.Damage;
 import towerDefence.tower.ITower;
 import towerDefence.view.sprite.SpriteEngine;

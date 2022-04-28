@@ -1,18 +1,15 @@
 package towerDefence.enemies;
 
-import towerDefence.components.Collision;
-import towerDefence.components.CollisionObject;
-import towerDefence.components.damage.Damage;
+import towerDefence.components.Collision.Collision;
+import towerDefence.components.Collision.CollisionObject;
 import towerDefence.components.damage.IDamageable;
 import towerDefence.components.debuff.DebuffManager;
 import towerDefence.components.debuff.IDebuff;
 import towerDefence.components.movement.SplineMovement;
-import towerDefence.model.GameEntities;
 import towerDefence.view.IRenderableObject;
 import towerDefence.view.sprite.Sprite;
 
 import java.awt.geom.Point2D;
-import java.util.List;
 
 public interface IEnemy extends IRenderableObject, CollisionObject, IDamageable {
 

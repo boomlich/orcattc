@@ -1,7 +1,5 @@
 package towerDefence.view.sprite;
 
-import towerDefence.components.Animation;
-
 public class SpriteEngine {
 
     private Sprite sprite;
@@ -23,10 +21,6 @@ public class SpriteEngine {
     /** Currently displayed frame from the current animation playback.
      * Incremented by the deltaSteps * (spriteFPS / gameFPS) each step */
     double currentFrame;
-
-    /** Determine if an animation should play */
-//    private boolean hasActiveAnimation = false;
-
 
     private Animation currentAnimation;
 

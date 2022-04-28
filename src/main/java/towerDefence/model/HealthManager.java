@@ -17,6 +17,9 @@ public class HealthManager {
         return health > 0;
     }
 
+    /**
+     * @return current health
+     */
     protected int getHealth() {
         return health;
     }

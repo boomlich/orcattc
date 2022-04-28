@@ -1,16 +1,16 @@
 package towerDefence.controller;
 
-import towerDefence.components.TargetingMode;
-import towerDefence.level.levels.Level;
+import towerDefence.components.Targeting.TargetingMode;
+import towerDefence.level.Level;
 import towerDefence.tower.ITower;
 import towerDefence.tower.towerTypes.Archer;
 import towerDefence.tower.towerTypes.Cannon;
 import towerDefence.tower.towerTypes.Rifleman;
 import towerDefence.tower.towerTypes.Wizard;
 import towerDefence.view.GameRender;
-import towerDefence.view.Interaction.InteractCode;
-import towerDefence.view.Interaction.Interactable;
-import towerDefence.view.Interaction.InteractionManager;
+import UI.Interaction.InteractCode;
+import UI.Interaction.Interactable;
+import UI.Interaction.InteractionManager;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -167,7 +167,7 @@ public class MouseController implements MouseMotionListener, MouseListener {
             gameModel.addTower(new Wizard(new Point2D.Double(mouseX, mouseY)));
         }
         else if (interactCode == InteractCode.PLAY) {
-            gameModel.startRound();
+            gameModel.startInvasionRound();
         }
         else if (interactCode == InteractCode.TARGET_Tower) {
             gameModel.selectTower((ITower) currentInteractable);
@@ -185,7 +185,6 @@ public class MouseController implements MouseMotionListener, MouseListener {
             gameModel.upgradeTower();
         } else if (interactCode == InteractCode.SELL) {
             gameModel.sellTower();
-
         }
         else if (interactCode == InteractCode.PAUSE) {
             gameModel.togglePauseGame();
@@ -207,7 +206,6 @@ public class MouseController implements MouseMotionListener, MouseListener {
     }
 
     private void interactEmptySpace() {
-
         if (gameModel.isActiveTowerInSpawnMode()) {
             gameModel.placeTower();
         } else {

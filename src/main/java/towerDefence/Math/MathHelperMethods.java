@@ -31,9 +31,6 @@ public class MathHelperMethods {
         return new Point2D.Double(vector.getX() / length, vector.getY() / length);
     }
 
-
-
-
     public static Point2D normalVector(Point2D vector) {
         return new Point2D.Double(-vector.getY(), vector.getX());
     }

@@ -1,7 +1,7 @@
 package towerDefence.view;
 
-import towerDefence.components.Collision;
-import towerDefence.components.Projectile;
+import towerDefence.components.Collision.Collision;
+import towerDefence.components.Weapons.Projectile;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.path.PathPoint;
 import towerDefence.model.GameMode;
@@ -11,15 +11,15 @@ import towerDefence.tower.ITower;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
 
 public interface GameRenderable {
 
+    /**
+     * @return health of the player
+     */
     int getHealth();
-
-    public void getBackground();
 
     /**
      *
@@ -27,6 +27,9 @@ public interface GameRenderable {
      */
     public HashMap<Integer, List<ITower>> getTowers();
 
+    /**
+     * @return Set of all active z-depth values for the current frame
+     */
     public TreeSet<Integer> getZDepthRange();
 
     /**
@@ -35,35 +38,75 @@ public interface GameRenderable {
      */
     public HashMap<Integer, List<IEnemy>> getEnemies();
 
+    /**
+     * @return list of all active projectiles
+     */
     public List<Projectile> getProjectiles();
 
-    public List<Particle> getParticles();
+    /**
+     * @return list of all active particles
+     */
+    List<Particle> getParticles();
 
-    public int getMoney();
+    /**
+     * @return currently available money for the player
+     */
+    int getMoney();
 
-    public boolean hasSufficiantFunds(int cost);
+    /**
+     * @param cost cost of the item
+     * @return true if player has sufficient money to purchase the item
+     */
+    boolean hasSufficiantFunds(int cost);
 
-    public List<PathPoint> getTrackPath();
+    /**
+     * @return currently selected tower
+     */
+    ITower getActiveTower();
 
-    public Point2D[] getSplineControls();
+    /**
+     * @return
+     */
+    List<Collision> getPathCollision();
 
-    public ITower getActiveTower();
+    /**
+     * @return true if player has a tower selected
+     */
+    boolean hasActiveTower();
 
-    public List<Collision> getPathCollision();
+    /**
+     * @return true if the player has a tower selected that is in spawning mode
+     */
+    boolean isActiveTowerInSpawnMode();
 
-    public boolean hasActiveTower();
-
-    public boolean isActiveTowerInSpawnMode();
-
+    /**
+     * @return currently active gameMode
+     */
     GameMode getGameMode();
 
+    /**
+     * @param uiCanvas connect the UI to the gameModel. After assigning the UI
+     * the game will initiate
+     */
     void setGameUI(UICanvas uiCanvas);
 
+    /**
+     * @return the maximum number of waves in the currently active level
+     */
     int getMaxWaves();
 
+    /**
+     * @return the current wave number on the active level
+     */
     int getCurrentWave();
 
+    /**
+     * @return true if fast forward is enabled
+     */
     boolean isFastForwarding();
 
+    /**
+     * @return background graphics of the level
+     */
     BufferedImage getMapGraphics();
 }

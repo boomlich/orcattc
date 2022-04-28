@@ -1,9 +1,9 @@
 package towerDefence.tower.towerTypes;
 
-import towerDefence.components.Animation;
-import towerDefence.components.Collision;
-import towerDefence.components.Projectile;
-import towerDefence.components.Weapon;
+import towerDefence.view.sprite.Animation;
+import towerDefence.components.Collision.Collision;
+import towerDefence.components.Weapons.Projectile;
+import towerDefence.components.Weapons.Weapon;
 import towerDefence.components.damage.Damage;
 import towerDefence.controller.GameControllable;
 import towerDefence.controller.MouseController;
@@ -44,6 +44,11 @@ public class Cannon extends Tower {
                         1000));
         this.mouseController = mouseController;
         this.gameControllable = gameModel;
+    }
+
+    public Cannon() {
+        this.mouseController = null;
+        this.gameControllable = null;
     }
 
     @Override

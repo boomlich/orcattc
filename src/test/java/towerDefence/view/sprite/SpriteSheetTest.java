@@ -20,17 +20,4 @@ public class SpriteSheetTest {
         assertEquals(new Point(3, 1), spriteSheet.convertIndexToRowCol(13));
         assertEquals(new Point(4, 2), spriteSheet.convertIndexToRowCol(18));
     }
-
-    @Test
-    void testTest() {
-        HashSet<Integer> mySet = new HashSet<>();
-
-        mySet.add(5);
-        mySet.add(5);
-        mySet.add(3);
-
-        System.out.println(mySet);
-    }
-
-
 }

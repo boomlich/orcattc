@@ -1,6 +1,10 @@
 package towerDefence.tower.towerTypes;
 
-import towerDefence.components.*;
+import towerDefence.components.Collision.Collision;
+import towerDefence.components.Targeting.Targeting;
+import towerDefence.components.Targeting.TargetingMode;
+import towerDefence.components.Weapons.Projectile;
+import towerDefence.components.Weapons.Weapon;
 import towerDefence.components.damage.Damage;
 import towerDefence.components.debuff.DebuffSlow;
 import towerDefence.enemies.IEnemy;
@@ -10,8 +14,6 @@ import towerDefence.tower.TowerUpgrades;
 import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.geom.Point2D;
-import java.util.List;
-import java.util.Random;
 
 public class Wizard extends Tower {
 
@@ -34,6 +36,11 @@ public class Wizard extends Tower {
 
         originalWeapon = getWeapon();
         originalWeapon.setTowerOwner(this);
+    }
+
+    // For testing
+    public Wizard() {
+        this.originalWeapon = null;
     }
 
     @Override

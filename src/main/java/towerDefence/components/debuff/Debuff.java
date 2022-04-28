@@ -1,13 +1,12 @@
 package towerDefence.components.debuff;
 
-import towerDefence.components.Animation;
+import towerDefence.view.sprite.Animation;
 import towerDefence.enemies.IEnemy;
 import towerDefence.view.sprite.SpriteEngine;
 
 import java.util.Objects;
 
 abstract class Debuff implements IDebuff {
-
 
     /**
      * Duration of the debuff in millisecounds
@@ -77,6 +76,9 @@ abstract class Debuff implements IDebuff {
         this.target = target;
     }
 
+    /**
+     * @return enemy with the debuff effect
+     */
     protected IEnemy getTarget() {
         return target;
     }
@@ -101,8 +103,10 @@ abstract class Debuff implements IDebuff {
 
     }
 
+    /**
+     * Refresh
+     */
     protected void restoreDuration() {
-        System.out.println("Restored");
         restartTimer();
     }
 

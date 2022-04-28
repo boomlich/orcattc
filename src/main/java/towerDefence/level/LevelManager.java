@@ -1,6 +1,5 @@
 package towerDefence.level;
 
-import towerDefence.level.levels.Level;
 import towerDefence.level.path.SplinePath;
 import towerDefence.level.path.SplinePathData;
 

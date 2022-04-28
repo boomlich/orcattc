@@ -1,8 +1,8 @@
 package towerDefence.tower;
 
-import towerDefence.components.Collision;
-import towerDefence.components.TargetingMode;
-import towerDefence.components.Weapon;
+import towerDefence.components.Collision.Collision;
+import towerDefence.components.Targeting.TargetingMode;
+import towerDefence.components.Weapons.Weapon;
 import towerDefence.components.damage.Damage;
 import towerDefence.enemies.IEnemy;
 import towerDefence.model.GameEntities;

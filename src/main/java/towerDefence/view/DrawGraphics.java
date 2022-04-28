@@ -10,6 +10,13 @@ import java.awt.geom.Point2D;
 public class DrawGraphics {
 
 
+    /**
+     * Render the sprite at the specific given screen coordinate.
+     *
+     * @param g2D graphics
+     * @param sprite sprite of the object to be drawn
+     * @param coordinate position of the sprite
+     */
     public static void drawSprite(Graphics2D g2D, Sprite sprite, Point2D coordinate) {
 
         AffineTransform reset = g2D.getTransform();

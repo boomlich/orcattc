@@ -1,7 +1,7 @@
 package towerDefence.enemies.enemyTypes;
 
-import towerDefence.components.Animation;
-import towerDefence.components.Collision;
+import towerDefence.view.sprite.Animation;
+import towerDefence.components.Collision.Collision;
 import towerDefence.components.movement.SplineMovement;
 import towerDefence.enemies.Enemy;
 import towerDefence.level.path.SplinePathData;
@@ -10,6 +10,10 @@ import towerDefence.view.sprite.SpriteEngine;
 public class OrcGrunt extends Enemy {
 
     public OrcGrunt() {
+    }
+
+    public OrcGrunt(double progression) {
+        super(progression);
     }
 
     public OrcGrunt(SplinePathData path) {

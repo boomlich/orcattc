@@ -11,7 +11,6 @@ public class EnemyWave {
 
     private List<EnemyWithSpawnTime> enemies = new ArrayList<>();
     private SplinePathData path;
-    private double totalPathLength;
     private int startSpawnTimer = 0;
 
     public EnemyWave(String wave, SplinePathData path) {
@@ -53,7 +52,7 @@ public class EnemyWave {
                 if (enemies.size()== 0) {
                     startSpawnTimer = multiplier;
                 } else {
-                    enemies.get(enemies.size()-1).setTimer(multiplier);
+                    enemies.get(enemies.size()-1).addToTimer(multiplier);
                 }
             } else {
                 for (int i = 0; i < multiplier; i++) {
@@ -71,7 +70,7 @@ public class EnemyWave {
      * @param enemyCode letter corrosponding to the type of enemy
      * @return enemy
      */
-    protected IEnemy parseEnemy(char enemyCode){
+    private IEnemy parseEnemy(char enemyCode){
         IEnemy selectedEnemy = null;
 
         switch (enemyCode) {

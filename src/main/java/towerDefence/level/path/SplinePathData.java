@@ -1,6 +1,6 @@
 package towerDefence.level.path;
 
-import towerDefence.components.Collision;
+import towerDefence.components.Collision.Collision;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -28,6 +28,16 @@ public class SplinePathData {
         totalLength = calculateTotalLength(segmentLength);
         pathCollision = calculatePathCollision(pathPoints, 4);
     }
+
+//    // For testing
+//    public SplinePathData() {
+//        this.pathPoints = null;
+//        this.segmentResolution = 0;
+//        this.segmentLength = null;
+//        this.splineControls = null;
+//        totalLength = 10;
+//        pathCollision = null;
+//    }
 
     private double calculateTotalLength (List<Double> segmentLength) {
         double totalLength = 0;

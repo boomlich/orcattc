@@ -1,9 +1,7 @@
 package towerDefence.tower;
 
-import towerDefence.components.Collision;
-import towerDefence.components.damage.Damage;
-import towerDefence.components.Projectile;
-import towerDefence.components.Weapon;
+import towerDefence.components.Collision.Collision;
+import towerDefence.components.Weapons.Weapon;
 
 public class TowerUpgrades {
 

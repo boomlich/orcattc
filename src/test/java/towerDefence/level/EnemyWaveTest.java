@@ -14,30 +14,24 @@ public class EnemyWaveTest {
 
     @Test
     void parseWaveTest() {
-        EnemyWave wave = new EnemyWave("D_15, a_2, db_1, P_60, abc_1", null);
-
-        List<Integer> expectedDelayTimer = new ArrayList<>(Arrays.asList(15, 15, 15, 15, 60, 15, 15, 15));
+        EnemyWave wave = new EnemyWave("P_20, D_15, a_2, db_1, P_60, abc_1, D_30, defghi_1", null);
 
         IEnemy typeA = new OrcGrunt();
-        IEnemy typeB = new OrcBrute();
-        IEnemy typeC = new AttackShip();
-        IEnemy typeD = new BattleShip();
-        List<IEnemy> expectedEnemies = new ArrayList<>(Arrays.asList(typeA, typeA, typeD, typeB, typeA, typeB, typeC));
+        IEnemy typeB = new OrcGruntShielded();
+        IEnemy typeC = new OrcBrute();
+        IEnemy typeD = new OrcBruteShielded();
+        IEnemy typeE = new OrcGruntBerserker();
+        IEnemy typeF = new OrcGruntBerserkerShielded();
+        IEnemy typeG = new OrcBruteBerserker();
+        IEnemy typeH = new OrcBruteBerserkerShielded();
+        IEnemy typeI = new Ogre();
+
+        List<Integer> expectedDelayTimer = new ArrayList<>(Arrays.asList(15, 15, 15, 75, 15, 15, 15, 30, 30, 30, 30, 30, 30));
+        List<IEnemy> expectedEnemies = new ArrayList<>(Arrays.asList(typeA, typeA, typeD, typeB, typeA, typeB, typeC, typeD, typeE, typeF, typeG, typeH, typeI));
 
         for (int i = 0; i < expectedDelayTimer.size(); i++) {
-            assertEquals(expectedDelayTimer.get(i), wave.getEnemies().get(i).timer);
+            assertEquals(expectedDelayTimer.get(i), wave.getEnemies().get(i).getTimer());
             assertEquals(expectedEnemies.get(i).getClass(), wave.getEnemies().get(i).enemy.getClass());
         }
-    }
-
-    @Test
-    void parseEnemyTest() {
-        EnemyWave wave = new EnemyWave();
-
-        IEnemy testEnemy = new AttackShip();
-        assertEquals(testEnemy.getClass(), wave.parseEnemy('c').getClass());
-
-        testEnemy = new OrcGrunt();
-        assertEquals(testEnemy.getClass(), wave.parseEnemy('a').getClass());
     }
 }

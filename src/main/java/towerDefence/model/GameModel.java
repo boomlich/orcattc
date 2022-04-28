@@ -1,17 +1,16 @@
 package towerDefence.model;
 
-import towerDefence.components.Collision;
-import towerDefence.components.Projectile;
-import towerDefence.components.TargetingMode;
+import towerDefence.components.Collision.Collision;
+import towerDefence.components.Weapons.Projectile;
+import towerDefence.components.Targeting.TargetingMode;
 import towerDefence.controller.GameControllable;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.LevelManager;
-import towerDefence.level.levels.Level;
-import towerDefence.level.path.PathPoint;
+import towerDefence.level.Level;
 import towerDefence.particles.Particle;
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
-import towerDefence.view.Interaction.InteractionManager;
+import UI.Interaction.InteractionManager;
 import towerDefence.view.UICanvas;
 
 import java.awt.geom.Point2D;
@@ -62,14 +61,14 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     @Override
-    public void startRound() {
+    public void startInvasionRound() {
         waveSpawner.setCurrentWave(levelManager.loadNextWave());
         changeGameMode(GameMode.INVASION_PHASE);
     }
 
     @Override
     public void addTower(ITower target) {
-        if (economyManager.hasSufficiantFunds(target.getCost())) {
+        if (economyManager.hasSufficientFunds(target.getCost())) {
             if (!isActiveTowerInSpawnMode()) {
                 activeTower = target;
                 activeTower.setGameEntities(gameEntities);
@@ -144,10 +143,11 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public void placeTower() {
         if (activeTower.hasValidPlacement()) {
-            economyManager.purchaseItem(activeTower.getCost());
-            gameEntities.addTower(activeTower);
-            activeTower.disableSpawnMode();
-            activeTower = null;
+            if (economyManager.purchaseItem(activeTower.getCost())) {
+                gameEntities.addTower(activeTower);
+                activeTower.disableSpawnMode();
+                activeTower = null;
+            }
         }
     }
 
@@ -171,7 +171,7 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public void upgradeTower() {
         if (activeTower != null) {
-            if (economyManager.hasSufficiantFunds(activeTower.getCost())) {
+            if (economyManager.hasSufficientFunds(activeTower.getCost())) {
                 economyManager.purchaseItem(activeTower.upgradeRank());
             }
         }
@@ -204,7 +204,7 @@ public class GameModel implements GameRenderable, GameControllable {
             if (gameMode != GameMode.PAUSE) {
                 if (gameMode == GameMode.INVASION_PHASE) {
                     waveSpawner.update(deltaSteps);
-                    economyManager.addMoney(gameEntities.retrieveMoneyLoot());
+                    economyManager.addMoney(gameEntities.getMoneyEarned());
                     if (!healthManager.reduceHealth(gameEntities.getDamageDone())) {
                         changeGameMode(GameMode.GAME_OVER);
                     }
@@ -244,7 +244,7 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     private boolean isWaveDepleted() {
-        return gameEntities.getSortedEnemies().isEmpty() && waveSpawner.waveSpawnCompleted();
+        return gameEntities.getSortedEnemies(false).isEmpty() && waveSpawner.waveSpawnCompleted();
     }
 
     @Override
@@ -263,11 +263,6 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public int getHealth() {
         return healthManager.getHealth();
-    }
-
-    @Override
-    public void getBackground() {
-
     }
 
     @Override
@@ -302,12 +297,7 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public boolean hasSufficiantFunds(int cost) {
-        return economyManager.hasSufficiantFunds(cost);
-    }
-
-    @Override
-    public List<PathPoint> getTrackPath() {
-        return levelManager.getPath().getPathPoints();
+        return economyManager.hasSufficientFunds(cost);
     }
 
     @Override
@@ -315,8 +305,4 @@ public class GameModel implements GameRenderable, GameControllable {
         return levelManager.getPath().getPathCollision();
     }
 
-    @Override
-    public Point2D[] getSplineControls() {
-        return levelManager.getSplineControls();
-    }
 }

@@ -1,7 +1,7 @@
 package towerDefence.enemies;
 
-import towerDefence.components.Animation;
-import towerDefence.components.Collision;
+import towerDefence.view.sprite.Animation;
+import towerDefence.components.Collision.Collision;
 import towerDefence.components.damage.Damage;
 import towerDefence.components.debuff.DebuffManager;
 import towerDefence.components.debuff.IDebuff;
@@ -55,6 +55,10 @@ public abstract class Enemy implements IEnemy {
      */
     private int reachedEndDamage;
 
+    private double progression = 0.0;
+
+    private int zDepth = 0;
+
     // Animations
     private Animation animMoveRight;
     private Animation animMoveLeft;
@@ -80,7 +84,11 @@ public abstract class Enemy implements IEnemy {
     }
 
     // For testing
-    public Enemy() {
+    protected Enemy(double progression) {
+        this.progression = progression;
+    }
+
+    protected Enemy() {
     }
 
     private double generateRandomOffset(){
@@ -148,6 +156,8 @@ public abstract class Enemy implements IEnemy {
         double x = position.getX() + normal.getX() * pathOffset - offsetX;
         double y = position.getY() - offsetY + normal.getY() * pathOffset;
 
+        zDepth = (int) y;
+
         return new Point2D.Double(x, y);
     }
 
@@ -183,7 +193,10 @@ public abstract class Enemy implements IEnemy {
 
     @Override
     public double getPathProgression() {
-        return splineMovement.getPathProgression();
+        if (splineMovement != null) {
+            progression = splineMovement.getPathProgression();
+        }
+        return progression;
     }
 
     private void death() {
@@ -207,7 +220,7 @@ public abstract class Enemy implements IEnemy {
 
     @Override
     public int getZDepth() {
-        return (int) getPosition().getY();
+        return zDepth;
     }
 
     @Override

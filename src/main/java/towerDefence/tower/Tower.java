@@ -1,12 +1,15 @@
 package towerDefence.tower;
 
 import towerDefence.Math.MathHelperMethods;
-import towerDefence.components.*;
+import towerDefence.components.Collision.Collision;
+import towerDefence.components.Targeting.Targeting;
+import towerDefence.components.Targeting.TargetingMode;
+import towerDefence.components.Weapons.Weapon;
 import towerDefence.components.damage.Damage;
 import towerDefence.enemies.IEnemy;
 import towerDefence.model.GameEntities;
-import towerDefence.view.Interaction.InteractCode;
-import towerDefence.view.Interaction.Interactable;
+import UI.Interaction.InteractCode;
+import UI.Interaction.Interactable;
 import towerDefence.view.sprite.Sprite;
 import towerDefence.view.sprite.SpriteEngine;
 
@@ -50,6 +53,14 @@ public abstract class Tower implements ITower, Interactable{
         spriteBase = new SpriteEngine("TestSpriteSheet.png", 4, 5, 10, 10);
         targeting = new Targeting(TargetingMode.FIRST, this);
         this.cost = cost;
+    }
+
+    // For testing
+    public Tower() {
+        this.placementRadius = null;
+        this.cost = null;
+        this.portraitPath = null;
+        this.towerName = null;
     }
 
     @Override
@@ -116,7 +127,7 @@ public abstract class Tower implements ITower, Interactable{
     }
 
     protected List<IEnemy> getEnemies() {
-        return gameEntities.getSortedEnemies();
+        return gameEntities.getSortedEnemies(false);
     }
 
     protected void noTarget() {
@@ -376,5 +387,10 @@ public abstract class Tower implements ITower, Interactable{
     @Override
     public TargetingMode getTargetingMode() {
         return targeting.targetingMode;
+    }
+
+    @Override
+    public boolean isDead(){
+        return false;
     }
 }

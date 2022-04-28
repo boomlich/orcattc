@@ -1,12 +1,13 @@
 package towerDefence.particles;
 
-import towerDefence.components.Animation;
+import towerDefence.view.sprite.Animation;
+import towerDefence.view.IRenderableObject;
 import towerDefence.view.sprite.Sprite;
 import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.geom.Point2D;
 
-public class Particle {
+public class Particle implements IRenderableObject {
 
     private final SpriteEngine sprite;
     private final Point2D position;
@@ -20,6 +21,11 @@ public class Particle {
         currentTime = lifeTime;
         this.animation = particleAnimation;
         sprite.start(particleAnimation);
+    }
+
+    @Override
+    public int getZDepth() {
+        return 0;
     }
 
     public Sprite getSprite() {

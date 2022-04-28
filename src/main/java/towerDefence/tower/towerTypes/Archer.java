@@ -1,13 +1,14 @@
 package towerDefence.tower.towerTypes;
 
-import towerDefence.components.*;
+import towerDefence.components.Collision.Collision;
+import towerDefence.components.Weapons.Projectile;
+import towerDefence.components.Weapons.Weapon;
 import towerDefence.components.damage.Damage;
 import towerDefence.components.debuff.DebuffDamageOverTime;
-import towerDefence.particles.Particle;
-import towerDefence.particles.ParticleEmitter;
 import towerDefence.tower.Cost;
 import towerDefence.tower.Tower;
 import towerDefence.tower.TowerUpgrades;
+import towerDefence.view.sprite.Animation;
 import towerDefence.view.sprite.SpriteEngine;
 
 import java.awt.geom.Point2D;
@@ -38,6 +39,9 @@ public class Archer extends Tower {
                         fireAnim,
                         this,
                         "fireAR0"));
+    }
+
+    public Archer() {
     }
 
     @Override

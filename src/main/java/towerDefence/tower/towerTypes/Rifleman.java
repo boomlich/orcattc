@@ -1,8 +1,8 @@
 package towerDefence.tower.towerTypes;
 
-import towerDefence.components.Collision;
-import towerDefence.components.ProjectileMultiShot;
-import towerDefence.components.Weapon;
+import towerDefence.components.Collision.Collision;
+import towerDefence.components.Weapons.ProjectileMultiShot;
+import towerDefence.components.Weapons.Weapon;
 import towerDefence.components.damage.Damage;
 import towerDefence.tower.Cost;
 import towerDefence.tower.Tower;
@@ -25,6 +25,10 @@ public class Rifleman extends Tower {
                 Cost.RIFLEMAN);
 
         getWeapon().setTowerOwner(this);
+    }
+
+    // For testing
+    public Rifleman() {
     }
 
     @Override

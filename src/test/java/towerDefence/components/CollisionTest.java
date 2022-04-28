@@ -1,6 +1,8 @@
 package towerDefence.components;
 
 import org.junit.jupiter.api.Test;
+import towerDefence.components.Collision.Collision;
+import towerDefence.components.Collision.CollisionObject;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;

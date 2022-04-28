@@ -1,21 +1,37 @@
 package towerDefence.view;
 
+import UI.UI.components.UIContainer;
+import UI.UI.presets.*;
 import towerDefence.model.GameMode;
 import towerDefence.tower.ITower;
-import towerDefence.view.UI.components.*;
-import towerDefence.view.UI.presets.*;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 
-public class UICanvas implements ICanvas {
+public class UICanvas {
 
     private final GameRenderable gameModel;
-    private final UIContainer UIContainer;
+
+    /**
+     * Main UI container. Every UI element is inside this container.
+     */
+    private final UI.UI.components.UIContainer UIContainer;
+
+    /**
+     * The currently displayed Heads Up Display (HUD)
+     */
     private UI_HUD HUD;
+
+    /**
+     * the currently displayed pause menu UI
+     */
     private UI_PauseMenu pauseMenu;
+
+    /**
+     *
+     */
     private UI_MainMenu mainMenu;
     private UI_LevelSelect levelSelect;
     private UI_Win winScreen;
@@ -31,7 +47,6 @@ public class UICanvas implements ICanvas {
         gameModel.setGameUI(this);
     }
 
-    @Override
     public void paint(Graphics2D g2D) {
 
         if (gameModel.getGameMode() == GameMode.MAIN_MENU) {
@@ -68,6 +83,12 @@ public class UICanvas implements ICanvas {
         UIContainer.paint(g2D);
     }
 
+    /**
+     * Removes the component from the UI
+     *
+     * @param component target component
+     * @return null
+     */
     private <T extends UIContainer> T removeUIComponent(T component){
         if (component != null) {
             UIContainer.remove(component);
@@ -75,6 +96,10 @@ public class UICanvas implements ICanvas {
         return null;
     }
 
+    /**
+     * Clear all current UI elements and create new
+     * HUD display
+     */
     public void startNewLevel() {
         clearAll();
 
@@ -82,7 +107,6 @@ public class UICanvas implements ICanvas {
         UIContainer.add(HUD);
     }
 
-    @Override
     public void update(double deltaSteps) {
 
         if (HUD != null) {
@@ -97,7 +121,6 @@ public class UICanvas implements ICanvas {
         }
     }
 
-    @Override
     public void togglePauseGame() {
 
         if (pauseMenu == null) {
@@ -106,37 +129,29 @@ public class UICanvas implements ICanvas {
             UIContainer.add(pauseMenu);
         } else {
             pauseMenu = removeUIComponent(pauseMenu);
-//            UIContainer.remove(HUD);
             HUD = new UI_HUD(width, height, gameModel);
             UIContainer.add(HUD);
         }
     }
 
-    @Override
     public void startRound() {
         if (HUD != null) {
             HUD.startRound();
         }
     }
 
-    @Override
-    public void addTowerMenu() {
-
-    }
-
-    @Override
     public void displayWin() {
         HUD = removeUIComponent(HUD);
         winScreen = new UI_Win(width, height);
         UIContainer.add(winScreen);
     }
 
-    @Override
     public void displayGameOver() {
         HUD = removeUIComponent(HUD);
         gameOver = new UI_GameOver(width, height);
         UIContainer.add(gameOver);
     }
+
 
     public void startBuildPhase() {
         if (HUD != null) {
@@ -144,7 +159,6 @@ public class UICanvas implements ICanvas {
         }
     }
 
-    @Override
     public void displayLevelSelect() {
         mainMenu = removeUIComponent(mainMenu);
         levelSelect = new UI_LevelSelect(width, height);
@@ -163,11 +177,17 @@ public class UICanvas implements ICanvas {
         }
     }
 
+    /**
+     * Clear all elements from the UI
+     */
     private void clearAll() {
         levelSelect = removeUIComponent(levelSelect);
         pauseMenu = removeUIComponent(pauseMenu);
         HUD = removeUIComponent(HUD);
         winScreen = removeUIComponent(winScreen);
         gameOver = removeUIComponent(gameOver);
+    }
+
+    public void addTowerMenu() {
     }
 }
