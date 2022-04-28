@@ -19,6 +19,7 @@ public class UICanvas implements ICanvas {
     private UI_MainMenu mainMenu;
     private UI_LevelSelect levelSelect;
     private UI_Win winScreen;
+    private UI_GameOver gameOver;
     private int width, height;
 
 
@@ -75,9 +76,7 @@ public class UICanvas implements ICanvas {
     }
 
     public void startNewLevel() {
-        levelSelect = removeUIComponent(levelSelect);
-        pauseMenu = removeUIComponent(pauseMenu);
-        HUD = removeUIComponent(HUD);
+        clearAll();
 
         HUD = new UI_HUD(width, height, gameModel);
         UIContainer.add(HUD);
@@ -135,7 +134,8 @@ public class UICanvas implements ICanvas {
     @Override
     public void displayGameOver() {
         HUD = removeUIComponent(HUD);
-        UIContainer.add(new UI_GameOver(width, height));
+        gameOver = new UI_GameOver(width, height);
+        UIContainer.add(gameOver);
     }
 
     public void startBuildPhase() {
@@ -152,7 +152,7 @@ public class UICanvas implements ICanvas {
     }
 
     public void displayMainMenu() {
-        pauseMenu = removeUIComponent(pauseMenu);
+        clearAll();
         mainMenu = new UI_MainMenu(width, height);
         UIContainer.add(mainMenu);
     }
@@ -161,5 +161,13 @@ public class UICanvas implements ICanvas {
         if (HUD != null) {
             HUD.toggleFastForward();
         }
+    }
+
+    private void clearAll() {
+        levelSelect = removeUIComponent(levelSelect);
+        pauseMenu = removeUIComponent(pauseMenu);
+        HUD = removeUIComponent(HUD);
+        winScreen = removeUIComponent(winScreen);
+        gameOver = removeUIComponent(gameOver);
     }
 }
