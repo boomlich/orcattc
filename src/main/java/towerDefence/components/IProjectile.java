@@ -26,4 +26,6 @@ public interface IProjectile {
 
     public void setImpactEffect(Particle particle);
 
+    boolean isDead();
+
 }

@@ -1,5 +1,7 @@
 package towerDefence.view;
 
+import towerDefence.model.GameMode;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -12,6 +14,7 @@ public class GameRender extends JPanel {
     private final GraphicsDevice device;
     private final int gameWidth = 960;
     private final int gameHeight = 540;
+    private final GameRenderable gameModel;
 
     private double scaleX;
     private double scaleY;
@@ -24,6 +27,7 @@ public class GameRender extends JPanel {
             this.setFocusable(true);
         }
 
+        this.gameModel = gameModel;
         this.device = device;
         setScale();
         boardCanvas = new BoardCanvas(gameModel, gameWidth, gameHeight);
@@ -62,7 +66,9 @@ public class GameRender extends JPanel {
 
         g2D.scale(getScaleX(), getScaleY());
 
-        boardCanvas.paint(g2D);
+        if (gameModel.getGameMode() != GameMode.MAIN_MENU) {
+            boardCanvas.paint(g2D);
+        }
         gameUI.paint(g2D);
     }
 }

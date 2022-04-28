@@ -11,6 +11,7 @@ import towerDefence.level.path.PathPoint;
 import towerDefence.particles.Particle;
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
+import towerDefence.view.Interaction.InteractionManager;
 import towerDefence.view.UICanvas;
 
 import java.awt.geom.Point2D;
@@ -33,7 +34,14 @@ public class GameModel implements GameRenderable, GameControllable {
     private HealthManager healthManager;
 
     public GameModel() {
-        loadLevel(Level.A);
+    }
+
+    private void initiateGame(){
+        loadMainMenu();
+    }
+
+    public void loadMainMenu() {
+        changeGameMode(GameMode.MAIN_MENU);
     }
 
     @Override
@@ -47,11 +55,11 @@ public class GameModel implements GameRenderable, GameControllable {
         waveSpawner = new WaveSpawner(gameEntities);
         gameMode = GameMode.BUILD_PHASE;
         fastForward = false;
+        uiCanvas.startNewLevel();
     }
 
     @Override
     public void startRound() {
-        System.out.println("ROUND STARTED");
         waveSpawner.setCurrentWave(levelManager.loadNextWave());
         changeGameMode(GameMode.INVASION_PHASE);
     }
@@ -96,6 +104,13 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     @Override
+    public void restartLevel() {
+        gameEntities.removeAllTowers();
+        loadLevel(levelManager.getcurrentLevel());
+        uiCanvas.startBuildPhase();
+    }
+
+    @Override
     public BufferedImage getMapGraphics() {
         return levelManager.getMapBackground();
     }
@@ -103,6 +118,7 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public void setGameUI(UICanvas uiCanvas) {
         this.uiCanvas = uiCanvas;
+        initiateGame();
     }
 
     @Override
@@ -136,7 +152,6 @@ public class GameModel implements GameRenderable, GameControllable {
     public void togglePauseGame() {
         if (gameMode == GameMode.PAUSE) {
             changeGameMode(modePriorToPause);
-            uiCanvas.togglePauseGame();
         } else {
             modePriorToPause = gameMode;
             changeGameMode(GameMode.PAUSE);
@@ -177,20 +192,23 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public void update(double deltaSteps) {
 
-        if (hasActiveTower() && activeTower.activeSpawnMode()) {
-            activeTower.update(deltaSteps);
-        }
 
-        if (gameMode != GameMode.PAUSE) {
-            if (gameMode == GameMode.INVASION_PHASE) {
-                waveSpawner.update(deltaSteps);
-                economyManager.addMoney(gameEntities.retrieveMoneyLoot());
-                if (!healthManager.reduceHealth(gameEntities.getDamageDone())) {
-                    changeGameMode(GameMode.GAME_OVER);
-                }
-                endInvasionPhase();
+        if (gameMode != GameMode.MAIN_MENU) {
+            if (hasActiveTower() && activeTower.activeSpawnMode()) {
+                activeTower.update(deltaSteps);
             }
-            gameEntities.update(deltaSteps);
+
+            if (gameMode != GameMode.PAUSE) {
+                if (gameMode == GameMode.INVASION_PHASE) {
+                    waveSpawner.update(deltaSteps);
+                    economyManager.addMoney(gameEntities.retrieveMoneyLoot());
+                    if (!healthManager.reduceHealth(gameEntities.getDamageDone())) {
+                        changeGameMode(GameMode.GAME_OVER);
+                    }
+                    endInvasionPhase();
+                }
+                gameEntities.update(deltaSteps);
+            }
         }
     }
 
@@ -206,6 +224,9 @@ public class GameModel implements GameRenderable, GameControllable {
     }
 
     private void changeGameMode(GameMode gameMode) {
+
+        System.out.println(gameMode);
+
         if (gameMode == GameMode.BUILD_PHASE) {
             uiCanvas.startBuildPhase();
         } else if (gameMode == GameMode.INVASION_PHASE) {

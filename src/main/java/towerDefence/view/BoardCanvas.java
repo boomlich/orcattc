@@ -5,6 +5,7 @@ import towerDefence.components.Projectile;
 import towerDefence.components.debuff.DebuffDamageOverTime;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.path.PathPoint;
+import towerDefence.model.GameMode;
 import towerDefence.particles.Particle;
 import towerDefence.tower.ITower;
 import towerDefence.view.sprite.Sprite;
@@ -171,6 +172,11 @@ public class BoardCanvas implements ICanvas{
 
     @Override
     public void displayGameOver() {
+
+    }
+
+    @Override
+    public void displayLevelSelect() {
 
     }
 }

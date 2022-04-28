@@ -1,5 +1,6 @@
 package towerDefence.level;
 
+import towerDefence.level.levels.Level;
 import towerDefence.level.path.SplinePathData;
 
 import java.awt.geom.Point2D;
@@ -22,4 +23,6 @@ public interface IGameLevel {
     int getCurrentWaveNumber();
 
     int getWaveEndMoney();
+
+    Level getcurrentLevel();
 }

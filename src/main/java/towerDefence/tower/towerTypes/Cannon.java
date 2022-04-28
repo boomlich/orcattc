@@ -5,7 +5,9 @@ import towerDefence.components.Collision;
 import towerDefence.components.Projectile;
 import towerDefence.components.Weapon;
 import towerDefence.components.damage.Damage;
+import towerDefence.controller.GameControllable;
 import towerDefence.controller.MouseController;
+import towerDefence.model.GameMode;
 import towerDefence.particles.Particle;
 import towerDefence.tower.Cost;
 import towerDefence.tower.Tower;
@@ -17,9 +19,10 @@ import java.awt.geom.Point2D;
 public class Cannon extends Tower {
 
     private final MouseController mouseController;
+    private final GameControllable gameControllable;
     private boolean mouseAim = false;
 
-    public Cannon(Point2D position, MouseController mouseController) {
+    public Cannon(Point2D position, MouseController mouseController, GameControllable gameModel) {
         super(
                 "Cannon",
                 "graphics/buttons/cannon/Portrait_Cannon_Hover.png",
@@ -40,6 +43,7 @@ public class Cannon extends Tower {
                         null,
                         1000));
         this.mouseController = mouseController;
+        this.gameControllable = gameModel;
     }
 
     @Override
@@ -60,7 +64,7 @@ public class Cannon extends Tower {
 
     @Override
     public void update(double deltaSteps) {
-        if (mouseAim) {
+        if (mouseAim && gameControllable.getGameMode() == GameMode.INVASION_PHASE) {
             if (!activeSpawnMode()) {
                 updateTargetDirection(mouseController.getMouseCoordinate());
                 updateWeapon(deltaSteps, mouseController.getMouseCoordinate());

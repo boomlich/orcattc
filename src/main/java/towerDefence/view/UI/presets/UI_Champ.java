@@ -57,9 +57,6 @@ public class UI_Champ extends UIContainer {
                 "Attacks with a flurry of icicles that freezes enemies"
         );
 
-
-
-
         champions = new UI_Button_Champions[]{
                 archer,
                 rifleMan,
@@ -94,7 +91,6 @@ public class UI_Champ extends UIContainer {
         UIContainer frameRight = new UIContainer(12, 47);
         frameRight.setAlignment(UIAlignment.WEST);
         frameRight.setBackgroundImage("graphics/UI/ChampionSelect/UI_Champions_Frame_Right.png");
-
 
         bottomContainer.add(frameLeft);
         bottomContainer.add(frameBody);

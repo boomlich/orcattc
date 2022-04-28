@@ -1,6 +1,7 @@
 package towerDefence.controller;
 
 import towerDefence.components.TargetingMode;
+import towerDefence.level.levels.Level;
 import towerDefence.tower.ITower;
 import towerDefence.tower.towerTypes.Archer;
 import towerDefence.tower.towerTypes.Cannon;
@@ -152,6 +153,7 @@ public class MouseController implements MouseMotionListener, MouseListener {
         double mouseX = mousePosition.getX();
         double mouseY = mousePosition.getY();
 
+
         if (interactCode == InteractCode.DEFAULT) {
         }
         else if (interactCode == InteractCode.SPAWN_A) {
@@ -161,7 +163,7 @@ public class MouseController implements MouseMotionListener, MouseListener {
             gameModel.addTower(new Rifleman(new Point2D.Double(mouseX, mouseY)));
         }
         else if (interactCode == InteractCode.SPAWN_C) {
-            gameModel.addTower(new Cannon(new Point2D.Double(mouseX, mouseY), this));
+            gameModel.addTower(new Cannon(new Point2D.Double(mouseX, mouseY), this, gameModel));
         }
         else if (interactCode == InteractCode.SPAWN_D) {
             gameModel.addTower(new Wizard(new Point2D.Double(mouseX, mouseY)));
@@ -191,6 +193,16 @@ public class MouseController implements MouseMotionListener, MouseListener {
             gameModel.togglePauseGame();
         } else if (interactCode == InteractCode.FAST_FORWARD) {
             gameModel.toggleFastForward();
+        } else if (interactCode == InteractCode.RESTART) {
+            gameModel.restartLevel();
+        } else if (interactCode == InteractCode.PLAY_GAME) {
+            gameRender.getGameUI().displayLevelSelect();
+        } else if (interactCode == InteractCode.LEVEL_A) {
+            gameModel.loadLevel(Level.A);
+        } else if (interactCode == InteractCode.LEVEL_B) {
+            gameModel.loadLevel(Level.B);
+        } else if (interactCode == InteractCode.MAIN_MENU) {
+            gameModel.loadMainMenu();
         }
     }
 

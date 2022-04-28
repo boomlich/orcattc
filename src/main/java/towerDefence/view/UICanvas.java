@@ -3,10 +3,7 @@ package towerDefence.view;
 import towerDefence.model.GameMode;
 import towerDefence.tower.ITower;
 import towerDefence.view.UI.components.*;
-import towerDefence.view.UI.presets.UI_GameOver;
-import towerDefence.view.UI.presets.UI_HUD;
-import towerDefence.view.UI.presets.UI_PauseMenu;
-import towerDefence.view.UI.presets.UI_Win;
+import towerDefence.view.UI.presets.*;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -19,18 +16,18 @@ public class UICanvas implements ICanvas {
     private final UIContainer UIContainer;
     private UI_HUD HUD;
     private UI_PauseMenu pauseMenu;
+    private UI_MainMenu mainMenu;
+    private UI_LevelSelect levelSelect;
     private UI_Win winScreen;
     private int width, height;
 
 
     public UICanvas(GameRenderable gameModel, int width, int height) {
-        gameModel.setGameUI(this);
         this.gameModel = gameModel;
         this.width = width;
         this.height = height;
         UIContainer = new UIContainer(width, height);
-        HUD = new UI_HUD(width, height, gameModel);
-        UIContainer.add(HUD);
+        gameModel.setGameUI(this);
     }
 
     @Override
@@ -65,6 +62,16 @@ public class UICanvas implements ICanvas {
         UIContainer.paint(g2D);
     }
 
+    public void startNewLevel() {
+        if (levelSelect != null) {
+            UIContainer.remove(levelSelect);
+            levelSelect = null;
+        }
+
+        HUD = new UI_HUD(width, height, gameModel);
+        UIContainer.add(HUD);
+    }
+
     @Override
     public void update(double deltaSteps) {
 
@@ -82,6 +89,7 @@ public class UICanvas implements ICanvas {
 
     @Override
     public void togglePauseGame() {
+
         if (pauseMenu == null) {
             UIContainer.remove(HUD);
             HUD = null;
@@ -90,6 +98,7 @@ public class UICanvas implements ICanvas {
         } else {
             UIContainer.remove(pauseMenu);
             pauseMenu = null;
+            UIContainer.remove(HUD);
             HUD = new UI_HUD(width, height, gameModel);
             UIContainer.add(HUD);
         }
@@ -123,12 +132,31 @@ public class UICanvas implements ICanvas {
     }
 
     public void startBuildPhase() {
+        if (pauseMenu != null) {
+            togglePauseGame();
+        }
+
         if (HUD != null) {
             HUD.buildPhase();
         }
     }
 
+    @Override
+    public void displayLevelSelect() {
+        UIContainer.remove(mainMenu);
+        mainMenu = null;
+        levelSelect = new UI_LevelSelect(width, height);
+        UIContainer.add(levelSelect);
+    }
+
     public void displayMainMenu() {
+        if (pauseMenu != null) {
+            UIContainer.remove(pauseMenu);
+            pauseMenu = null;
+        }
+
+        mainMenu = new UI_MainMenu(width, height);
+        UIContainer.add(mainMenu);
     }
 
     public void toggleFastForward() {

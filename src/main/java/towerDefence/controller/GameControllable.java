@@ -43,4 +43,8 @@ public interface GameControllable {
     void toggleFastForward();
 
     boolean isFastForwarding();
+
+    void restartLevel();
+
+    void loadMainMenu();
 }

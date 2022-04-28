@@ -31,6 +31,8 @@ public class Projectile implements IDamageable, IProjectile {
     private ParticleEmitter particleEmitter;
     private GameEntities gameEntities;
     private Particle impactEffect;
+    private int timeLeftToLive = 5000;
+    private boolean isDead;
 
 
     public Projectile() {
@@ -91,6 +93,16 @@ public class Projectile implements IDamageable, IProjectile {
                 impactEffect = null;
             }
         }
+
+        timeLeftToLive -= 1000/60 * deltaSteps;
+        if (timeLeftToLive <= 0 || health <= 0) {
+            death();
+        }
+    }
+
+    private void death() {
+        isDead = true;
+        System.out.println("DEATH");
     }
 
     private void updateCollision(double deltaSteps) {
@@ -150,8 +162,9 @@ public class Projectile implements IDamageable, IProjectile {
         return damageRadius == null;
     }
 
+    @Override
     public boolean isDead() {
-        return health <= 0;
+        return isDead;
     }
 
     protected void setEnemies(List<IEnemy> enemies) {

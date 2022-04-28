@@ -42,7 +42,6 @@ public class Cost {
     }
 
     public int getCost(int rank) {
-        System.out.println(allCost[rank]);
         return allCost[rank];
     }
 

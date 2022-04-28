@@ -17,4 +17,6 @@ public interface ICanvas {
     void displayWin();
 
     void displayGameOver();
+
+    void displayLevelSelect();
 }
