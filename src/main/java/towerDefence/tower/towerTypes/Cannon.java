@@ -1,14 +1,14 @@
 package towerDefence.tower.towerTypes;
 
 import towerDefence.view.sprite.Animation;
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.Weapons.Projectile;
 import towerDefence.components.Weapons.Weapon;
 import towerDefence.components.damage.Damage;
 import towerDefence.controller.GameControllable;
 import towerDefence.controller.MouseController;
 import towerDefence.model.GameMode;
-import towerDefence.particles.Particle;
+import towerDefence.components.particles.Particle;
 import towerDefence.tower.Cost;
 import towerDefence.tower.Tower;
 import towerDefence.tower.TowerUpgrades;
@@ -53,11 +53,13 @@ public class Cannon extends Tower {
 
     @Override
     protected void rank1() {
+        setUpgradeToolTip("Increases explosion radius and damage");
         setSearchRadius(TowerUpgrades.upgradeDetectionRange(getSearchRadius(), 2));
     }
 
     @Override
     protected void rank2() {
+        setUpgradeToolTip("Unlock alternating target mode. Targets mouse cursor");
         getWeapon().increaseDamage(2);
         getWeapon().getProjectile().setDamageRadius(new Collision(40, false));
     }

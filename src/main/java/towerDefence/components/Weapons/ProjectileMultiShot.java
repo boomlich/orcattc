@@ -1,6 +1,6 @@
 package towerDefence.components.Weapons;
 
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.damage.Damage;
 import towerDefence.model.GameEntities;
 import towerDefence.tower.ITower;

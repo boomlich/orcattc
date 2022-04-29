@@ -1,6 +1,6 @@
 package towerDefence.level.path;
 
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;

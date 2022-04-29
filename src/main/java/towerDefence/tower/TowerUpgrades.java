@@ -1,7 +1,6 @@
 package towerDefence.tower;
 
-import towerDefence.components.Collision.Collision;
-import towerDefence.components.Weapons.Weapon;
+import towerDefence.components.collision.Collision;
 
 public class TowerUpgrades {
 
@@ -10,28 +9,4 @@ public class TowerUpgrades {
         updatedCollision.setPosition(range.getPosition());
         return updatedCollision;
     }
-
-    public static Weapon upgradeFireRate(Weapon weapon, double percentage) {
-        return null;
-    }
-
-//    public static Projectile upgradeProjectilePenetration(Projectile projectile, int penetrationDelta) {
-//        int health = projectile.getHealth() + projectile.getPenetrationDamage().getDamageValue() * penetrationDelta;
-//        Projectile newProjectile = projectile.makeCopy();
-//        newProjectile.setHealth(health);
-//
-//        return newProjectile;
-//    }
-
-    public static Collision upgradeImpactRadius() {
-        return null;
-    }
-
-//    public static Projectile upgradeProjectileDamage(Projectile projectile, double percentageDelta) {
-//        int damage = (int) (projectile.getDamage().getDamageValue() * (1.0 + percentageDelta));
-//        Projectile newProjectile = projectile.makeCopy();
-//        newProjectile.setDamage(damage);
-//        return newProjectile;
-//    }
-
 }

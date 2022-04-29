@@ -1,7 +1,7 @@
 package towerDefence.enemies;
 
 import towerDefence.view.sprite.Animation;
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.damage.Damage;
 import towerDefence.components.debuff.DebuffManager;
 import towerDefence.components.debuff.IDebuff;
@@ -104,13 +104,13 @@ public abstract class Enemy implements IEnemy {
 
         Point2D pos = getPosition();
         collision.setPosition(new Point2D.Double(
-                pos.getX() + getSprite().width / 2.0,
-                pos.getY() + collision.getRadius() / 2.0));
+                splineMovement.getPosition().getX(),
+                splineMovement.getPosition().getY() - getSprite().height / 2.0
+        ));
 
         if (splineMovement.movementDone()) {
             reachedEnd();
         }
-
 
         // Update movement direction
         if (enemyAnimationState != EnemyState.DYING) {
@@ -159,6 +159,16 @@ public abstract class Enemy implements IEnemy {
         zDepth = (int) y;
 
         return new Point2D.Double(x, y);
+    }
+
+    @Override
+    public Point2D getDebuffPosition(){
+        Point2D position = new Point2D.Double(
+                getMovement().getPosition().getX(),
+                getMovement().getPosition().getY()
+        );
+
+        return null;
     }
 
     @Override

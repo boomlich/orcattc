@@ -24,6 +24,7 @@ public class MouseController implements MouseMotionListener, MouseListener {
     private final GameRender gameRender;
     private final GameControllable gameModel;
     private Point2D mouseCoordinate;
+    private int interactions = 0;
 
     public MouseController(GameRender gameRender, GameControllable gameModel) {
         this.gameRender = gameRender;
@@ -32,30 +33,14 @@ public class MouseController implements MouseMotionListener, MouseListener {
 
     private void checkInteraction(Point2D mousePosition) {
 
-        for (Interactable object: InteractionManager.getIntractable()) {
-
-
-            if (inBounds(mousePosition, object)){
-
-                // Activate new object
-                if (currentInteractable == null) {
-                    object.toggleHover();
-                    currentInteractable = object;
-                }
-
-                // Check if entered new object
-                else if (currentInteractable != object) {
-                    currentInteractable.toggleHover();
-                    currentInteractable = object;
-                }
+        for (Interactable object : InteractionManager.getIntractable()) {
+            if (inBounds(mousePosition, object)) {
+                object.setHover();
+                currentInteractable = object;
                 break;
-            }
-            // When not hovering anymore
-            else {
-                if (currentInteractable != null) {
-                    currentInteractable.toggleHover();
-                    currentInteractable = null;
-                }
+            } else {
+                object.setNormal();
+                currentInteractable = null;
             }
         }
     }
@@ -63,14 +48,6 @@ public class MouseController implements MouseMotionListener, MouseListener {
     private boolean inBounds(Point2D mousePoint, Interactable object) {
         return mousePoint.getX() > object.getX() && mousePoint.getX() < (object.getX() + object.getWidth()) &&
                 mousePoint.getY() > object.getY() && mousePoint.getY() < (object.getY() + object.getHeight());
-    }
-
-    private void toggleClick(Point mousePoint) {
-        if (currentInteractable != null) {
-            currentInteractable.toggleClick();
-            currentInteractable = null;
-            checkInteraction(mousePoint);
-        }
     }
 
     private void clickPressed(Point2D mousePoint) {

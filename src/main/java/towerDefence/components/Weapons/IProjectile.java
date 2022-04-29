@@ -1,10 +1,9 @@
 package towerDefence.components.Weapons;
 
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.debuff.IDebuff;
 import towerDefence.model.GameEntities;
-import towerDefence.particles.Particle;
-import towerDefence.particles.ParticleEmitter;
+import towerDefence.components.particles.Particle;
 import towerDefence.tower.ITower;
 
 import java.awt.geom.Point2D;
@@ -22,8 +21,6 @@ public interface IProjectile  {
     public void setDebuff(IDebuff debuff);
 
     public void setDamageRadius(Collision damageRadius);
-
-    public void setParticleEmitter(ParticleEmitter particleEmitter);
 
     public void setImpactEffect(Particle particle);
 

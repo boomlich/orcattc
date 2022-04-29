@@ -1,6 +1,6 @@
 package towerDefence.tower.towerTypes;
 
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.Weapons.ProjectileMultiShot;
 import towerDefence.components.Weapons.Weapon;
 import towerDefence.components.damage.Damage;
@@ -33,11 +33,13 @@ public class Rifleman extends Tower {
 
     @Override
     protected void rank1() {
+        setUpgradeToolTip("Increase bullet penetration and damage");
         setSearchRadius(TowerUpgrades.upgradeDetectionRange(getSearchRadius(), 0.25));
     }
 
     @Override
     protected void rank2() {
+        setUpgradeToolTip("Swap weapons. Fires 3 bullets simultaneously");
         getWeapon().increasePenetration(5);
         getWeapon().increaseDamage(1.5);
     }

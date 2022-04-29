@@ -1,6 +1,6 @@
 package towerDefence.tower;
 
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.Targeting.TargetingMode;
 import towerDefence.components.Weapons.Weapon;
 import towerDefence.components.damage.Damage;
@@ -23,13 +23,9 @@ public interface ITower extends IRenderableObject {
 
     public void updatePosition(Point2D newPosition);
 
-    public Sprite getBaseSprite();
-
     public Sprite getBodySprite();
 
     public Point2D getBodyPosition();
-
-    public Point2D getBasePosition();
 
     public void disableSpawnMode();
 
@@ -51,6 +47,8 @@ public interface ITower extends IRenderableObject {
 
     public String getName();
 
+    String getUpgradeToolTip();
+
     public int getTotalKills();
 
     public int getDamageDone();
@@ -63,7 +61,7 @@ public interface ITower extends IRenderableObject {
 
     public void addStats(IEnemy enemy, int healthBefore, Damage damage);
 
-    int getCost();
+    int getCost(int rankOffset);
 
     int getRank();
 

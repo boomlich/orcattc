@@ -2,25 +2,47 @@ package UI.Interaction;
 
 public interface Interactable {
 
-    public int getX();
+    int getX();
 
-    public int getY();
+    int getY();
 
-    public int getWidth();
+    int getWidth();
 
-    public int getHeight();
+    int getHeight();
 
-    public String getTooltip();
+    /**
+     * Set to hover state.
+     */
+    void setHover();
 
-    public void toggleHover();
+    /**
+     * set to normal state
+     */
+    void setNormal();
 
-    public void toggleClick();
+    /**
+     *
+     */
+    void toggleClick();
 
-    public InteractCode getInteractCode();
+    /**
+     *
+     * @return
+     */
+    InteractCode getInteractCode();
 
+    /**
+     *
+     */
     void disableInteraction();
 
+    /**
+     *
+     */
     void enableInteraction();
 
-    public void setInactive();
+    /**
+     *
+     */
+    void setInactive();
 }

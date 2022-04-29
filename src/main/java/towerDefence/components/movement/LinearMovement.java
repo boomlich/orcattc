@@ -1,6 +1,6 @@
 package towerDefence.components.movement;
 
-import towerDefence.Math.MathHelperMethods;
+import towerDefence.math.MathHelperMethods;
 
 import java.awt.geom.Point2D;
 

@@ -83,10 +83,6 @@ public class SpriteEngine {
         }
     }
 
-    public void setSpriteRotation(double angle) {
-        sprite.setRotation(angle);
-    }
-
     public void setDefaultSprite() {
         sprite = grabFrame(defaultFrame);
     }

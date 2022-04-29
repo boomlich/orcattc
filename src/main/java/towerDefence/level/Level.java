@@ -74,8 +74,9 @@ public class Level {
 
             // Enemy wave
             new String[] {
-                    "P_60, D_45, ab_10",
-//                    "P_120, D_200, abcdefgh_2",
+//                    "P_60, D_45, ab_10",
+//                    "P_60, D_10, i_1",
+                    "P_120, D_200, abcdefgh_2",
 //                    "P_120, D_30, ab_6, c_1, P_500, ab_10",
             },
             10000,

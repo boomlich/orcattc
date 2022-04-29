@@ -1,11 +1,9 @@
 package towerDefence.components.movement;
 
-import towerDefence.Math.MathHelperMethods;
-import towerDefence.level.path.PathPoint;
+import towerDefence.math.MathHelperMethods;
 import towerDefence.level.path.SplinePathData;
 
 import java.awt.geom.Point2D;
-import java.util.List;
 
 public class SplineMovement implements IMovement{
 

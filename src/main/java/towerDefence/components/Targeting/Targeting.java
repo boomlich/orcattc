@@ -1,6 +1,6 @@
 package towerDefence.components.Targeting;
 
-import towerDefence.Math.MathHelperMethods;
+import towerDefence.math.MathHelperMethods;
 import towerDefence.enemies.IEnemy;
 import towerDefence.tower.ITower;
 

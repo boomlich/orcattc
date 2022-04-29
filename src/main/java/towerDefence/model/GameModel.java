@@ -1,13 +1,13 @@
 package towerDefence.model;
 
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.Weapons.Projectile;
 import towerDefence.components.Targeting.TargetingMode;
 import towerDefence.controller.GameControllable;
 import towerDefence.enemies.IEnemy;
 import towerDefence.level.LevelManager;
 import towerDefence.level.Level;
-import towerDefence.particles.Particle;
+import towerDefence.components.particles.Particle;
 import towerDefence.tower.ITower;
 import towerDefence.view.GameRenderable;
 import UI.Interaction.InteractionManager;
@@ -48,6 +48,7 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void loadLevel(Level level) {
+        activeTower = null;
         levelManager = new LevelManager();
         levelManager.loadLevel(level);
         healthManager = new HealthManager(level.getStartHealth());
@@ -68,7 +69,7 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void addTower(ITower target) {
-        if (economyManager.hasSufficientFunds(target.getCost())) {
+        if (economyManager.hasSufficientFunds(target.getCost(0))) {
             if (!isActiveTowerInSpawnMode()) {
                 activeTower = target;
                 activeTower.setGameEntities(gameEntities);
@@ -107,6 +108,9 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void restartLevel() {
+        if (activeTower != null) {
+            activeTower = null;
+        }
         InteractionManager.clearInteractables();
         loadLevel(levelManager.getcurrentLevel());
         uiCanvas.startNewLevel();
@@ -143,7 +147,7 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public void placeTower() {
         if (activeTower.hasValidPlacement()) {
-            if (economyManager.purchaseItem(activeTower.getCost())) {
+            if (economyManager.purchaseItem(activeTower.getCost(0))) {
                 gameEntities.addTower(activeTower);
                 activeTower.disableSpawnMode();
                 activeTower = null;
@@ -171,7 +175,8 @@ public class GameModel implements GameRenderable, GameControllable {
     @Override
     public void upgradeTower() {
         if (activeTower != null) {
-            if (economyManager.hasSufficientFunds(activeTower.getCost())) {
+            System.out.println(activeTower.getCost(1));
+            if (economyManager.hasSufficientFunds(activeTower.getCost(1))) {
                 economyManager.purchaseItem(activeTower.upgradeRank());
             }
         }

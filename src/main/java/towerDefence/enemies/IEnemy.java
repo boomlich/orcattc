@@ -1,7 +1,7 @@
 package towerDefence.enemies;
 
-import towerDefence.components.Collision.Collision;
-import towerDefence.components.Collision.CollisionObject;
+import towerDefence.components.collision.Collision;
+import towerDefence.components.collision.CollisionObject;
 import towerDefence.components.damage.IDamageable;
 import towerDefence.components.debuff.DebuffManager;
 import towerDefence.components.debuff.IDebuff;
@@ -38,4 +38,6 @@ public interface IEnemy extends IRenderableObject, CollisionObject, IDamageable 
     int getMoneyLoot();
 
     int getReachedEndDamage();
+
+    Point2D getDebuffPosition();
 }

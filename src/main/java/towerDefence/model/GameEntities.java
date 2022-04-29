@@ -1,10 +1,9 @@
 package towerDefence.model;
 
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.Weapons.Projectile;
 import towerDefence.enemies.IEnemy;
-import towerDefence.particles.Particle;
-import towerDefence.particles.ParticleEmitter;
+import towerDefence.components.particles.Particle;
 import towerDefence.tower.ITower;
 import towerDefence.view.IRenderableObject;
 import UI.Interaction.Interactable;
@@ -15,11 +14,10 @@ import java.util.*;
 public class GameEntities {
 
     private List<IEnemy> enemies = new ArrayList<>();
-    private List<ITower> towers = new ArrayList<>();
-    private List<Projectile> projectiles = new ArrayList<>();
-    private List<Particle> particles = new ArrayList<>();
-    private List<ParticleEmitter> particleEmitters = new ArrayList<>();
-    private List<Collision> boardCollisions = new ArrayList<>();
+    private final List<ITower> towers = new ArrayList<>();
+    private final List<Projectile> projectiles = new ArrayList<>();
+    private final List<Particle> particles = new ArrayList<>();
+    private final List<Collision> boardCollisions = new ArrayList<>();
 
     /**
      * Enemies sorted by z-depth for rendering the enemies in correct order.

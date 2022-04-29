@@ -92,13 +92,13 @@ public class UI_Champ extends UIContainer {
         frameRight.setAlignment(UIAlignment.WEST);
         frameRight.setBackgroundImage("graphics/UI/ChampionSelect/UI_Champions_Frame_Right.png");
 
-        bottomContainer.add(frameLeft);
-        bottomContainer.add(frameBody);
-        bottomContainer.add(frameRight);
-
         for (UIButton champion: champions) {
             frameBody.add(champion);
         }
+
+        bottomContainer.add(frameLeft);
+        bottomContainer.add(frameBody);
+        bottomContainer.add(frameRight);
 
         this.add(bottomContainer);
         this.add(topContainer);

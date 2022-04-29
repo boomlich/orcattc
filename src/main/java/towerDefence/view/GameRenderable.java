@@ -1,14 +1,12 @@
 package towerDefence.view;
 
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.Weapons.Projectile;
 import towerDefence.enemies.IEnemy;
-import towerDefence.level.path.PathPoint;
 import towerDefence.model.GameMode;
-import towerDefence.particles.Particle;
+import towerDefence.components.particles.Particle;
 import towerDefence.tower.ITower;
 
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.List;

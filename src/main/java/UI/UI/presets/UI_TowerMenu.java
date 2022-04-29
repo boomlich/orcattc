@@ -15,6 +15,7 @@ public class UI_TowerMenu extends UIContainer {
     private final UITextBox statKills;
     private final UITextBox statDamage;
     private final UIButton upgradeButton;
+    private final UITextBox upgradeCost;
     private final UIContainer[] rankDisplay = new UIContainer[3];
     private final UIButton[] targetingModes = new UIButton[4];
     private TargetingMode storedTargetingMode;
@@ -107,13 +108,17 @@ public class UI_TowerMenu extends UIContainer {
         upgradeContainer.setBackgroundImage("graphics/UI/TowerMenu/UI_TowerMenu_Upgrade_Frame.png");
 
         upgradeButton = new UIButton("UPGRADE",49, 30);
+        upgradeCost = new UITextBox(String.valueOf(tower.getCost(1)), 8);
+        upgradeButton.setBorder(new ContainerBorder(3));
+        upgradeCost.setAlignment(UIAlignment.SOUTH);
         upgradeButton.setButtonNormal("graphics/UI/TowerMenu/UI_TowerMenu_Upgrade_Normal.png");
         upgradeButton.setButtonHover("graphics/UI/TowerMenu/UI_TowerMenu_Upgrade_Hover.png");
         upgradeButton.setButtonClicked("graphics/UI/TowerMenu/UI_TowerMenu_Upgrade_Normal.png");
+        upgradeButton.setButtonDisabled("graphics/UI/TowerMenu/UI_TowerMenu_Upgrade_Disabled.png");
 
 
         upgradeButton.setInteractCode(InteractCode.UPGRADE);
-        upgradeButton.setToolTip("Test", new Point2D.Double(0, -50));
+        upgradeButton.add(upgradeCost);
 
         UIContainer rankContainer = new UIContainer(49, 6);
         rankContainer.setBackground(new Color(115, 62, 57));
@@ -138,7 +143,6 @@ public class UI_TowerMenu extends UIContainer {
         sell.setInteractCode(InteractCode.SELL);
 
         // Add all elements to main container
-
         int frameEndWidth = 12;
         int framepadding = 5;
 
@@ -160,24 +164,28 @@ public class UI_TowerMenu extends UIContainer {
         this.add(frameLeft);
         this.add(frameMain);
         this.add(frameRight);
-
-
-
     }
 
-    private void updateRankDisplay(ITower tower) {
-        if (tower.getRank() != 0) {
+    private void updateRankDisplay() {
+        int rank = tower.getRank();
+        if (rank != 0) {
             for (int i = 0; i < tower.getRank(); i++) {
                 rankDisplay[i].setBackgroundImage("graphics/UI/TowerMenu/UI_TowerMenu_Upgrade_Light.png");
             }
         }
+        upgradeButton.setToolTip(tower.getUpgradeToolTip(), new Point2D.Double(0, -50));
     }
 
     private void updateMoney(GameRenderable gameModel) {
-        if (gameModel.hasSufficiantFunds(tower.getCost())) {
+
+        int cost = tower.getCost(1);
+        if (gameModel.hasSufficiantFunds(cost) && cost > 0) {
             upgradeButton.enableInteraction();
+            upgradeCost.setText(String.valueOf(tower.getCost(1)));
         } else {
             upgradeButton.disableInteraction();
+            upgradeButton.setText("MAX");
+            upgradeCost.setText("");
         }
     }
 
@@ -214,7 +222,7 @@ public class UI_TowerMenu extends UIContainer {
     public void update(GameRenderable gameModel) {
         statKills.setText("Kills: " + tower.getTotalKills());
         statDamage.setText("Damage: " + tower.getDamageDone());
-        updateRankDisplay(tower);
+        updateRankDisplay();
         updateMoney(gameModel);
         updateTargetingButtons();
     }

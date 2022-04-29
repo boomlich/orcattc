@@ -42,7 +42,10 @@ public class Cost {
     }
 
     public int getCost(int rank) {
-        return allCost[rank];
+        if (rank < 4) {
+            return allCost[rank];
+        }
+        return -1;
     }
 
     public int getSellValue(int rank) {

@@ -46,7 +46,6 @@ public abstract class UIComponentTemplate implements UIComponent{
 
     @Override
     public void setAllSubComponentsInactive(UIComponent component){
-
     }
 
     @Override

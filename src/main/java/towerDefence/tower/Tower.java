@@ -1,7 +1,7 @@
 package towerDefence.tower;
 
-import towerDefence.Math.MathHelperMethods;
-import towerDefence.components.Collision.Collision;
+import towerDefence.math.MathHelperMethods;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.Targeting.Targeting;
 import towerDefence.components.Targeting.TargetingMode;
 import towerDefence.components.Weapons.Weapon;
@@ -20,11 +20,21 @@ public abstract class Tower implements ITower, Interactable{
 
     private Point2D position;
     private int rank = 0;
+
+    /**
+     * Detection range. Enemies within this search radius are potential targets
+     */
     private Collision searchRadius;
+
+    /**
+     * Detects obstacles on the map when spawning to assure that only places
+     * on a valid position.
+     */
     private final Collision placementRadius;
+
     private Weapon weapon;
+
     private SpriteEngine spriteBody;
-    private SpriteEngine spriteBase;
     private boolean spawnMode = true;
     private InteractCode interactCode = InteractCode.TARGET_Tower;
     private final int interactionSize = 40;
@@ -34,12 +44,12 @@ public abstract class Tower implements ITower, Interactable{
     private boolean validPlacement;
     private final Cost cost;
 
-
     // Tower menu options
     private final String portraitPath;
     private final String towerName;
     private int totalKills = 0;
     private int totalDamageDone = 0;
+    private String upgradeToolTip = "Upgrade detection range";
 
     public Tower(String towerName, String portraitPath, Point2D position, Collision searchRadius, Collision placementRadius,
                  Weapon weapon, SpriteEngine spriteBody, Cost cost){
@@ -47,17 +57,19 @@ public abstract class Tower implements ITower, Interactable{
         this.portraitPath = portraitPath;
         this.position = position;
         this.searchRadius = searchRadius;
+        searchRadius.setPosition(position);
         this.placementRadius = placementRadius;
         this.weapon = weapon;
         this.spriteBody = spriteBody;
-        spriteBase = new SpriteEngine("TestSpriteSheet.png", 4, 5, 10, 10);
         targeting = new Targeting(TargetingMode.FIRST, this);
         this.cost = cost;
     }
 
     // For testing
     public Tower() {
-        this.placementRadius = null;
+        this.searchRadius = new Collision(5);
+        this.spriteBody = new SpriteEngine("TestSpriteSheet.png", 4, 5, 10, 0);
+        this.placementRadius = new Collision(5);
         this.cost = null;
         this.portraitPath = null;
         this.towerName = null;
@@ -72,26 +84,41 @@ public abstract class Tower implements ITower, Interactable{
                 case 2 -> rank2();
                 case 3 -> rank3();
             }
-            return getCost();
+            return getCost(0);
         }
         return 0;
     }
 
+    protected void setUpgradeToolTip(String upgradeToolTip) {
+        this.upgradeToolTip = upgradeToolTip;
+    }
+
+    @Override
+    public String getUpgradeToolTip() {
+        return upgradeToolTip;
+    }
+
+    /**
+     * Triggers when upgrading to rank 1
+     */
     protected void rank1() {
-
     }
 
+    /**
+     * Trigger when upgrading to rank 2
+     */
     protected void rank2() {
-
     }
 
+    /**
+     * Trigger when upgrading to rank 3
+     */
     protected void rank3() {
     }
 
     protected void setSearchRadius (Collision newRadius) {
         searchRadius = newRadius;
     }
-
 
     @Override
     public void update(double deltaSteps) {
@@ -122,7 +149,7 @@ public abstract class Tower implements ITower, Interactable{
     }
 
     protected void aimAndFireWeaponAtTarget(IEnemy target, double deltaSteps) {
-        updateTargetDirection(target.getCollision().getPosition());
+        setBodyFrame(updateTargetDirection(target.getCollision().getPosition()));
         updateWeapon(deltaSteps, target.getCollision().getPosition());
     }
 
@@ -140,7 +167,7 @@ public abstract class Tower implements ITower, Interactable{
         weapon.update(deltaSteps);
     }
 
-    protected void updateTargetDirection(Point2D target) {
+    protected int updateTargetDirection(Point2D target) {
 
         int numberOfRotations = 16;
         double anglePerRotation = 2.0 * Math.PI / numberOfRotations;
@@ -150,11 +177,11 @@ public abstract class Tower implements ITower, Interactable{
         double angleToTarget = MathHelperMethods.calculateVectorAngle(vectorToTarget);
 
         if (angleToTarget < Math.PI / 2.0 && angleToTarget > Math.PI / 2.0 - anglePerRotation / 2.0) {
-            spriteBody.setFrame(8);
+            return 8;
         } else if (angleToTarget < firstFrameRange) {
-            spriteBody.setFrame(0);
+            return 0;
         } else {
-            spriteBody.setFrame(calculateFrameNumber(firstFrameRange, angleToTarget, anglePerRotation));
+            return calculateFrameNumber(firstFrameRange, angleToTarget, anglePerRotation);
         }
     }
 
@@ -168,10 +195,7 @@ public abstract class Tower implements ITower, Interactable{
     }
 
     private boolean positionNotBlocked() {
-        if (placementRadius.updateCollision(gameEntities.getBoardCollisions()).size() > 0) {
-            return false;
-        }
-        return true;
+        return placementRadius.updateCollision(gameEntities.getBoardCollisions()).size() <= 0;
     }
 
     protected void setBodyFrame(int frame) {
@@ -278,11 +302,6 @@ public abstract class Tower implements ITower, Interactable{
     }
 
     @Override
-    public Sprite getBaseSprite() {
-        return spriteBase.getSprite();
-    }
-
-    @Override
     public Sprite getBodySprite() {
         return spriteBody.getSprite();
     }
@@ -297,13 +316,6 @@ public abstract class Tower implements ITower, Interactable{
         double y = newPosition.getY() - spriteBody.getSprite().height / 2.0;
 
         return new Point2D.Double(x, y);
-    }
-
-    @Override
-    public Point2D getBasePosition() {
-        double offsetY = 10;
-
-        return new Point2D.Double(position.getX(), position.getY() + offsetY);
     }
 
     public int getSellValue() {
@@ -343,12 +355,12 @@ public abstract class Tower implements ITower, Interactable{
     }
 
     @Override
-    public String getTooltip() {
-        return null;
+    public void setHover() {
     }
 
     @Override
-    public void toggleHover() {
+    public void setNormal() {
+
     }
 
     @Override
@@ -366,8 +378,8 @@ public abstract class Tower implements ITower, Interactable{
     }
 
     @Override
-    public int getCost() {
-        return cost.getCost(rank);
+    public int getCost(int rankOffset) {
+        return cost.getCost(rank + rankOffset);
     }
 
     @Override

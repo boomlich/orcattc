@@ -6,11 +6,6 @@ import towerDefence.enemies.enemyTypes.Ogre;
 import towerDefence.enemies.enemyTypes.OrcBrute;
 import towerDefence.enemies.enemyTypes.OrcBruteBerserker;
 import towerDefence.enemies.enemyTypes.OrcGrunt;
-import towerDefence.tower.ITower;
-import towerDefence.tower.towerTypes.Archer;
-import towerDefence.tower.towerTypes.Cannon;
-import towerDefence.tower.towerTypes.Wizard;
-import towerDefence.view.IRenderableObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class GameRender extends JPanel {
 
-    private final gameCanvas gameCanvas;
+    private final GameCanvas gameCanvas;
     private final UICanvas gameUI;
     private final GraphicsDevice device;
     private final int gameWidth = 960;
@@ -26,7 +26,7 @@ public class GameRender extends JPanel {
         this.gameModel = gameModel;
         this.device = device;
         setRenderingScale();
-        gameCanvas = new gameCanvas(gameModel, gameWidth, gameHeight);
+        gameCanvas = new GameCanvas(gameModel, gameWidth, gameHeight);
         gameUI = new UICanvas(gameModel, gameWidth, gameHeight);
     }
 

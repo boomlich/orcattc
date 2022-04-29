@@ -1,14 +1,13 @@
 package towerDefence.components.Weapons;
 
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.damage.Damage;
 import towerDefence.components.damage.IDamageable;
 import towerDefence.components.debuff.IDebuff;
 import towerDefence.components.movement.LinearMovement;
 import towerDefence.enemies.IEnemy;
 import towerDefence.model.GameEntities;
-import towerDefence.particles.Particle;
-import towerDefence.particles.ParticleEmitter;
+import towerDefence.components.particles.Particle;
 import towerDefence.tower.ITower;
 import towerDefence.view.IRenderableObject;
 import towerDefence.view.sprite.Sprite;
@@ -66,10 +65,6 @@ public class Projectile implements IDamageable, IProjectile, IRenderableObject {
 
     public void setImpactEffect(Particle particle) {
         impactEffect = particle;
-    }
-
-    @Override
-    public void setParticleEmitter(ParticleEmitter particleEmitter) {
     }
 
     public Projectile makeCopy() {
@@ -196,10 +191,12 @@ public class Projectile implements IDamageable, IProjectile, IRenderableObject {
         health = damage.applyDamage(health);
     }
 
+    @Override
     public void increasePenetration (int penetrationDelta) {
         health += penetrationDamage.getDamageValue() * penetrationDelta;
     }
 
+    @Override
     public void increaseDamage(double percentageDelta) {
         damage = new Damage((int) (damage.getDamageValue() + (1.0 + percentageDelta)));
     }

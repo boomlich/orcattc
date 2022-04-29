@@ -18,6 +18,7 @@ public class UIButton extends UIContainer implements Interactable {
     private BufferedImage buttonHover;
     private BufferedImage buttonClicked;
     private BufferedImage buttonDisabled;
+    private UITextBox buttonTitle;
 
     // Default colors
     private final Color normalColor = new Color(190, 190, 190);
@@ -39,7 +40,8 @@ public class UIButton extends UIContainer implements Interactable {
 
     public UIButton(String label, int width, int height) {
         this(width, height);
-        add(new UITextBox(label));
+        buttonTitle = new UITextBox(label);
+        add(buttonTitle);
     }
 
     public void setInteractCode(InteractCode interactCode) {
@@ -55,18 +57,38 @@ public class UIButton extends UIContainer implements Interactable {
         return null;
     }
 
+    /**
+     * Set the image to be displayed when the button is in normal state
+     *
+     * @param path path of the image
+     */
     public void setButtonNormal(String path) {
         buttonNormal = loadImage(path);
     }
 
+    /**
+     * Set the image to be displayed when the button is hovered
+     *
+     * @param path path of the image
+     */
     public void setButtonHover(String path) {
         buttonHover = loadImage(path);
     }
 
+    /**
+     * Set the image to be displayed when the button is clicked
+     *
+     * @param path path of the image
+     */
     public void setButtonClicked(String path) {
         buttonClicked = loadImage(path);
     }
 
+    /**
+     * Set the image to be displayed when the button is disabled
+     *
+     * @param path path of the image
+     */
     public void setButtonDisabled(String path) {
         buttonDisabled = loadImage(path);
     }
@@ -101,6 +123,12 @@ public class UIButton extends UIContainer implements Interactable {
         super.paint(g2D);
     }
 
+    /**
+     * Check if image is null, if not empty set the button graphics
+     *
+     * @param image image to check
+     * @return true if image is null
+     */
     private boolean isEmptyImage(BufferedImage image) {
         if (image != null) {
             setBackgroundImage(image);
@@ -109,23 +137,17 @@ public class UIButton extends UIContainer implements Interactable {
         return true;
     }
 
-    @Override
-    public String getTooltip() {
-        return null;
+    public void setHover() {
+        buttonState = UIButtonState.HOVER;
+        if (toolTipString != null) {
+            addToolTip();
+        }
     }
 
-    @Override
-    public void toggleHover() {
-        if (buttonState == UIButtonState.NORMAL) {
-            buttonState = UIButtonState.HOVER;
-            if (toolTipString != null) {
-                addToolTip();
-            }
-        } else if (buttonState == UIButtonState.HOVER) {
-            buttonState = UIButtonState.NORMAL;
-            if (toolTipString != null) {
-                removeToolTip();
-            }
+    public void setNormal() {
+        buttonState = UIButtonState.NORMAL;
+        if (toolTipString != null) {
+            removeToolTip();
         }
     }
 
@@ -177,8 +199,20 @@ public class UIButton extends UIContainer implements Interactable {
         toolTip = null;
     }
 
+    /**
+     * @param toolTipText the text to be displayed in the frame
+     * @param positionOffset position offset from the button
+     */
     public void setToolTip(String toolTipText, Point2D positionOffset) {
         this.toolTipString = toolTipText;
         this.toolTipOffset = positionOffset;
+    }
+
+    public void setText(String text) {
+        if (buttonTitle != null) {
+            this.remove(buttonTitle);
+        }
+        buttonTitle = new UITextBox(text);
+        this.add(buttonTitle);
     }
 }

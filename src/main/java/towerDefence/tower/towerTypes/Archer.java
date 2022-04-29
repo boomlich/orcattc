@@ -1,6 +1,6 @@
 package towerDefence.tower.towerTypes;
 
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.Weapons.Projectile;
 import towerDefence.components.Weapons.Weapon;
 import towerDefence.components.damage.Damage;
@@ -30,8 +30,7 @@ public class Archer extends Tower {
                 Cost.ARCHER);
 
         getWeapon().setTowerOwner(this);
-        getWeapon().getProjectile().setDebuff(
-                new DebuffDamageOverTime(
+        getWeapon().getProjectile().setDebuff(new DebuffDamageOverTime(
                         10000,
                         200,
                         30,
@@ -46,11 +45,13 @@ public class Archer extends Tower {
 
     @Override
     protected void rank1() {
+        setUpgradeToolTip("Increase burn damage");
         setSearchRadius(TowerUpgrades.upgradeDetectionRange(getSearchRadius(), 0.30));
     }
 
     @Override
     protected void rank2() {
+        setUpgradeToolTip("Fire spreads to all targets within a small radius upon impact");
         getWeapon().getProjectile().setDebuff(new DebuffDamageOverTime(10000, 400, 30, fireSprite, fireAnim,this, "fireAR0"));
     }
 

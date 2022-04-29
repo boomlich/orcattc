@@ -7,6 +7,10 @@ public class UITextBox extends UIComponentTemplate {
 
     private String text;
     private Font font = new Font("Calibri", Font.BOLD, 10);
+
+    /**
+     * Used to calculate size of the text when rendered.
+     */
     private final Graphics2D graphics;
     private Color color;
 
@@ -31,38 +35,49 @@ public class UITextBox extends UIComponentTemplate {
         return (Graphics2D) graphicsImage.getGraphics();
     }
 
+    /**
+     * @param color new color of the text
+     */
     public void setColor(Color color) {
         this.color = color;
     }
 
+    /**
+     * @param font new font of the text
+     */
     public void setFont(Font font) {
         this.font = font;
         updateDimensions();
     }
 
-    public Font getFont() {
-        return font;
-    }
-
+    /**
+     * @return width of the text with its currently set font
+     * and size when rendered
+     */
     private int calculateStringWidth() {
         graphics.setFont(font);
         return graphics.getFontMetrics().stringWidth(text);
     }
 
+    /**
+     * @param text new text
+     */
     public void setText(String text) {
         this.text = text;
     }
 
-    public String getText() {
-        return text;
-    }
-
+    /**
+     * @param size font size
+     */
     public void setSize(int size) {
         font = new Font(font.getFontName(), font.getStyle(), size);
         updateDimensions();
     }
 
-    public void updateDimensions() {
+    /**
+     * Update the width and height of the textBox
+     */
+    private void updateDimensions() {
         setWidth(calculateStringWidth());
         setHeight(font.getSize());
     }

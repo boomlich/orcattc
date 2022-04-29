@@ -1,6 +1,6 @@
 package towerDefence.level.path;
 
-import towerDefence.Math.MathHelperMethods;
+import towerDefence.math.MathHelperMethods;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;

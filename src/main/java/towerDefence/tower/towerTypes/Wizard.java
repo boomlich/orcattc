@@ -1,6 +1,6 @@
 package towerDefence.tower.towerTypes;
 
-import towerDefence.components.Collision.Collision;
+import towerDefence.components.collision.Collision;
 import towerDefence.components.Targeting.Targeting;
 import towerDefence.components.Targeting.TargetingMode;
 import towerDefence.components.Weapons.Projectile;
@@ -45,11 +45,13 @@ public class Wizard extends Tower {
 
     @Override
     protected void rank1() {
+        setUpgradeToolTip("Chance of freezing enemies, slowing their movement-speed");
         setSearchRadius(TowerUpgrades.upgradeDetectionRange(getSearchRadius(), 0.5));
     }
 
     @Override
     protected void rank2() {
+        setUpgradeToolTip("Attacks with regular intervals the first enemy on the path, even outside its radius");
         getWeapon().getProjectile().setDebuff(new DebuffSlow(5000, 0.5, 0.25, null, null, "freezeWR2"));
     }
 
@@ -62,7 +64,7 @@ public class Wizard extends Tower {
 
     @Override
     public void update(double deltaSteps) {
-        if (ultimateWeapon != null) {
+        if (ultimateWeapon != null && !getEnemies().isEmpty()) {
             fireUltimateWeapon(deltaSteps);
         }
 
@@ -80,10 +82,9 @@ public class Wizard extends Tower {
         }
     }
 
-
     @Override
-    protected void updateTargetDirection(Point2D target) {
-        setBodyFrame(1);
+    protected int updateTargetDirection(Point2D target) {
+        return 1;
     }
 
     @Override
