@@ -224,6 +224,9 @@ public class GameModel implements GameRenderable, GameControllable {
         if (isWaveDepleted()) {
             if (levelManager.getCurrentWaveNumber() == levelManager.getMaxWaves()) {
                 changeGameMode(GameMode.WIN);
+                if (activeTower != null) {
+                    activeTower = null;
+                }
             } else {
                 changeGameMode(GameMode.BUILD_PHASE);
                 economyManager.addMoney((int) (levelManager.getWaveEndMoney() * Math.pow(1.05, getCurrentWave())));

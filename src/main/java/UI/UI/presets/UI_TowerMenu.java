@@ -179,9 +179,14 @@ public class UI_TowerMenu extends UIContainer {
     private void updateMoney(GameRenderable gameModel) {
 
         int cost = tower.getCost(1);
-        if (gameModel.hasSufficiantFunds(cost) && cost > 0) {
-            upgradeButton.enableInteraction();
-            upgradeCost.setText(String.valueOf(tower.getCost(1)));
+
+        if (cost > 0){
+            if (gameModel.hasSufficiantFunds(cost)) {
+                upgradeButton.enableInteraction();
+                upgradeCost.setText(String.valueOf(tower.getCost(1)));
+            } else {
+                upgradeButton.disableInteraction();
+            }
         } else {
             upgradeButton.disableInteraction();
             upgradeButton.setText("MAX");

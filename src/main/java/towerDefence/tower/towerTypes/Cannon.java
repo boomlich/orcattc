@@ -68,7 +68,7 @@ public class Cannon extends Tower {
     public void update(double deltaSteps) {
         if (mouseAim && gameControllable.getGameMode() == GameMode.INVASION_PHASE) {
             if (!activeSpawnMode()) {
-                updateTargetDirection(mouseController.getMouseCoordinate());
+                setBodyFrame(updateTargetDirection(mouseController.getMouseCoordinate()));
                 updateWeapon(deltaSteps, mouseController.getMouseCoordinate());
             }
         } else {
