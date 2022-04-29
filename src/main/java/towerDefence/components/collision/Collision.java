@@ -12,6 +12,10 @@ public class Collision implements CollisionObject {
     /** Center of collision circle */
     private Point2D position = new Point2D.Double(0,0);
 
+    /**
+     * Determines if the collision should detect the first and only target,
+     * of if every target inside the radius will be detected.
+     */
     private final boolean isSingleTarget;
 
     public Collision(double radius, boolean isSingleTarget) {
@@ -77,11 +81,10 @@ public class Collision implements CollisionObject {
         return this;
     }
 
+    /**
+     * @return true if collision only detects the first collision
+     */
     public boolean isSingleTarget() {
         return isSingleTarget;
     }
-
-    //    public void increaseRange(double sizeDelta) {
-//        radius *= (1.0 + sizeDelta);
-//    }
 }

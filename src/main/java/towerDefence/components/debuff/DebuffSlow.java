@@ -15,15 +15,18 @@ public class DebuffSlow extends Debuff{
     private final double speedReduction;
 
     /**
-     * Total duration of the slow effect
+     * Total duration of the slow effect.
      */
     private final int totalDuration;
 
     /**
-     * Chance of slow effect to be applied upon hit
+     * Chance of slow effect to be applied upon hit.
      */
     private final double randomChance;
 
+    /**
+     * Speed prior to slow effect getting applied.
+     */
     private double originalSpeed;
 
     public DebuffSlow(int duration, double speedReduction, double randomChance, SpriteEngine spriteEngine, Animation animation, String identifier) {
@@ -44,7 +47,13 @@ public class DebuffSlow extends Debuff{
         randomizeSlowEffect(reducedSpeed, randomChance);
     }
 
-
+    /**
+     * Takes the given input and validate that it is within 0-1. If
+     * inputNumber > 1, return 1. If inputNumber < 0, return 0.
+     *
+     * @param inputNumber desired value
+     * @return inputNumber with limit between 0-1
+     */
     private double limitScope(double inputNumber) {
         if (inputNumber > 1) {
             inputNumber = 1;
@@ -54,6 +63,10 @@ public class DebuffSlow extends Debuff{
         return inputNumber;
     }
 
+    /**
+     * @param speedReduction desired speed reduction in percentage
+     * @param randomChance percentage change of slow effect getting applied
+     */
     private void randomizeSlowEffect(double speedReduction, double randomChance) {
         Random rand = new Random();
         if (rand.nextDouble() < randomChance) {
@@ -63,12 +76,10 @@ public class DebuffSlow extends Debuff{
 
     private void slowMovementSpeed(double speedReduction) {
         getTarget().getMovement().setSpeed(speedReduction);
-        System.out.println("SLOWED");
     }
 
     @Override
     protected void effectTrigger() {
-        // Restore speed
         removeEffect();
     }
 
@@ -80,7 +91,6 @@ public class DebuffSlow extends Debuff{
 
     private void restoreSpeed() {
         getTarget().getMovement().setSpeed(originalSpeed);
-        System.out.println("RESTORED");
     }
 
     @Override
@@ -88,6 +98,9 @@ public class DebuffSlow extends Debuff{
         return new DebuffSlow(totalDuration, speedReduction, randomChance, getSpriteEngine(), getSpriteAnimation(), getIdentifier());
     }
 
+    /**
+     * @return percentage slowdown to the movement speed. Value from 0-1.
+     */
     public double getSlowMultiplier() {
         return speedReduction;
     }

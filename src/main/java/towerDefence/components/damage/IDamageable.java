@@ -1,8 +1,12 @@
 package towerDefence.components.damage;
 
-import towerDefence.components.debuff.IDebuff;
-
 public interface IDamageable {
 
-    public void applyDamage(Damage damage);
+    /**
+     * Apply the damage to the Damage object on the health
+     * of the damageble object.
+     *
+     * @param damage damage to apply
+     */
+    void applyDamage(Damage damage);
 }

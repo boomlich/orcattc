@@ -4,7 +4,6 @@ public class ContainerBorder {
 
     public final int north, east, south, west;
 
-
     public ContainerBorder(int border) {
         north = border;
         east = border;

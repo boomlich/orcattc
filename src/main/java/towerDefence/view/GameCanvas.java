@@ -82,7 +82,7 @@ public class GameCanvas {
             if (towers.containsKey(i)) {
                 for (ITower tower: towers.get(i)) {
 //                    DrawGraphics.drawSprite(g2D, tower.getBaseSprite(), tower.getBasePosition());
-                    DrawGraphics.drawSprite(g2D, tower.getBodySprite(), tower.getBodyPosition());
+                    DrawGraphics.drawSprite(g2D, tower.getSprite(), tower.getBodyPosition());
 
 
                     if (RenderingOptions.DEBUG) {
@@ -113,7 +113,7 @@ public class GameCanvas {
         }
 
         for (Projectile projectile: gameModel.getProjectiles()) {
-            g2D.setColor(Color.RED);
+            g2D.setColor(Color.BLACK);
             g2D.fill(new Ellipse2D.Double(projectile.getPosition().getX()-5, projectile.getPosition().getY() - 5, 10, 10));
         }
         for (Particle particle: gameModel.getParticles()) {

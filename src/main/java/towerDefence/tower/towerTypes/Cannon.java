@@ -46,11 +46,6 @@ public class Cannon extends Tower {
         this.gameControllable = gameModel;
     }
 
-    public Cannon() {
-        this.mouseController = null;
-        this.gameControllable = null;
-    }
-
     @Override
     protected void rank1() {
         setUpgradeToolTip("Increases explosion radius and damage");

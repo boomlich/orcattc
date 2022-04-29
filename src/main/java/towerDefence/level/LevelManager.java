@@ -3,10 +3,9 @@ package towerDefence.level;
 import towerDefence.level.path.SplinePath;
 import towerDefence.level.path.SplinePathData;
 
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
-public class LevelManager implements IGameLevel {
+public class LevelManager implements ILevelManager {
 
     private SplinePath path;
     private Level currentLevel;
@@ -29,18 +28,8 @@ public class LevelManager implements IGameLevel {
     }
 
     @Override
-    public Point2D[] getSplineControls() {
-        return path.getSplineControls();
-    }
-
-    @Override
     public SplinePathData getPath() {
         return path.getSplinePathData();
-    }
-
-    @Override
-    public EnemyWave getCurrentWave(int waveNumber) {
-        return new EnemyWave(currentLevel.getEnemyWave(waveNumber), getPath());
     }
 
     public EnemyWave loadNextWave() {
@@ -63,7 +52,7 @@ public class LevelManager implements IGameLevel {
     }
 
     @Override
-    public Level getcurrentLevel() {
+    public Level getCurrentLevel() {
         return currentLevel;
     }
 }

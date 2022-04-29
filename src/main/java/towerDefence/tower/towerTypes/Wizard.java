@@ -17,12 +17,10 @@ import java.awt.geom.Point2D;
 
 public class Wizard extends Tower {
 
-    private final int ultimateCooldown = 5000;
+    private final int ultimateCooldown = 10000;
     private Weapon ultimateWeapon;
     private final Weapon originalWeapon;
     private int currentCooldown = ultimateCooldown;
-
-
 
     public Wizard(Point2D position) {
         super(
@@ -38,10 +36,6 @@ public class Wizard extends Tower {
         originalWeapon.setTowerOwner(this);
     }
 
-    // For testing
-    public Wizard() {
-        this.originalWeapon = null;
-    }
 
     @Override
     protected void rank1() {
@@ -52,12 +46,12 @@ public class Wizard extends Tower {
     @Override
     protected void rank2() {
         setUpgradeToolTip("Attacks with regular intervals the first enemy on the path, even outside its radius");
-        getWeapon().getProjectile().setDebuff(new DebuffSlow(5000, 0.5, 0.25, null, null, "freezeWR2"));
+        getWeapon().getProjectile().setDebuff(new DebuffSlow(2500, 0.25, 0.5, null, null, "freezeWR2"));
     }
 
     @Override
     protected void rank3() {
-        ultimateWeapon = new Weapon(1, new Projectile(10000, new Damage(300), 50, new Collision(10)));
+        ultimateWeapon = new Weapon(1, new Projectile(10000, new Damage(300), 20, new Collision(10)));
         ultimateWeapon.setTowerOwner(this);
         ultimateWeapon.setGameEntities(getGameEntities());
     }

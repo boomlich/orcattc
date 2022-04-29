@@ -28,7 +28,14 @@ public abstract class Enemy implements IEnemy {
      */
     private SpriteEngine spriteEngine;
 
+    /**
+     * True if movement is done and enemy reached the end.
+     */
     private boolean reachedEnd = false;
+
+    /**
+     * True if enemy is dead and should be removed.
+     */
     private boolean isDead = false;
 
     /**
@@ -55,8 +62,15 @@ public abstract class Enemy implements IEnemy {
      */
     private int reachedEndDamage;
 
+    /**
+     * Progression the path.
+     */
     private double progression = 0.0;
 
+    /**
+     * Z-depth value of the enemy. Determines the rendering order.
+     * Based of the y-coordinate of the enemy.
+     */
     private int zDepth = 0;
 
     // Animations
@@ -159,16 +173,6 @@ public abstract class Enemy implements IEnemy {
         zDepth = (int) y;
 
         return new Point2D.Double(x, y);
-    }
-
-    @Override
-    public Point2D getDebuffPosition(){
-        Point2D position = new Point2D.Double(
-                getMovement().getPosition().getX(),
-                getMovement().getPosition().getY()
-        );
-
-        return null;
     }
 
     @Override

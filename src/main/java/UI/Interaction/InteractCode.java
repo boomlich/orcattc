@@ -20,5 +20,12 @@ public enum InteractCode {
     TARGET_B,
     TARGET_C,
     TARGET_D,
-    FAST_FORWARD, RESTART, MAIN_MENU, QUIT, PLAY_GAME, LEVEL_A, LEVEL_B, INACTIVE
+    FAST_FORWARD,
+    RESTART,
+    MAIN_MENU,
+    QUIT,
+    PLAY_GAME,
+    LEVEL_A,
+    LEVEL_B,
+    INACTIVE
 }

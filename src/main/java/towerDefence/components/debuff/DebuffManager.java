@@ -23,10 +23,9 @@ public class DebuffManager {
         }
     }
 
-    public DebuffSlow getSlow() {
-        return slow;
-    }
-
+    /**
+     * @return list of all damage over time debuffs
+     */
     public List<DebuffDamageOverTime> getDamageOverTimeList() {
         return damageOverTimeList;
     }
@@ -50,6 +49,17 @@ public class DebuffManager {
         damageOverTimeList.removeAll(expiredDamages);
     }
 
+    /**
+     * Add a new debuff. If a slow debuff already applied, check if
+     * it has the same identifier. Then restore the duration of the
+     * effect already applied. If a slow effect with a different identifier
+     * already applied, check if the slow effect on the new debuff is
+     * greater, if so then replace. This is to prevent two slow effects
+     * to be applied twice. Only a maximum of one slow effect should be
+     * active at any time.
+     *
+     * @param debuff new slow effect
+     */
     private void addSlowDebuff(DebuffSlow debuff) {
         if (slow != null) {
             if (slow.equals(debuff)) {
@@ -69,6 +79,14 @@ public class DebuffManager {
         return oldDebuff.getSlowMultiplier() <= newDebuff.getSlowMultiplier();
     }
 
+    /**
+     * Check if the same damage over time debuff already is applied, if so
+     * then replenish the duration of the existing effect. Otherwise, add
+     * the new effect. This is to prevent two of identical damage over time
+     * effects to be applied at once.
+     *
+     * @param damageOverTime new damage over time debuff
+     */
     private void addDamageOverTime(DebuffDamageOverTime damageOverTime) {
         damageOverTime.setTarget(ownerEnemy);
         boolean DOTAdded = false;

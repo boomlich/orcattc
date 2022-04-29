@@ -18,7 +18,14 @@ import java.util.List;
 
 public abstract class Tower implements ITower, Interactable{
 
+    /**
+     * Current position of the tower on the map
+     */
     private Point2D position;
+
+    /**
+     * Current rank of the tower
+     */
     private int rank = 0;
 
     /**
@@ -32,16 +39,44 @@ public abstract class Tower implements ITower, Interactable{
      */
     private final Collision placementRadius;
 
+    /**
+     * Active weapon of the tower
+     */
     private Weapon weapon;
 
-    private SpriteEngine spriteBody;
+    /**
+     * Sprite of the body to the tower
+     */
+    private final SpriteEngine spriteBody;
+
     private boolean spawnMode = true;
+
+    /**
+     * Determines what happens when interacting with the tower
+     */
     private InteractCode interactCode = InteractCode.TARGET_Tower;
+
+    /**
+     * Size of the interaction collision box.
+     */
     private final int interactionSize = 40;
+
     private GameEntities gameEntities;
+
+    /**
+     * Current targeting mode
+     */
     private Targeting targeting;
+
+    /**
+     * Current active target
+     */
     private IEnemy target;
     private boolean validPlacement;
+
+    /**
+     * Cost of purchase and upgrades
+     */
     private final Cost cost;
 
     // Tower menu options
@@ -89,6 +124,9 @@ public abstract class Tower implements ITower, Interactable{
         return 0;
     }
 
+    /**
+     * @param upgradeToolTip new tool tip display text
+     */
     protected void setUpgradeToolTip(String upgradeToolTip) {
         this.upgradeToolTip = upgradeToolTip;
     }
@@ -167,6 +205,14 @@ public abstract class Tower implements ITower, Interactable{
         weapon.update(deltaSteps);
     }
 
+    /**
+     * Calculate the aiming direction to the target. The sprites have 16 degree of rotation and
+     * the number of frame is determined by the angle to the target. The closest frame number in
+     * angle to the angle of the target is selected.
+     *
+     * @param target target position
+     * @return the frame-number of the sprite
+     */
     protected int updateTargetDirection(Point2D target) {
 
         int numberOfRotations = 16;
@@ -330,7 +376,7 @@ public abstract class Tower implements ITower, Interactable{
 
     @Override
     public Sprite getSprite() {
-        return null;
+        return getBodySprite();
     }
 
     @Override
@@ -360,7 +406,6 @@ public abstract class Tower implements ITower, Interactable{
 
     @Override
     public void setNormal() {
-
     }
 
     @Override
@@ -388,7 +433,6 @@ public abstract class Tower implements ITower, Interactable{
 
     @Override
     public void enableInteraction() {
-
     }
 
     @Override

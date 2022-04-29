@@ -10,20 +10,49 @@ import java.awt.geom.Point2D;
 
 public interface IProjectile  {
 
-    public Projectile makeCopy();
+    /**
+     * @return copy of the projectile
+     */
+    Projectile makeCopy();
 
-    public void fireProjectile(Point2D spawn, Point2D target, ITower towerOwner, GameEntities gameEntities);
+    /**
+     * Make copy of the projectile, calculate velocity and movement, and add the
+     * copied projectile to the game entities.
+     *
+     * @param spawn position where the projectile will spawn when firering
+     * @param target position where the projectile will travel towards
+     * @param towerOwner tower that fires the projectile
+     * @param gameEntities entity manger
+     */
+    void fireProjectile(Point2D spawn, Point2D target, ITower towerOwner, GameEntities gameEntities);
 
-    public void increasePenetration(int penetrationDelta);
+    /**
+     * @param penetrationDelta change in health value for the projectile.
+     */
+    void increasePenetration(int penetrationDelta);
 
-    public void increaseDamage(double percentageDelta);
+    /**
+     * @param percentageDelta change in damage value for the projectile.
+     */
+    void increaseDamage(double percentageDelta);
 
-    public void setDebuff(IDebuff debuff);
+    /**
+     * @param debuff debuff that will be applied upon impact with targets
+     */
+    void setDebuff(IDebuff debuff);
 
-    public void setDamageRadius(Collision damageRadius);
+    /**
+     * @param towerOwner tower that fires the projectile
+     */
+    void setTowerOwner(ITower towerOwner);
 
-    public void setImpactEffect(Particle particle);
+    /**
+     * @param damageRadius radius of area of effect damage
+     */
+    void setDamageRadius(Collision damageRadius);
 
-    boolean isDead();
-
+    /**
+     * @param particle particle to display upon impact with target
+     */
+    void setImpactEffect(Particle particle);
 }

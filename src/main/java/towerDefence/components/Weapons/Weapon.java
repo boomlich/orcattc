@@ -9,12 +9,12 @@ public class Weapon {
     /**
      * Time in ms between each shot
      */
-    private int fireFrequency;
+    private final int fireFrequency;
 
     /**
      * Type of projectile that the weapon fires
      */
-    private IProjectile projectile;
+    private final IProjectile projectile;
 
     /**
      * Location where the projectile spawns upon the weapon firing
@@ -28,10 +28,6 @@ public class Weapon {
      * Owner of the weapon
      */
     private ITower tower;
-
-
-    public Weapon() {
-    }
 
     public Weapon(int fireFrequency, IProjectile projectile) {
         this.fireFrequency = fireFrequency;
@@ -53,14 +49,20 @@ public class Weapon {
         }
     }
 
-    protected void fireProjectile() {
+    private void fireProjectile() {
         projectile.fireProjectile(projectileSpawn, target, tower, gameEntities);
     }
 
+    /**
+     * @param projectileSpawn projectile spawn location upon firing weapon
+     */
     public void setProjectileSpawn(Point2D projectileSpawn) {
         this.projectileSpawn = projectileSpawn;
     }
 
+    /**
+     * @param target target to aim and shoot for
+     */
     public void setTarget(Point2D target) {
         this.target = target;
     }
@@ -69,10 +71,16 @@ public class Weapon {
         this.gameEntities = gameEntities;
     }
 
+    /**
+     * @return the weapons projectile that will be shot upon firing
+     */
     public IProjectile getProjectile() {
         return projectile;
     }
 
+    /**
+     * @param percentageDelta percentage increase of projectile damage
+     */
     public void increaseDamage(double percentageDelta) {
         projectile.increaseDamage(percentageDelta);
     }
@@ -84,9 +92,15 @@ public class Weapon {
         projectile.increasePenetration(penetrationDelta);
     }
 
-    public void increaseSpreadShots(int numberOfShots){
+    /**
+     * @param numberOfShots number of shots to fire at once.
+     * @return true if successfully increased the number of projectiles.
+     */
+    public boolean increaseSpreadShots(int numberOfShots){
         if (projectile instanceof ProjectileMultiShot) {
             ((ProjectileMultiShot) projectile).setNumberOfShots(numberOfShots);
+            return true;
         }
+        return false;
     }
 }

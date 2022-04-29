@@ -27,10 +27,6 @@ public class Rifleman extends Tower {
         getWeapon().setTowerOwner(this);
     }
 
-    // For testing
-    public Rifleman() {
-    }
-
     @Override
     protected void rank1() {
         setUpgradeToolTip("Increase bullet penetration and damage");

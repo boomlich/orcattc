@@ -76,9 +76,6 @@ public class UICanvas {
                 g2D.draw(new Ellipse2D.Double(collisionX, collisionY, 2 * radius, 2 * radius));
             }
             DrawGraphics.drawSprite(g2D, tower.getBodySprite(), tower.getBodyPosition());
-
-            // Center of Collision
-            g2D.draw(new Rectangle2D.Double(tower.getSearchRadius().getPosition().getX(), tower.getSearchRadius().getPosition().getY(), 1, 1));
         }
         UIContainer.paint(g2D);
     }

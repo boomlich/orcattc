@@ -112,7 +112,7 @@ public class GameModel implements GameRenderable, GameControllable {
             activeTower = null;
         }
         InteractionManager.clearInteractables();
-        loadLevel(levelManager.getcurrentLevel());
+        loadLevel(levelManager.getCurrentLevel());
         uiCanvas.startNewLevel();
     }
 
@@ -139,7 +139,7 @@ public class GameModel implements GameRenderable, GameControllable {
 
     @Override
     public void selectTower(ITower tower) {
-        if (gameMode != GameMode.PAUSE) {
+        if (gameMode == GameMode.INVASION_PHASE || gameMode == GameMode.BUILD_PHASE) {
             activeTower = tower;
         }
     }

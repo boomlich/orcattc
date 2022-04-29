@@ -9,16 +9,49 @@ import java.io.IOException;
 
 public class Level {
 
+    /**
+     * All enemy waves to spawn in the level
+     */
     private final String[] enemyWaves;
+
+    /**
+     * The levels path control points. Used to calculate the path.
+     */
     private final Point2D[] pathSplineControls;
+
+    /**
+     * Initial money upon loading the level
+     */
     private final int startMoney;
+
+    /**
+     * money earned upon finishing a round of waves.
+     */
     private final int waveEndMoney;
-    private final String thumbnailNormalPath;
-    private final String thumbnailHoverPath;
+
+    /**
+     * Level selection button thumbnail image path
+     */
+    private final String thumbnailNormalPath, thumbnailHoverPath;
+
+    /**
+     * Background graphics of the level.
+     */
     private BufferedImage mapGraphics;
-    private int startHealth;
-    private final String levelTitle;
-    private final String levelDescription;
+
+    /**
+     * Initial player health value upon loading the level
+     */
+    private final int startHealth;
+
+    /**
+     * Level selection details
+     */
+    private final String levelTitle, levelDescription;
+
+    /**
+     * Level selection button interaction-code
+     */
     private final InteractCode interactCode;
 
     public static final Level A = new Level(
@@ -39,7 +72,6 @@ public class Level {
                     new Point2D.Double(312, 241),
                     new Point2D.Double(309, 277),
                     new Point2D.Double(261, 308),
-
                     new Point2D.Double(193, 328),
                     new Point2D.Double(145, 352),
                     new Point2D.Double(119, 387),
@@ -54,7 +86,6 @@ public class Level {
                     new Point2D.Double(543, 325),
                     new Point2D.Double(527, 270),
                     new Point2D.Double(516, 208),
-
                     new Point2D.Double(511, 154),
                     new Point2D.Double(524, 109),
                     new Point2D.Double(561, 86),
@@ -122,7 +153,6 @@ public class Level {
                     new Point2D.Double(596, 412),
                     new Point2D.Double(645, 397),
                     new Point2D.Double(684, 362),
-
                     new Point2D.Double(703, 322),
                     new Point2D.Double(710, 277),
                     new Point2D.Double(709, 229),
@@ -188,50 +218,80 @@ public class Level {
     }
 
 
-    public String getEnemyWave(int selectedWave) {
+    protected String getEnemyWave(int selectedWave) {
         return enemyWaves[selectedWave];
     }
 
-    public Point2D[] getPathSplineControls() {
+    protected Point2D[] getPathSplineControls() {
         return pathSplineControls;
     }
 
+    /**
+     * @return maximum number of waves on the level
+     */
     public int getMaxWaves() {
         return enemyWaves.length;
     }
 
+    /**
+     * @return initial money when loading the level
+     */
     public int getStartMoney() {
         return startMoney;
     }
 
-    public int getWaveEndMoney() {
+    /**
+     * @return money earned after each wave
+     */
+    protected int getWaveEndMoney() {
         return waveEndMoney;
     }
 
-    public BufferedImage getMapBackground() {
+    /**
+     * @return background graphics of the level
+     */
+    protected BufferedImage getMapBackground() {
         return mapGraphics;
     }
 
+    /**
+     * @return initial health value upon laoding the level
+     */
     public int getStartHealth() {
         return startHealth;
     }
 
+    /**
+     * @return the title of the level.
+     */
     public String getTitle() {
         return levelTitle;
     }
 
+    /**
+     * @return description of the level
+     */
     public String getLevelDescription() {
         return levelDescription;
     }
 
+    /**
+     * @return path to the level select button normal image
+     */
     public String getThumbnailNormalPath() {
         return thumbnailNormalPath;
     }
 
+    /**
+     * @return path to the level sect button hover image
+     */
     public String getThumbnailHoverPath() {
         return thumbnailHoverPath;
     }
 
+    /**
+     * @return interaction code to spawn the selected level
+     */
     public InteractCode getInteractCode() {
         return interactCode;
     }

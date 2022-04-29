@@ -9,17 +9,25 @@ import java.util.Objects;
 abstract class Debuff implements IDebuff {
 
     /**
-     * Duration of the debuff in millisecounds
+     * Duration of the debuff in millisecounds.
      */
     private final int duration;
     private int currentDuration;
 
+    /**
+     * Expired debuffs will be removed from the target.
+     */
     private boolean expired;
 
+    /**
+     * Unique identifier of the debuff. Used for some debuff types
+     * to determine if the debuff should be replenished or simply added
+     * if a similar debuff is already applied.
+     */
     private final String identifier;
 
     /**
-     * The target with the debuff effect
+     * The target with the debuff effect applied.
      */
     private IEnemy target;
 
@@ -54,6 +62,9 @@ abstract class Debuff implements IDebuff {
         return spriteEngine;
     }
 
+    /**
+     * @return unique string that identifies the debuff from other debuffs.
+     */
     public String getIdentifier() {
         return identifier;
     }
@@ -83,10 +94,16 @@ abstract class Debuff implements IDebuff {
         return target;
     }
 
+    /**
+     * Set the timer to the original duration value
+     */
     protected void restartTimer () {
         currentDuration = duration;
     }
 
+    /**
+     * Set the effect to expired to remove the debuff form the target
+     */
     protected void removeEffect() {
         expired = true;
     }
@@ -104,7 +121,8 @@ abstract class Debuff implements IDebuff {
     }
 
     /**
-     * Refresh
+     * Refresh duration of the entire debuff effect. If multiple ticks,
+     * all ticks will be reset.
      */
     protected void restoreDuration() {
         restartTimer();
@@ -126,10 +144,5 @@ abstract class Debuff implements IDebuff {
     @Override
     public IDebuff makeCopy() {
         return null;
-    }
-
-    @Override
-    public int getComparisonValue() {
-        return 0;
     }
 }

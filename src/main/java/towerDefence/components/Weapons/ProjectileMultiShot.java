@@ -46,6 +46,9 @@ public class ProjectileMultiShot extends Projectile{
         return new Point2D.Double(spawn.getX() + offsetX, spawn.getY() + offsetY);
     }
 
+    /**
+     * @param numberOfShots number of projectiles fired at once.
+     */
     public void setNumberOfShots(int numberOfShots) {
         this.numberOfShots = numberOfShots;
     }

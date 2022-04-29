@@ -29,18 +29,6 @@ public class Cost {
         return buyCost;
     }
 
-    public int getRank1Cost() {
-        return rank1Cost;
-    }
-
-    public int getRank2Cost() {
-        return rank2Cost;
-    }
-
-    public int getRank3Cost() {
-        return rank3Cost;
-    }
-
     public int getCost(int rank) {
         if (rank < 4) {
             return allCost[rank];

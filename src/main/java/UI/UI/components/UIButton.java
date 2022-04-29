@@ -137,17 +137,23 @@ public class UIButton extends UIContainer implements Interactable {
         return true;
     }
 
+    @Override
     public void setHover() {
-        buttonState = UIButtonState.HOVER;
-        if (toolTipString != null) {
-            addToolTip();
+        if (buttonState != UIButtonState.DISABLED) {
+            buttonState = UIButtonState.HOVER;
+            if (toolTipString != null) {
+                addToolTip();
+            }
         }
     }
 
+    @Override
     public void setNormal() {
-        buttonState = UIButtonState.NORMAL;
-        if (toolTipString != null) {
-            removeToolTip();
+        if (buttonState != UIButtonState.DISABLED) {
+            buttonState = UIButtonState.NORMAL;
+            if (toolTipString != null) {
+                removeToolTip();
+            }
         }
     }
 

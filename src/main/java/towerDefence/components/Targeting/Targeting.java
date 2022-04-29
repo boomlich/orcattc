@@ -16,6 +16,16 @@ public class Targeting {
         this.tower = tower;
     }
 
+    /**
+     * Select one target from a list of potential targets. The selection
+     * is determined by the targeting-mode. If FIRST, the enemy at index
+     * 0 is selected. If LAST, the enemy at the last index is selected. If
+     * STRONGEST, the target with the most health is selected. If CLOSEST,
+     * the target with the least distance from the tower is selected.
+     *
+     * @param potentialTargets list of all enemies that can be selected
+     * @return the selected enemy. Null if no targets selected.
+     */
     public IEnemy getTarget(List<IEnemy> potentialTargets) {
 
         switch (targetingMode) {
@@ -32,7 +42,6 @@ public class Targeting {
                 return targetClosest(potentialTargets);
             }
         }
-
         return null;
     }
 

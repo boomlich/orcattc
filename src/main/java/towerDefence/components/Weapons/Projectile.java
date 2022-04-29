@@ -19,24 +19,52 @@ import java.util.List;
 public class Projectile implements IDamageable, IProjectile, IRenderableObject {
 
     private int health;
+
+    /**
+     * Damaged to be applied to target upon impact
+     */
     private Damage damage;
+
+    /**
+     * Self damage when impacting targets
+     */
     private final Damage penetrationDamage = new Damage(100);
-    private double speed;
-    private Collision hitDetection;
+    private final double speed;
+    private final Collision hitDetection;
+
+    /**
+     * Area of effect damage radius
+     */
     private Collision damageRadius;
     private LinearMovement movement;
     private List<IEnemy> enemies;
+
+    /**
+     * Store already hit enemies to prevent damaging the same enemy twice
+     */
     private final List<IEnemy> alreadyDamagedEnemies = new ArrayList<>();
+
+    /**
+     * Tower that fired the projectile
+     */
     private ITower towerOwner;
+
+    /**
+     * The debuff effect to be applied if taget hit
+     */
     private IDebuff debuff;
     private GameEntities gameEntities;
+
+    /**
+     * The particle spawned upon impact with target
+     */
     private Particle impactEffect;
+
+    /**
+     * Maximum time to live. Will die and be destroyed after timer is expired.
+     */
     private int timeLeftToLive = 5000;
     private boolean isDead;
-
-
-    public Projectile() {
-    }
 
     public Projectile(int health, Damage damage, double speed, Collision hitDetection) {
         this.health = health;
@@ -45,6 +73,7 @@ public class Projectile implements IDamageable, IProjectile, IRenderableObject {
         this.hitDetection = hitDetection;
     }
 
+    @Override
     public void fireProjectile(Point2D spawn, Point2D target, ITower towerOwner, GameEntities gameEntities) {
         Projectile fired = this.makeCopy();
         fired.setTowerOwner(towerOwner);
@@ -63,18 +92,28 @@ public class Projectile implements IDamageable, IProjectile, IRenderableObject {
         this.gameEntities = gameEntities;
     }
 
+    @Override
     public void setImpactEffect(Particle particle) {
         impactEffect = particle;
     }
 
+    @Override
     public Projectile makeCopy() {
         return new Projectile(health, damage, speed, hitDetection);
     }
 
+    @Override
     public void setTowerOwner(ITower towerOwner) {
         this.towerOwner = towerOwner;
     }
 
+    /**
+     * Set the projectiles linear movement. The projectile will move
+     * from the spawn location towards the target in a linear way.
+     *
+     * @param spawn projectile spawn position
+     * @param target position to move towards
+     */
     public void setLinearMovement(Point2D spawn, Point2D target) {
         this.movement = new LinearMovement(speed, spawn, target);
     }
@@ -111,11 +150,17 @@ public class Projectile implements IDamageable, IProjectile, IRenderableObject {
         System.out.println("DEATH");
     }
 
+    /**
+     * Check for collision against enemies. If collision is single target, it will
+     * only check for up to one target, else will detect multiple. If targets detected
+     * Apply self penetration damage and damage to the targets
+     *
+     * @param deltaSteps
+     */
     private void updateCollision(double deltaSteps) {
         hitDetection.setPosition(movement.getPosition());
 
         List<IEnemy> detectedEnemies = hitDetection.updateCollision(enemies);
-
         if (detectedEnemies.size() > 0) {
 
             // Apply self damage

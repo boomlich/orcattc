@@ -13,31 +13,77 @@ import java.awt.geom.Point2D;
 
 public interface IEnemy extends IRenderableObject, CollisionObject, IDamageable {
 
-    public void update(double deltaSteps);
+    /**
+     * Update the enemy. Updates the enemy movement, progress, status
+     * and sprite animation
+     * @param deltaSteps change in time
+     */
+    void update(double deltaSteps);
 
-    public Point2D getPosition();
+    /**
+     * Get position on the path. Offset sprite dimensions to match
+     * the path position.
+     *
+     * @return position of the enemy
+     */
+    Point2D getPosition();
 
-    public Sprite getSprite();
+    /**
+     * @return enemy sprite to be rendered
+     */
+    Sprite getSprite();
 
-    public boolean isDead();
+    /**
+     * @return true if enemy is dead. Dies if health reaches 0
+     * or enemy reaches end of path.
+     */
+    boolean isDead();
 
+    /**
+     * @return true if enemy has reached the end of the path.
+     */
     boolean hasReachedEnd();
 
-    public Collision getCollision();
+    /**
+     * @return Collision circle of the enemy.
+     */
+    Collision getCollision();
 
-    public double getPathProgression();
+    /**
+     * @return current progression on the path in percentage. If halfway
+     * through the path, it returns 0.5.
+     */
+    double getPathProgression();
 
-    public int getHealth();
+    /**
+     * @return current health value of the enemy. Determines if it is alive
+     */
+    int getHealth();
 
-    public void applyDebuff(IDebuff debuff);
+    /**
+     * Send debuff to the debuffManager to added.
+     *
+     * @param debuff debuff to be applied
+     */
+    void applyDebuff(IDebuff debuff);
 
-    public SplineMovement getMovement();
+    /**
+     * @return movement on the path of the enemy.
+     */
+    SplineMovement getMovement();
 
+    /**
+     * @return the debuffmanager that handles all debuffs.
+     */
     DebuffManager getDebuffManager();
 
+    /**
+     * @return money that will be looted upon death.
+     */
     int getMoneyLoot();
 
+    /**
+     * @return damage applied to the player if the enemy reaces the end
+     */
     int getReachedEndDamage();
-
-    Point2D getDebuffPosition();
 }
