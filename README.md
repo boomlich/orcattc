@@ -1,11 +1,11 @@
 <H1>ORCATTC</H1>
  
 ORCATTC is a tower defense game where you'll have to defend against enemy waves by placing towers along the road.
- 
+
 
 <H2>Installation instruction</H2>
  
-Download the source-code, open in an Java IDE of your choice and run.
+Download the source-code (src folder), open in a Java IDE of your choice and run.
 
 Requirements:
 -	Java IDE (E.g., IntelliJ)
@@ -67,8 +67,8 @@ Rapidly congures icicles that is fired at his targets, that might even slow them
 There are currently 9 enemies with different health and speed values. As the wave number increases, the more difficult the waves become.
  
 <H2>Known bugs:</H2>
-- Sometimes victory screen is displayed to the side of the game over screen
-- Sometimes the buttons will hitch up the hover
+- Sometimes victory screen is displayed to the side of the game over screen 
+- Sometimes the buttons will hitch up the hover 
 - After upgrading tower the cost of the next upgrade is not updated in the tower menu
  
 
