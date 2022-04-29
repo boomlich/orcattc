@@ -37,6 +37,10 @@ public class MathHelperMethods {
 
 
     public static Point2D getSplinePoint(double x, Point2D[] splineControls) {
+
+        // Code inspired by the One Lone Coder
+        // source: https://github.com/OneLoneCoder/videos/blob/master/OneLoneCoder_Splines2.cpp
+
         int point0, point1, point2, point3;
         point1 = (int) x + 1;
         point2 = point1 + 1;
